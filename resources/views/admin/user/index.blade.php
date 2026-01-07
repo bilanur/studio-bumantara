@@ -1,61 +1,43 @@
-<?php
+@extends('admin.layout')
 
-namespace App\Http\Controllers\Admin;
+@section('content')
+<h4>Data User</h4>
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+<a href="/admin/user/create" class="btn btn-primary mb-3">Tambah User</a>
 
-class UserController extends Controller
-{
-    public function index()
-    {
-        $users = User::latest()->get();
-        return view('admin.user.index', compact('users'));
-    }
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($users as $i => $user)
+        <tr>
+            <td>{{ $i + 1 }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>
+                <span class="badge bg-info">{{ $user->role }}</span>
+            </td>
+            <td>
+                <a href="/admin/user/{{ $user->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
 
-    public function create()
-    {
-        return view('admin.user.create');
-    }
-
-    public function store(Request $request)
-    {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return redirect('/admin/user')->with('success', 'User berhasil ditambahkan');
-    }
-
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        return view('admin.user.edit', compact('user'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-
-        $data = $request->only(['name', 'email', 'role']);
-
-        if ($request->password) {
-            $data['password'] = Hash::make($request->password);
-        }
-
-        $user->update($data);
-
-        return redirect('/admin/user')->with('success', 'User berhasil diupdate');
-    }
-
-    public function destroy($id)
-    {
-        User::destroy($id);
-        return redirect('/admin/user')->with('success', 'User berhasil dihapus');
-    }
-}
+                <form action="/admin/user/{{ $user->id }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm"
+                        onclick="return confirm('Hapus user ini?')">
+                        Hapus
+                    </button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+@endsection
