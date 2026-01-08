@@ -1,63 +1,52 @@
-<div class="untree_co--site-wrap">
-    <nav class="untree_co--site-nav js-sticky-nav
-    @if (Request::is('profil','tentangkami','user/dashboard'))
-        py-2 bg-white shadow-sm text-dark
-    @else
-        navbar-dark bg-transparent
-    @endif">
+<header>
+    <nav>
+        <div class="logo">
+            <span>📷</span>
+            <span>bumantara</span>
+        </div>
 
-        <div class="container d-flex align-items-center">
-            <!-- Logo -->
-            <div class="logo-wrap">
-                <a href="/" class="untree_co--site-logo 
-                    @if (Request::is('profil','tentangkami','user/dashboard')) text-dark @endif">
-                    LuxtonHotel
-                </a>
-            </div>
+        <ul class="nav-links">
+            <li><a href="{{ route('home') }}">HOME</a></li>
+            <li><a href="{{ route('about') }}">ABOUT US</a></li>
+            <li><a href="{{ route('packages') }}">PACKAGE</a></li>
+            <li><a href="{{ route('claimphoto') }}">CLAIM PHOTO</a></li>
+            <li><a href="{{ route('gallery') }}">GALLERY</a></li>
+        </ul>
 
-            <!-- Menu Desktop -->
-            <div class="site-nav-ul-wrap text-center d-none d-lg-block">
-                <ul class="site-nav-ul js-clone-nav">
-                    <li class="active">
-                        <a href="/" class="@if (Request::is('profil','tentangkami')) text-dark @endif">
-                            Beranda
-                        </a>
-                    </li>
-                    <li class="has-children">
-                        <a href="/tipekamar" class="@if (Request::is('profil','tentangkami')) text-dark @endif">
-                            Tipe Kamar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/fasilitas" class="@if (Request::is('profil','tentangkami')) text-dark @endif">
-                            Fasilitas
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/tentangkami" class="@if (Request::is('profil','tentangkami')) text-dark @endif">
-                            Tentang Kami
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="nav-right">
+            @guest
+                <!-- BELUM LOGIN -->
+                <a href="{{ route('login') }}" class="masuk-btn-outline">MASUK</a>
+                <a href="{{ route('register') }}" class="masuk-btn">DAFTAR</a>
+            @endguest
 
-            <!-- Ikon (Profile, dsb.) -->
-            <div class="icons-wrap text-md-right">
-                <ul class="d-flex align-items-center">
-                    <li style="list-style: none">
-                        <a href="/profil">
-                            <i class="bi bi-person-circle mr-2 fs-5 
-                                @if (Request::is('profil','tentangkami')) text-dark @endif">
-                            </i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            @auth
+                <!-- SUDAH LOGIN -->
+                <div class="profile-menu" id="profileMenu">
+                    <div class="profile-trigger">
+                        <svg class="profile-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                        <span>{{ Auth::user()->name }}</span>
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="currentColor" onclick="toggleDropdown(event)">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </div>
 
-            <!-- Toggle Mobile -->
-            <a href="#" class="d-block d-lg-none burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
-                <span></span>
-            </a>
+                    <div class="profile-dropdown">
+                        @if(Auth::user()->role === 'admin')
+                            <a href="{{ route('dashboard') }}">Dashboard</a>
+                        @endif
+
+                        <a href="{{ route('profile.edit') }}">Profile</a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            @endauth
         </div>
     </nav>
-</div>
+</header>

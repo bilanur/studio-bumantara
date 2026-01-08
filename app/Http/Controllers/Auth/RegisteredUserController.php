@@ -32,19 +32,23 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'no_hp' => ['required', 'string', 'max:15'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'no_hp' => $request->no_hp,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // COMMENT atau HAPUS 2 baris ini agar tidak auto login
+        // event(new Registered($user));
+        // Auth::login($user);
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        // Redirect ke register dengan pesan sukses
+        return redirect()->route('register')
+                    ->with('success', 'Pendaftaran berhasil! Silakan login untuk melanjutkan.');
     }
 }

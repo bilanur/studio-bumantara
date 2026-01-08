@@ -1,0 +1,682 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+
+                /* Header */
+        header {
+            background: white;
+            padding: 1.2rem 6%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e4d6b;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #1e4d6b;
+        }
+
+       .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        }
+
+        .masuk-btn-outline {
+        text-decoration: none;
+        color: #4a5568;
+        font-size: 0.85rem;
+        font-weight: 500;
+        padding: 0;
+        background: transparent;
+        }
+
+        .masuk-btn-outline:hover {
+        color: #1e4d6b;
+        }
+
+        .masuk-btn {
+        background: #1e4d6b;
+        color: white;
+        padding: 0.40rem 1.3rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s;
+        }
+
+        .masuk-btn:hover {
+        background: #163d54;
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            background: #f8f9fa;
+        }
+
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e4d6b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 3rem 6% 2rem;
+            background: white;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-subtitle {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        /* Booking Container */
+        .booking-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 6%;
+            display: grid;
+            grid-template-columns: 350px 1fr 350px;
+            gap: 2rem;
+        }
+
+        /* Package Card Left */
+        .package-info {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .package-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+        }
+
+        .package-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-features {
+            list-style: none;
+        }
+
+        .package-features li {
+            font-size: 0.85rem;
+            color: #5a6c7d;
+            padding: 0.6rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+
+        .package-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #1e4d6b;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .calendar-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .month-year {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .month-year-display {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .nav-arrow {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .nav-arrow:hover {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #7f8c8d;
+            padding: 0.5rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .calendar-day:hover {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+
+        .calendar-day.selected {
+            background: #1e4d6b;
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.disabled {
+            color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.disabled:hover {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        /* Timezone */
+        .timezone-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timezone-selector {
+            margin: 0;
+        }
+
+        .timezone-selector label {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .timezone-selector select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            color: #2c3e50;
+        }
+
+        /* Time Slots */
+        .time-slots-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .time-slot {
+            padding: 0.7rem;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .time-slot:hover {
+            border-color: #1e4d6b;
+            background: #e3f2fd;
+        }
+
+        .time-slot.selected {
+            background: #1e4d6b;
+            color: white;
+            border-color: #1e4d6b;
+        }
+
+        .time-slot.disabled {
+            background: #f5f5f5;
+            color: #bdc3c7;
+            text-decoration: line-through;
+            cursor: not-allowed;
+        }
+
+        .time-slot.disabled:hover {
+            border-color: #ddd;
+            background: #f5f5f5;
+        }
+
+        /* Summary Card Right */
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .summary-section {
+            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .summary-section.combined {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .summary-section.combined .selected-datetime {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .summary-section.combined .price-section {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .summary-section h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-icon {
+            width: 35px;
+            height: 35px;
+            background: #e3f2fd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .summary-text {
+            flex: 1;
+        }
+
+        .summary-label {
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            margin-bottom: 0.2rem;
+        }
+
+        .summary-value {
+            font-size: 0.9rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .extra-time-info {
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            margin-top: 0.3rem;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-number {
+            width: 35px;
+            height: 35px;
+            background: #1e4d6b;
+            color: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            color: #7f8c8d;
+            margin-top: 0.3rem;
+        }
+
+        .selected-datetime {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .datetime-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .datetime-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .datetime-icon {
+            font-size: 1rem;
+        }
+
+        .datetime-text {
+            font-size: 0.85rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .price-section {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            font-size: 1.5rem;
+            color: #1e4d6b;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #1e4d6b;
+            color: white;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .checkout-btn:hover {
+            background: #163d54;
+        }
+
+        @media (max-width: 1024px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+         /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e4d6b 0%, #163d54 50%, #0d2a3a 100%);
+            color: white;
+            padding: 3.5rem 6% 2rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            padding-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-address {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .social-icon:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-about {
+                flex-direction: column;
+                padding: 3rem 5%;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .map-container {
+                flex-direction: column;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.75rem;
+            }
+            
+            .hero-about h2 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+
+
