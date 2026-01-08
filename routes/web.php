@@ -15,7 +15,7 @@ Route::get('/booking-1', function () {
 
 Route::get('/booking-2', function () {
     return view('booking2');
-})->name('booking2');
+})->name('booking');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', fn () => view('admin.dashboard'))
