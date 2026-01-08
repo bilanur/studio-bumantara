@@ -1,0 +1,201 @@
+/* ===============================
+   FIX NAVBAR FONT
+================================ */
+.claim-page header,
+.claim-page nav,
+.claim-page .logo,
+.claim-page .nav-links,
+.claim-page .nav-links a,
+.claim-page .nav-right,
+.claim-page .masuk-btn,
+.claim-page .masuk-btn-outline {
+    font-family: f !important;
+}
+
+/* ===============================
+   RESET AMAN
+================================ */
+.claim-page {
+    box-sizing: border-box;
+}
+.claim-page *:not(header):not(header *) {
+    box-sizing: border-box;
+}
+
+/* ===============================
+   PAGE WRAPPER
+================================ */
+.claim-page {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #2c5f7c 0%,
+        #1e4d6b 50%,
+        #34495e 100%
+    );
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    padding-top: 60px;
+    padding-bottom: 200px;
+}
+
+/* ===============================
+   MAIN CONTAINER
+================================ */
+.claim-page .container {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem 2rem 0;
+
+    background: transparent;
+}
+
+/* ===============================
+   TITLE
+================================ */
+.page-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    background: transparent;
+}
+
+.page-title h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #a29bfe;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ===============================
+   CARD
+================================ */
+.search-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* ===============================
+   FORM
+================================ */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    color: #2c3e50;
+    background: #f8f9fa;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.12);
+}
+
+.form-input::placeholder {
+    color: #bdc3c7;
+}
+
+/* ===============================
+   SUBMIT BUTTON
+================================ */
+.submit-btn {
+    width: 100%;
+    margin-top: 1rem;
+
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    color: #ffffff;
+    padding: 0.9rem;
+
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+
+    transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.45);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ===============================
+   CLOUD / WAVE (LEBIH BANYAK)
+================================ */
+.clouds {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,149.3C672,149,768,171,864,165.3C960,160,1056,128,1152,128C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+
+    z-index: 0;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .claim-page {
+        padding-top: 80px;
+        padding-bottom: 160px;
+    }
+
+    .claim-page .container {
+        padding: 1.5rem;
+    }
+
+    .search-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+}

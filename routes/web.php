@@ -3,25 +3,30 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', fn () => view('home'))->name('home');
+Route::get('/about', fn () => view('about'))->name('about');
+Route::get('/packages', fn () => view('packages'))->name('packages');
+Route::get('/claimphoto', fn () => view('claimphoto'))->name('claimphoto');
+Route::get('/gallery', fn () => view('gallery'))->name('gallery');
 
-Route::get('/', function () {
-    return view('about');
-});
-
-Route::get('/', function () {
-    return view('packages');
-});
-
-Route::get('/', function () {
+Route::get('/booking-1', function () {
     return view('booking1');
+})->name('booking1');
+
+Route::get('/booking-2', function () {
+    return view('booking2');
+})->name('booking2');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', fn () => view('admin.dashboard'))
+        ->name('admin.dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', fn () => view('dashboard'))
+        ->name('dashboard');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
