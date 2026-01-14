@@ -3,7 +3,6 @@
 @section('content')
 <h4>Data User</h4>
 
-<a href="/admin/user/create" class="btn btn-primary mb-3">Tambah User</a>
 
 <table class="table table-bordered">
     <thead class="table-dark">
@@ -25,7 +24,7 @@
                 <span class="badge bg-info">{{ $user->role }}</span>
             </td>
             <td>
-                <a href="/admin/user/{{ $user->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
+        
 
                 <form action="/admin/user/{{ $user->id }}" method="POST" class="d-inline">
                     @csrf

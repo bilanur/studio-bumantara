@@ -3,14 +3,19 @@
 @section('content')
 <h4>Tambah Paket</h4>
 
-<form method="POST" action="/admin/package">
+<form method="POST" action="{{ route('admin.package.store') }}">
     @csrf
 
+    <p>nama paket</p>
     <input class="form-control mb-2" name="name" placeholder="Nama Paket">
-    <textarea class="form-control mb-2" name="description" placeholder="Deskripsi"></textarea>
-    <input class="form-control mb-2" name="duration" placeholder="Durasi (menit)">
-    <input class="form-control mb-2" name="price" placeholder="Harga">
-    <input class="form-control mb-3" name="max_people" placeholder="Maksimal Orang">
+    <p>deskripsi</p>
+    <textarea class="form-control mb-2" name="description"></textarea>
+    <p>durasi</p>
+    <input type="number" class="form-control mb-2" name="duration">
+    <p>harga</p>
+    <input type="number" class="form-control mb-2" name="price">
+    <p>maksimal orang</p>
+    <input type="number" class="form-control mb-3" name="max_people">
 
     <button class="btn btn-success">Simpan</button>
 </form>

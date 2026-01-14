@@ -18,10 +18,16 @@
                 <li><a href="#" class="nav-link text-white">Dashboard</a></li>
                 <li><a href="/admin/booking" class="nav-link text-white">Data Booking</a></li>
                 <li><a href="/admin/user" class="nav-link text-white">Data User</a></li>
-                <li><a href="/admin/package" class="nav-link text-white">Paket & Harga</a></li>
+                <li>
+                    <a href="{{ route('admin.package.index') }}" class="nav-link text-white">
+                        Paket & Harga
+                    </a>
+                </li>
+
                 <li><a href="/admin/schedule" class="nav-link text-white">Jadwal Studio</a></li>
                 <li><a href="/admin/gallery" class="nav-link text-white">Galeri</a></li>
                 <li><a href="/admin/testimoni" class="nav-link text-white">Testimoni</a></li>
+                <li><a href="/admin/carousel" class="nav-link text-white">Carousel</a></li>
                 <li><a href="#" class="nav-link text-white">Laporan</a></li>
                 <li><a href="#" class="nav-link text-danger">Logout</a></li>
             </ul>

@@ -21,8 +21,18 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name'        => 'required',
+            'description' => 'required',
+            'duration'    => 'required|integer',
+            'price'       => 'required|integer',
+            'max_people'  => 'required|integer',
+        ]);
+
         Package::create($request->all());
-        return redirect('/admin/package')->with('success', 'Paket berhasil ditambahkan');
+
+        return redirect()->route('admin.package.index')
+            ->with('success', 'Paket berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -33,15 +43,26 @@ class PackageController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name'        => 'required',
+            'description' => 'required',
+            'duration'    => 'required|integer',
+            'price'       => 'required|integer',
+            'max_people'  => 'required|integer',
+        ]);
+
         $package = Package::findOrFail($id);
         $package->update($request->all());
 
-        return redirect('/admin/package')->with('success', 'Paket berhasil diupdate');
+        return redirect()->route('admin.package.index')
+            ->with('success', 'Paket berhasil diupdate');
     }
 
     public function destroy($id)
     {
         Package::destroy($id);
-        return redirect('/admin/package')->with('success', 'Paket berhasil dihapus');
+
+        return redirect()->route('admin.package.index')
+            ->with('success', 'Paket berhasil dihapus');
     }
 }
