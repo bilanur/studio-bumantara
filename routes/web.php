@@ -10,44 +10,34 @@ use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\TestimoniController;
 
-/*
-|--------------------------------------------------------------------------
-| PUBLIC PAGES
-|--------------------------------------------------------------------------
-*/
 Route::get('/', fn () => view('home'))->name('home');
 Route::get('/about', fn () => view('about'))->name('about');
 Route::get('/packages', fn () => view('packages'))->name('packages');
 Route::get('/gallery', fn () => view('gallery'))->name('gallery');
 Route::get('/claimphoto', fn () => view('claimphoto'))->name('claimphoto');
 
-/*
-|--------------------------------------------------------------------------
-| BOOKING
-|--------------------------------------------------------------------------
-*/
 Route::get('/booking-1', fn () => view('booking1'))->name('booking1');
 Route::get('/booking-2', fn () => view('booking2'))->name('booking2');
 Route::get('/booking-3', fn () => view('booking3'))->name('booking3');
+Route::get('/booking-4', fn () => view('booking4'))->name('booking4');
+Route::get('/testimoni', fn () => view('testimoni'))->name('testimoni');
+Route::get('/claim-2', fn () => view('claim2'))->name('claim2');
 
-/*
-|--------------------------------------------------------------------------
-| AUTH USER
-|--------------------------------------------------------------------------
-*/
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+   Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+
+
 });
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN (HARUS LOGIN + ADMIN)
-|--------------------------------------------------------------------------
-*/
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])

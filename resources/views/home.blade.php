@@ -1,11 +1,17 @@
+<!-- HOME.BLADE.PHP -->
 @php($title = 'Home | Bumantara Studio')
 
 @push('styles')
 <link href="{{ asset('assets/css/home.css') }}" rel="stylesheet">
 @endpush
 
+@push('scripts')
+<script src="{{ asset('assets/js/home.js') }}" defer></script>
+@endpush
+
 <x-layout>
 
+<!-- Hero Carousel -->
 <div class="hero-carousel">
     <!-- Slide 1 -->
     <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/slider2.jpeg') }}')">
@@ -61,172 +67,157 @@
     </div>
 </div>
 
-
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-content">
-            <h2>Bumantara Studio itu apa sih?</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-            <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p>
-            <button class="about-btn">Baca Selengkapnya</button>
-        </div>
-        <div class="about-images">
-            <div class="about-img"></div>
-            <div class="about-img"></div>
-            <div class="about-img"></div>
-            <div class="about-img"></div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="service">
-        <div class="services-container">
-            <h2>OUR SERVICE</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Wisuda</h3>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Prewedding</h3>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Wedding</h3>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Keluarga</h3>
-                    </div>
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="about-content">
+        <div class="about-badge">✨ Tentang Kami</div>
+        <h2>Bumantara Studio itu apa sih?</h2>
+        <p>Bumantara Studio adalah studio foto profesional yang menyediakan layanan foto pasangan, keluarga, wisuda, dan foto grup dengan konsep modern dan nyaman.</p>
+        <p>Kami hadir dengan peralatan terkini dan tim fotografer berpengalaman untuk mengabadikan setiap momen berharga Anda.</p>
+        
+        <a href="{{ route('about') }}" class="about-btn">Baca Selengkapnya</a>
+    </div>
+    
+    <div class="about-images">
+        <div class="image-grid">
+            <div class="about-img-card large">
+                <img src="{{ asset('assets/images/wisuda.jpeg') }}" alt="Foto Wisuda">
+                <div class="img-overlay">
+                    <span>Foto Wisuda</span>
                 </div>
             </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Company</h3>
-                    </div>
+            <div class="about-img-card">
+                <img src="{{ asset('assets/images/keluarga.jpeg') }}" alt="Foto Keluarga">
+                <div class="img-overlay">
+                    <span>Foto Keluarga</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Product</h3>
-                    </div>
+            </div>
+            <div class="about-img-card">
+                <img src="{{ asset('assets/images/couple.jpg') }}" alt="Foto Couple">
+                <div class="img-overlay">
+                    <span>Foto Couple</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Video Pembuatan</h3>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-overlay">
-                        <h3>Foto Portrait</h3>
-                    </div>
+            </div>
+            <div class="about-img-card wide">
+                <img src="{{ asset('assets/images/group.jpg') }}" alt="Foto Group">
+                <div class="img-overlay">
+                    <span>Foto Group</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <h2>TESTIMONI</h2>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="testimonial-img"></div>
-                <div class="testimonial-content">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                    <p class="testimonial-name">Ahmad Fauzi</p>
+<!-- Services Section -->
+<section class="services" id="service">
+    <div class="services-container">
+        <h2>Layanan Kami</h2>
+        <div class="services-grid">
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/wisuda.jpeg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Wisuda</h3>
                 </div>
             </div>
-            <div class="testimonial-card">
-                <div class="testimonial-img"></div>
-                <div class="testimonial-content">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
-                    <p class="testimonial-name">Siti Nurhaliza</p>
+            
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/keluarga.jpeg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Keluarga</h3>
                 </div>
             </div>
-            <div class="testimonial-card">
-                <div class="testimonial-img"></div>
-                <div class="testimonial-content">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-                    <p class="testimonial-name">Budi Santoso</p>
+            
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Bestie</h3>
                 </div>
             </div>
-            <div class="testimonial-card">
-                <div class="testimonial-img"></div>
-                <div class="testimonial-content">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis.</p>
-                    <p class="testimonial-name">Dewi Lestari</p>
+            
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/group.jpg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Group</h3>
                 </div>
             </div>
         </div>
-    </section>
 
-<script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.hero-slide');
-    const indicators = document.querySelectorAll('.indicator');
-    let autoSlideInterval;
+        <div class="services-grid">
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/profesional.jpg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Profesional</h3>
+                </div>
+            </div>
+            
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/couple.jpg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Couple</h3>
+                </div>
+            </div>
+            
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Prawedding</h3>
+                </div>
+            </div>
+            
+            <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
+                <div class="service-overlay">
+                    <h3>Foto Maternity</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-
-        slides[index].classList.add('active');
-        indicators[index].classList.add('active');
-    }
-
-    function changeSlide(direction) {
-        currentSlide += direction;
-
-        if (currentSlide < 0) {
-            currentSlide = slides.length - 1;
-        } else if (currentSlide >= slides.length) {
-            currentSlide = 0;
-        }
-
-        showSlide(currentSlide);
-        resetAutoSlide();
-    }
-
-    function goToSlide(index) {
-        currentSlide = index;
-        showSlide(currentSlide);
-        resetAutoSlide();
-    }
-
-    function autoSlide() {
-        currentSlide++;
-        if (currentSlide >= slides.length) {
-            currentSlide = 0;
-        }
-        showSlide(currentSlide);
-    }
-
-    function resetAutoSlide() {
-        clearInterval(autoSlideInterval);
-        autoSlideInterval = setInterval(autoSlide, 5000);
-    }
-
-    // Start auto slide
-    autoSlideInterval = setInterval(autoSlide, 5000);
-
-    // Pause on hover
-    const carousel = document.querySelector('.hero-carousel');
-    carousel.addEventListener('mouseenter', () => {
-        clearInterval(autoSlideInterval);
-    });
-
-    carousel.addEventListener('mouseleave', () => {
-        resetAutoSlide();
-    });
-</script>
+<!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+    <div class="testimonials-header">
+        <h2>APA KATA MEREKA?</h2>
+        <p>Kepuasan klien adalah prioritas utama kami</p>
+    </div>
+    
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <div class="testimonial-image">
+                <img src="{{ asset('assets/images/result1.jpg') }}" alt="Hasil Foto">
+            </div>
+            <div class="testimonial-content">
+                <h4 class="testimonial-name">Ahmad Fauzi</h4>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Pelayanan sangat memuaskan! Fotografer profesional dan hasil foto sangat berkualitas. Studio nya nyaman dan modern. Pasti balik lagi untuk sesi foto berikutnya!"</p>
+            </div>
+        </div>
+        
+        <div class="testimonial-card">
+            <div class="testimonial-image">
+                <img src="{{ asset('assets/images/result2.jpg') }}" alt="Hasil Foto">
+            </div>
+            <div class="testimonial-content">
+                <h4 class="testimonial-name">Siti Nurhaliza</h4>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Booking mudah, harga terjangkau, hasil foto keren banget! Tim nya ramah dan sabar ngarahin pose. Sangat recommended untuk foto wisuda!"</p>
+            </div>
+        </div>
+        
+        <div class="testimonial-card">
+            <div class="testimonial-image">
+                <img src="{{ asset('assets/images/result3.jpg') }}" alt="Hasil Foto">
+            </div>
+            <div class="testimonial-content">
+                <h4 class="testimonial-name">Budi Santoso</h4>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Foto keluarga kami jadi sangat berkesan. Suasana studio nyaman, fotografer sangat professional. Hasil editing cepat dan memuaskan. Worth it!"</p>
+            </div>
+        </div>
+        
+        <div class="testimonial-card">
+            <div class="testimonial-image">
+                <img src="{{ asset('assets/images/result4.jpg') }}" alt="Hasil Foto">
+            </div>
+            <div class="testimonial-content">
+                <h4 class="testimonial-name">Dewi Lestari</h4>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Best photo studio! Konsep foto couple kami dibuat sesuai request. Hasilnya lebih dari ekspektasi. Terima kasih Bumantara Studio!"</p>
+            </div>
+        </div>
+    </div>
+</section>
 
 </x-layout>

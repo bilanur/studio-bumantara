@@ -1,136 +1,116 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bumantara Studio - Riwayat Pesanan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="{{ asset('assets/css/booking3.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/js/booking3.js') }}"></script>
+@php($title = 'Booking3 | Bumantara Studio')
 
-</head>
-<body>
+@push('styles')
+<link href="{{ asset('assets/css/booking3.css') }}" rel="stylesheet">
+@endpush
 
-     <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <span>📷</span>
-                <span>bumantara</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#about">ABOUT US</a></li>
-                <li><a href="#package">PACKAGE</a></li>
-                <li><a href="#testimonials">CLAIM PHOTO</a></li>
-                <li><a href="#benefit">GALLERY</a></li>
-            </ul>
-            <div class="nav-right">
-                <a href="#" class="masuk-btn-outline">MASUK</a>
-                 <a href="#" class="masuk-btn">DAFTAR</a>
-            </div>
-        </nav>
-    </header>
+@push('scripts')
+<script src="{{ asset('assets/js/booking3.js') }}" defer></script>
+@endpush
+
+<x-layout>    
 
     <!-- Sidebar -->
     <div class="dashboard-layout">
-    <aside class="sidebar">
-        <ul class="sidebar-menu">
-            <li class="sidebar-item">
-                <span class="sidebar-icon">👤</span>
-                <span>Febri Harijadi</span>
-            </li>
-            <li class="sidebar-item active">
-                <span class="sidebar-icon">📋</span>
-                <span>Pesananan Saya</span>
-            </li>
-            <li class="sidebar-item">
-                <span class="sidebar-icon">✍️</span>
-                <span>Tulis Testimoni Anda</span>
-            </li>
-        </ul>
-    </aside>
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <span class="sidebar-icon">👤</span>
+                    <span>Febri Harijadi</span>
+                </li>
+                <li class="sidebar-item active">
+                    <span class="sidebar-icon">📋</span>
+                    <span>Pesananan Saya</span>
+                </li>
+                <li class="sidebar-item">
+                    <span class="sidebar-icon">✍️</span>
+                    {{-- <span>Tulis Testimoni Anda</span> --}}
+                    <span><a href="{{ route('testimoni') }}" button class="send-btn" class="booking-btn">
+                  Tulis Testimoni Anda
+                 </a></span>
+                </li>
+            </ul>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Page Title -->
-        <div class="page-title">
-            <h1>Riwayat Pesanan</h1>
-        </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Title -->
+            <div class="page-title">
+                <h1>Riwayat Pesanan</h1>
+            </div>
+
+            <!-- Orders Container -->
+            <div class="orders-container">
+                <!-- Order 1 -->
+                <div class="order-card">
+                    <img src="path/ke/foto-order1.jpg" alt="Order 1" class="order-image">
+                    <div class="order-info">
+                        <h3 class="order-title">Couple Self Photo Session - Studio 1</h3>
+                        <div class="order-details">
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Tanggal & Waktu:</span> 8 Desember 2025 | 14:00 WIB
+                            </div>
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Jumlah Orang:</span> 2 orang
+                            </div>
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Durasi:</span> 15 menit
+                            </div>
+                            <div class="order-price">Rp 80.000</div>
+                        </div>
+                    </div>
+                    <div class="order-status">
+                        <button class="status-btn pending">Menunggu Pembayaran</button>
+                    </div>
+                </div>
+
+                <!-- Order 2 -->
+                <div class="order-card">
+                    <img src="path/ke/foto-order2.jpg" alt="Order 2" class="order-image">
+                    <div class="order-info">
+                        <h3 class="order-title">Foto Keluarga - Studio 2</h3>
+                        <div class="order-details">
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Tanggal & Waktu:</span> 5 Desember 2025 | 10:00 WIB
+                            </div>
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Jumlah Orang:</span> 5 orang
+                            </div>
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Durasi:</span> 30 menit
+                            </div>
+                            <div class="order-price">Rp 150.000</div>
+                        </div>
+                    </div>
+                    <div class="order-status">
+                        <button class="status-btn completed">Selesai</button>
+                    </div>
+                </div>
+
+                <!-- Order 3 -->
+                <div class="order-card">
+                    <img src="path/ke/foto-order3.jpg" alt="Order 3" class="order-image">
+                    <div class="order-info">
+                        <h3 class="order-title">Foto Wisuda - Studio 1</h3>
+                        <div class="order-details">
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Tanggal & Waktu:</span> 10 Desember 2025 | 16:00 WIB
+                            </div>
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Jumlah Orang:</span> 1 orang
+                            </div>
+                            <div class="order-detail-item">
+                                <span class="order-detail-label">Durasi:</span> 20 menit
+                            </div>
+                            <div class="order-price">Rp 100.000</div>
+                        </div>
+                    </div>
+                    <div class="order-status">
+                        <button class="status-btn pending">Menunggu Pembayaran</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-        <!-- Orders Container -->
-        <div class="orders-container">
-            <!-- Order 1 -->
-            <div class="order-card">
-                <img src="path/ke/foto-order1.jpg" alt="Order 1" class="order-image">
-                <div class="order-info">
-                    <h3 class="order-title">Couple Self Photo Session - Studio 1</h3>
-                    <div class="order-details">
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Tanggal & Waktu:</span> 8 Desember 2025 | 14:00 WIB
-                        </div>
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Jumlah Orang:</span> 2 orang
-                        </div>
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Durasi:</span> 15 menit
-                        </div>
-                        <div class="order-price">Rp 80.000</div>
-                    </div>
-                </div>
-                <div class="order-status">
-                    <button class="status-btn pending">Menunggu Pembayaran</button>
-                </div>
-            </div>
-
-            <!-- Order 2 -->
-            <div class="order-card">
-                <img src="path/ke/foto-order2.jpg" alt="Order 2" class="order-image">
-                <div class="order-info">
-                    <h3 class="order-title">Foto Keluarga - Studio 2</h3>
-                    <div class="order-details">
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Tanggal & Waktu:</span> 5 Desember 2025 | 10:00 WIB
-                        </div>
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Jumlah Orang:</span> 5 orang
-                        </div>
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Durasi:</span> 30 menit
-                        </div>
-                        <div class="order-price">Rp 150.000</div>
-                    </div>
-                </div>
-                <div class="order-status">
-                    <button class="status-btn completed">Selesai</button>
-                </div>
-            </div>
-
-            <!-- Order 3 -->
-            <div class="order-card">
-                <img src="path/ke/foto-order3.jpg" alt="Order 3" class="order-image">
-                <div class="order-info">
-                    <h3 class="order-title">Foto Wisuda - Studio 1</h3>
-                    <div class="order-details">
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Tanggal & Waktu:</span> 10 Desember 2025 | 16:00 WIB
-                        </div>
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Jumlah Orang:</span> 1 orang
-                        </div>
-                        <div class="order-detail-item">
-                            <span class="order-detail-label">Durasi:</span> 20 menit
-                        </div>
-                        <div class="order-price">Rp 100.000</div>
-                    </div>
-                </div>
-                <div class="order-status">
-                    <button class="status-btn pending">Menunggu Pembayaran</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-</body>
-</html>
+</x-layout>
