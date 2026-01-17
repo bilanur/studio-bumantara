@@ -1,8 +1,11 @@
 <header>
     <nav>
         <div class="logo">
-            <span>📷</span>
-            <span>bumantara</span>
+            <img src="{{ asset('assets/images/logo.jpeg') }}" alt="Bumantara Studio">
+            <div class="logo-text-container">
+                <span class="logo-text-main">bumantara</span>
+                <span class="logo-text-sub">studio</span>
+            </div>
         </div>
 
         <ul class="nav-links">
@@ -34,11 +37,13 @@
                     </div>
 
                     <div class="profile-dropdown">
-                        @if(Auth::user()->role === 'admin')
+                        {{-- @if(Auth::user()->role === 'admin')
                             <a href="{{ route('dashboard') }}">Dashboard</a>
-                        @endif
+                        @endif --}}
 
-                        <a href="{{ route('profile.edit') }}">Profile</a>
+                        <a href="{{ route('profile.show') }}">Profile</a>
+
+                        <a href="{{ route('booking3') }}">Pesanan</a>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

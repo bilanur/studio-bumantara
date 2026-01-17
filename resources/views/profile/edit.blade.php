@@ -1,29 +1,52 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.profile')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('content')
+<div class="profile-card">
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+    <h2>EDIT INFORMASI AKUN</h2>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
+    <form method="POST" action="{{ route('profile.update') }}">
+        @csrf
+        @method('PATCH')
+
+        <label>Nama Lengkap</label>
+        <input type="text" name="name" value="{{ $user->name }}">
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ $user->email }}">
+
+        <div class="form-group password-group">
+    <label>Password</label>
+    <div class="password-wrapper">
+        <input 
+            type="password" 
+            name="password" 
+            id="password"
+            placeholder="Kosongkan jika tidak ingin mengubah password"
+        >
+        <span class="toggle-password" onclick="togglePassword()">👁️</span>
     </div>
-</x-app-layout>
+</div>
+
+        <label>No Telepon</label>
+        <input type="text" name="no_hp" value="{{ $user->no_hp }}">
+
+        <div class="form-actions">
+            <a href="{{ route('profile.show') }}" class="btn">Batal</a>
+            <button type="submit" class="btn primary">Simpan</button>
+        </div>
+    </form>
+
+    <script>
+function togglePassword() {
+    const passwordField = document.getElementById('password');
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+    } else {
+        passwordField.type = 'password';
+    }
+}
+</script>
+
+</div>
+@endsection

@@ -1,197 +1,193 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bumantara Studio - Checkout</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="{{ asset('assets/css/booking2.css') }}" rel="stylesheet">
+@php($title = 'Booking3 | Bumantara Studio')
 
-</head>
-<body>
+@push('styles')
+<link href="{{ asset('assets/css/booking2.css') }}" rel="stylesheet">
+@endpush
 
-     <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <span>📷</span>
-                <span>bumantara</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#about">ABOUT US</a></li>
-                <li><a href="#package">PACKAGE</a></li>
-                <li><a href="#testimonials">CLAIM PHOTO</a></li>
-                <li><a href="#benefit">GALLERY</a></li>
-            </ul>
-            <div class="nav-right">
-                <a href="#" class="masuk-btn-outline">MASUK</a>
-                 <a href="#" class="masuk-btn">DAFTAR</a>
-            </div>
-        </nav>
-    </header>
+@push('scripts')
+<script src="{{ asset('assets/js/booking3.js') }}" defer></script>
+@endpush
 
-    <!-- Info Banner -->
-    <div class="info-banner">
-        <span class="info-banner-text">Hi sudah hadiyadnya! berakhir. Pastikan pembayaran dari Anda dilakukan dengan benar!</span>
+<x-layout>
+    
+  <div class="container">
+        <div class="checkout-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Detail Paket -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h2 class="card-title">Detail Paket</h2>
+                    </div>
+                    <div class="order-item">
+                        <img src="https://via.placeholder.com/90x90/e8f0f7/2a4962?text=Photo" alt="Order" class="order-image">
+                        <div class="order-details">
+                            <h3>Foto Keluarga</h3>
+                            <div class="order-meta">
+                                <div class="order-meta-item">
+                                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: #64748b; stroke-width: 2; fill: none;">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    19 Desember 2025 | 11:30
+                                </div>
+                                <div class="order-meta-item">
+                                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: #64748b; stroke-width: 2; fill: none;">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Harga: Rp 80.000
+                                </div>
+                                <div class="order-meta-item">
+                                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: #64748b; stroke-width: 2; fill: none;">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Durasi: 15 menit
+                                </div>
+                                <div class="order-meta-item">
+                                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: #64748b; stroke-width: 2; fill: none;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    Extra people: 1 - 20.000
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Customer -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h2 class="card-title">Detail Customer</h2>
+                    </div>
+                    <p class="form-subtitle">Masukkan data lengkap kamu</p>
+                    
+                    <div class="form-group">
+    <label class="form-label">Nama Lengkap</label>
+    <input type="text" class="form-input" placeholder="Masukkan nama lengkap">
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label class="form-label">Nomor Telepon*</label>
+        <input type="tel" class="form-input" placeholder="821-1234-5678">
     </div>
 
-    <!-- Main Container -->
-    <div class="checkout-container">
-        <!-- Left Column -->
-        <div class="left-column">
-            <!-- Package Detail -->
-            <div class="card">
-                <h2 class="card-title">Detail Paket</h2>
-                <div class="package-detail">
-                    <img src="path/ke/couple-photo.jpg" alt="Package" class="package-image">
-                    <div class="package-info">
-                        <h3 class="package-name">Couple Self Photo Session - Studio 1</h3>
-                        <ul class="package-features">
-                            <li>14 desember</li>
-                            <li>Harga : Rp 80.000</li>
-                            <li>Durasi : 15 menit</li>
-                            <li>+ Extra people(s) : 000000</li>
-                        </ul>
+    <div class="form-group">
+        <label class="form-label">Email*</label>
+        <input type="email" class="form-input" placeholder="email@example.com">
+    </div>
+</div>
+
+                    <div class="form-group">
+                        <label class="form-label">Apakah boleh foto Kakak untuk Minkit upload di sosial media?*</label>
+                        <select class="form-input form-select">
+                            <option>Pilih opsi</option>
+                            <option>Boleh</option>
+                            <option>Tidak boleh</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
-            <!-- Customer Detail -->
-            <div class="card">
-                <h2 class="card-title">Detail Customer</h2>
-                <p class="form-sublabel">Masukkan data lengkap kamu</p>
-                
-                <div class="form-section">
-                    <label class="form-label">Nama</label>
-                    <input type="text" class="form-input" placeholder="Nama lengkap" value="Nama lengkap">
-                </div>
-
-                <div class="form-section">
-                    <label class="form-label">Nomor Telepon*</label>
-                    <input type="tel" class="form-input" placeholder="62+-1234-5678" value="62+-1234-5678">
-                </div>
-
-                <div class="form-section">
-                    <label class="form-label">Email*</label>
-                    <input type="email" class="form-input" placeholder="hello@gmail.com" value="hello@gmail.com">
-                </div>
-
-                <div class="form-section">
-                    <label class="form-label">Apakah boleh foto kalian untuk iklan upload di sosial media?*</label>
-                    <input type="text" class="form-input" placeholder="Tidak atau iya" value="Tidak atau iya">
-                </div>
-            </div>
-
-            <!-- Payment Detail -->
-            <div class="card">
-                <h2 class="card-title">Detail Pembayaran</h2>
-                
-                <div class="payment-table">
-                    <div class="payment-row header">
-                        <span>Metode Pembayaran</span>
-                        <span>QRIS</span>
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Payment Method Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                        </div>
+                        <h2 class="card-title">Pilih Metode Pembayaran</h2>
                     </div>
-                    <div class="payment-row">
-                        <span class="payment-item">Couple Self Photo Session - Studio 1</span>
-                        <span class="payment-price">Rp 80.000</span>
-                    </div>
-                    <div class="payment-row">
-                        <span class="payment-item">Couple Self Photo Session - Studio 1</span>
-                        <span class="payment-price">Rp 80.000</span>
-                    </div>
-                    <div class="payment-row">
-                        <span class="payment-item">Add ons</span>
-                        <span class="payment-price">Rp 0</span>
+                    
+                    <div class="payment-grid">
+                        <div class="payment-option selected">
+                            <span class="payment-name">QRIS</span>
+                        </div>
+                        <div class="payment-option">
+                            <span class="payment-name">BCA</span>
+                        </div>
+                        <div class="payment-option">
+                            <span class="payment-name">BNI</span>
+                        </div>
+                        <div class="payment-option">
+                            <span class="payment-name">DANA</span>
+                        </div>
+                        <div class="payment-option">
+                            <span class="payment-name">BANK BRI</span>
+                        </div>
+                        <div class="payment-option">
+                            <span class="payment-name">Mandiri</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="promo-input-group">
-                    <input type="text" class="form-input promo-input" placeholder="Kode Promo">
-                    <button class="apply-btn">Apply</button>
-                </div>
-                <p class="promo-note">* coupon + Total Dapat Berubah</p>
+                <!-- Summary Card -->
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <h2 class="summary-title">Ringkasan Pembayaran</h2>
+                    </div>
 
-                <div class="total-row">
-                    <span class="total-label">Total</span>
-                    <span class="total-price">Rp 80.000</span>
-                </div>
+                    <!-- Summary Items -->
+                    <div class="summary-items">
+                        <div class="summary-item">
+                            <span class="summary-label">Couple Self Photo Session</span>
+                            <span class="summary-value">Rp 80.000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Extra People (1 orang)</span>
+                            <span class="summary-value">Rp 20.000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Add-ons</span>
+                            <span class="summary-value">Rp 0</span>
+                        </div>
+                    </div>
 
-                <p class="checkout-note">* Pastikan data sudah benar sebelum anda proses pembayaran</p>
+                    <!-- Promo -->
+                    <div class="promo-section">
+                        <input type="text" class="form-input promo-input" placeholder="Masukkan kode promo">
+                        <button class="apply-btn">Apply</button>
+                    </div>
 
-                <button class="pay-btn">Bayar</button>
-            </div>
-        </div>
+                    <!-- Total -->
+                    <div class="total-section">
+                        <div class="total-row">
+                            <span class="total-label">Total Pembayaran</span>
+                            <span class="total-amount">Rp 100.000</span>
+                        </div>
 
-        <!-- Right Column -->
-        <div class="right-column">
-            <!-- Payment Methods -->
-            <div class="payment-methods">
-                <h2 class="section-title">Pilih metode pembayaran</h2>
-                <div class="payment-grid">
-                    <div class="payment-option">
-                        <span style="font-weight: 700; color: #2c3e50;">Virtual Account</span>
+                        <a href="{{ route('booking4') }}" class="payment-btn">Selanjutnya</a>
+                        <p class="payment-note">* Pastikan data sudah benar sebelum melanjutkan pembayaran</p>
+                        <p class="cancel-note">
+                            <a href="#" class="cancel-link">Cancel</a> = Tidak Dapat Refund
+                        </p>
                     </div>
-                    <div class="payment-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/QRIS_logo.svg/2560px-QRIS_logo.svg.png" alt="QRIS">
-                    </div>
-                    <div class="payment-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA">
-                    </div>
-                    <div class="payment-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/2560px-BNI_logo.svg.png" alt="BNI">
-                    </div>
-                    <div class="payment-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/DANA_logo.svg/2560px-DANA_logo.svg.png" alt="DANA">
-                    </div>
-                    <div class="payment-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana.png" alt="Bank BRI">
-                    </div>
-                    <div class="payment-option">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Mandiri_logo_2016.svg" alt="Mandiri">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Info -->
-            <div class="payment-info">
-                <h2 class="section-title">Informasi Pembayaran</h2>
-                <div class="info-item">
-                    <span class="info-label">Status</span>
-                    <span class="info-value status-pending">pending</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">No VA</span>
-                    <div class="info-value-with-btn">
-                        <span class="info-value">00000000000000000000</span>
-                        <button class="submit-btn">Salin</button>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Total Pembayaran</span>
-                    <span class="info-value">200.000</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">no transaksi</span>
-                    <span class="info-value">8812809012008</span>
-                </div>
-            </div>
-
-            <!-- Proof Upload -->
-            <div class="proof-upload">
-                <h2 class="section-title">Kirim bukti pembayaran</h2>
-                <div class="upload-area">
-                    <p class="upload-text">seret & letakkan file di sini ...</p>
-                </div>
-                <div class="upload-buttons">
-                    <button class="upload-btn">
-                        <span>⬇</span>
-                        <span>Tambahkan file</span>
-                    </button>
-                    <button class="send-btn">Kirim</button>
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</x-layout>    

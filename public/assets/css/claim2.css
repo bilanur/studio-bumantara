@@ -1,0 +1,402 @@
+/* ===============================
+   FIX NAVBAR FONT
+================================ */
+.claim-result-page header,
+.claim-result-page nav,
+.claim-result-page .logo,
+.claim-result-page .nav-links,
+.claim-result-page .nav-links a,
+.claim-result-page .nav-right,
+.claim-result-page .masuk-btn,
+.claim-result-page .masuk-btn-outline {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* ===============================
+   RESET AMAN
+================================ */
+.claim-result-page {
+    box-sizing: border-box;
+}
+.claim-result-page *:not(header):not(header *) {
+    box-sizing: border-box;
+}
+
+/* ===============================
+   PAGE WRAPPER
+================================ */
+.claim-result-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c5f7c 0%, #1e4d6b 50%, #34495e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+    padding: 100px 20px 220px;
+}
+
+/* ===============================
+   MAIN CONTAINER
+================================ */
+.claim-result-page .container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* ===============================
+   TITLE (NO WHITE BOX)
+================================ */
+.page-title {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    background: transparent;
+}
+
+.page-title h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background: transparent;
+}
+
+/* ===============================
+   TRANSACTION CARD (REDESIGN)
+================================ */
+.transaction-card {
+    background: white;
+    border-radius: 16px;
+    padding: 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2c5f7c 0%, #1e4d6b 100%);
+    padding: 1.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    margin: 0;
+}
+
+.card-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.status-badge {
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-success {
+    background: #4caf50;
+    color: white;
+}
+
+.status-pending {
+    background: #ff9800;
+    color: white;
+}
+
+/* ===============================
+   INFO ROWS (REDESIGN)
+================================ */
+.card-body {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #2c5f7c;
+    border-bottom: none;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row .label {
+    font-size: 0.75rem;
+    color: #7f8c8d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-row .value {
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+    text-align: left;
+}
+
+.info-row .value.price {
+    color: #2c5f7c;
+    font-size: 1.3rem;
+}
+
+/* ===============================
+   GOOGLE DRIVE CARD
+================================ */
+.drive-card {
+    background: white;
+    border-radius: 14px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+/* ===============================
+   DRIVE HEADER
+================================ */
+.drive-header {
+    background: linear-gradient(135deg, #2c5f7c 0%, #1e4d6b 100%);
+    padding: 1.5rem 2rem;
+}
+
+.drive-icon-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.drive-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.drive-icon svg {
+    color: white;
+}
+
+.drive-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.drive-header .subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0.2rem 0 0;
+}
+
+/* ===============================
+   DRIVE BODY
+================================ */
+.drive-body {
+    padding: 2rem;
+}
+
+/* ===============================
+   EXPIRY BOX
+================================ */
+.expiry-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: #f8f9fa;
+    border-left: 4px solid #2c5f7c;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.expiry-icon {
+    width: 40px;
+    height: 40px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.expiry-icon svg {
+    color: #2c5f7c;
+}
+
+.expiry-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.expiry-text strong {
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.expiry-text span {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+}
+
+/* ===============================
+   DRIVE BUTTON
+================================ */
+.btn-drive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    background: linear-gradient(135deg, #2c5f7c 0%, #1e4d6b 100%);
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(44, 95, 124, 0.3);
+    margin-bottom: 1.5rem;
+}
+
+.btn-drive:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(44, 95, 124, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.btn-drive:active {
+    transform: translateY(0);
+}
+
+/* ===============================
+   INFO NOTE
+================================ */
+.info-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    background: #fff8e1;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+}
+
+.info-note svg {
+    color: #f57c00;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.info-note p {
+    font-size: 0.85rem;
+    color: #e65100;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ===============================
+   WAVE
+================================ */
+.clouds {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none"><path fill="%23ffffff" fill-opacity="1" d="M0,160 Q360,100 720,160 T1440,160 L1440,320 L0,320 Z"></path></svg>');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 0;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .claim-result-page {
+        padding: 60px 15px 180px;
+    }
+
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .transaction-card,
+    .drive-card {
+        border-radius: 12px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding: 1.5rem;
+    }
+
+    .card-body {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .drive-header {
+        padding: 1.2rem 1.5rem;
+    }
+
+    .drive-body {
+        padding: 1.5rem;
+    }
+
+    .expiry-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-drive {
+        font-size: 0.95rem;
+        padding: 0.9rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title h1 {
+        font-size: 1.3rem;
+    }
+
+    .info-row {
+        padding: 1rem;
+    }
+
+    .card-header h2 {
+        font-size: 1.1rem;
+    }
+}

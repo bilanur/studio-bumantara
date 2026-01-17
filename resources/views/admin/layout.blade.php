@@ -29,7 +29,16 @@
                 <li><a href="/admin/testimoni" class="nav-link text-white">Testimoni</a></li>
                 <li><a href="/admin/carousel" class="nav-link text-white">Carousel</a></li>
                 <li><a href="#" class="nav-link text-white">Laporan</a></li>
-                <li><a href="#" class="nav-link text-danger">Logout</a></li>
+                <li>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit"
+            class="nav-link text-danger bg-transparent border-0 text-start w-100">
+            Logout
+        </button>
+    </form>
+</li>
+
             </ul>
         </div>
 
