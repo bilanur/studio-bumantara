@@ -6,19 +6,24 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\PackagePageController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Admin\CarouselController;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC PAGES (PAKAI PUNYAMU)
 |--------------------------------------------------------------------------
 */
-Route::get('/', fn () => view('home'))->name('home');
-Route::get('/about', fn () => view('about'))->name('about');
-Route::get('/packages', fn () => view('packages'))->name('packages');
+// Route::get('/', fn () => view('home'))->name('home');
+// Route::get('/about', fn () => view('about'))->name('about');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+// Route::get('/packages', fn () => view('packages'))->name('packages');
+Route::get('/packages', [PackagePageController::class, 'index'])->name('packages');
 Route::get('/gallery', fn () => view('gallery'))->name('gallery');
 Route::get('/claimphoto', fn () => view('claimphoto'))->name('claimphoto');
 Route::get('/claim-2', fn () => view('claim2'))->name('claim2');
@@ -68,12 +73,26 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
     // PACKAGE
-    Route::get('/package', [PackageController::class, 'index']);
-    Route::get('/package/create', [PackageController::class, 'create']);
-    Route::post('/package', [PackageController::class, 'store']);
-    Route::get('/package/{id}/edit', [PackageController::class, 'edit']);
-    Route::put('/package/{id}', [PackageController::class, 'update']);
-    Route::delete('/package/{id}', [PackageController::class, 'destroy']);
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+
+    Route::get('/package', [PackageController::class, 'index'])
+        ->name('admin.package.index');
+
+    Route::get('/package/create', [PackageController::class, 'create'])
+        ->name('admin.package.create');
+
+    Route::post('/package', [PackageController::class, 'store'])
+        ->name('admin.package.store');
+
+    Route::get('/package/{id}/edit', [PackageController::class, 'edit'])
+        ->name('admin.package.edit');
+
+    Route::put('/package/{id}', [PackageController::class, 'update'])
+        ->name('admin.package.update');
+
+    Route::delete('/package/{id}', [PackageController::class, 'destroy'])
+        ->name('admin.package.destroy');
+});
 
     // SCHEDULE
     Route::get('/schedule', [ScheduleController::class, 'index']);
