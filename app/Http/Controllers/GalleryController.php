@@ -7,59 +7,33 @@ use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $category = $request->query('category');
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $galleries = Gallery::where('is_public', 1)
+            ->when($category, function ($query) use ($category) {
+                $query->where('category', $category);
+            })
+            ->latest()
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $categories = [
+            'wisuda',
+            'keluarga',
+            'bestie',
+            'group',
+            'professional',
+            'bisnis',
+            'couple',
+            'prewedding',
+            'maternity',
+        ];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Gallery $gallery)
-    {
-        //
+        return view('gallery', compact(
+            'galleries',
+            'categories',
+            'category'
+        ));
     }
 }

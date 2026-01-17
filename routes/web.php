@@ -2,40 +2,43 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+
+// PUBLIC CONTROLLER
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\PackagePageController;
+use App\Http\Controllers\GalleryController;
+
+// ADMIN CONTROLLER
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ScheduleController;
-use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
+use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Admin\CarouselController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\Admin\PackageController;
-use App\Http\Controllers\PackagePageController;
-
-
 
 /*
 |--------------------------------------------------------------------------
-| PUBLIC PAGES
+| PUBLIC PAGES (USER)
 |--------------------------------------------------------------------------
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/packages', [PackagePageController::class, 'index'])->name('packages');
-Route::get('/gallery', fn () => view('gallery'))->name('gallery');
-Route::get('/claimphoto', fn () => view('claimphoto'))->name('claimphoto');
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+Route::get('/claimphoto', fn() => view('claimphoto'))->name('claimphoto');
 
 /*
 |--------------------------------------------------------------------------
-| BOOKING
+| BOOKING (PUBLIC)
 |--------------------------------------------------------------------------
 */
-Route::get('/booking-1', fn () => view('booking1'))->name('booking1');
-Route::get('/booking-2', fn () => view('booking2'))->name('booking2');
-Route::get('/booking-3', fn () => view('booking3'))->name('booking3');
+Route::get('/booking-1', fn() => view('booking1'))->name('booking1');
+Route::get('/booking-2', fn() => view('booking2'))->name('booking2');
+Route::get('/booking-3', fn() => view('booking3'))->name('booking3');
 
 /*
 |--------------------------------------------------------------------------
@@ -43,80 +46,49 @@ Route::get('/booking-3', fn () => view('booking3'))->name('booking3');
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
-    
+
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN AREA
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        // DASHBOARD
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // BOOKING
+        Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
+
+        // USER
+        Route::resource('user', UserController::class)->except(['show']);
+
+        // PACKAGE
+        Route::resource('package', PackageController::class)->except(['show']);
+
+        // SCHEDULE
+        Route::resource('schedule', ScheduleController::class)->except(['show']);
+
+        // GALLERY ADMIN
+        Route::resource('gallery', AdminGalleryController::class)->except(['show']);
+
+        // TESTIMONI
+        Route::resource('testimoni', TestimoniController::class)->except(['show']);
+
+        // CAROUSEL
+        Route::get('/carousel', [CarouselController::class, 'index'])->name('carousel.index');
+        Route::post('/carousel', [CarouselController::class, 'store'])->name('carousel.store');
+        Route::delete('/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
     });
-    
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN (HARUS LOGIN + ADMIN)
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-        
-        Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
-        
-        Route::get('/booking', [BookingController::class, 'index']);
-        
-    Route::get('/user', [UserController::class, 'index']);
-    Route::get('/user/create', [UserController::class, 'create']);
-    Route::post('/user', [UserController::class, 'store']);
-    Route::get('/user/{id}/edit', [UserController::class, 'edit']);
-    Route::put('/user/{id}', [UserController::class, 'update']);
-    Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
-
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-
-    Route::get('/package', [PackageController::class, 'index'])
-        ->name('admin.package.index');
-
-    Route::get('/package/create', [PackageController::class, 'create'])
-        ->name('admin.package.create');
-
-    Route::post('/package', [PackageController::class, 'store'])
-        ->name('admin.package.store');
-
-    Route::get('/package/{id}/edit', [PackageController::class, 'edit'])
-        ->name('admin.package.edit');
-
-    Route::put('/package/{id}', [PackageController::class, 'update'])
-        ->name('admin.package.update');
-
-    Route::delete('/package/{id}', [PackageController::class, 'destroy'])
-        ->name('admin.package.destroy');
-});
-
-
-Route::get('/schedule', [ScheduleController::class, 'index']);
-    Route::get('/schedule/create', [ScheduleController::class, 'create']);
-    Route::post('/schedule', [ScheduleController::class, 'store']);
-    Route::get('/schedule/{id}/edit', [ScheduleController::class, 'edit']);
-    Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
-    Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy']);
-
-    Route::get('/gallery', [GalleryController::class, 'index']);
-    Route::get('/gallery/create', [GalleryController::class, 'create']);
-    Route::post('/gallery', [GalleryController::class, 'store']);
-    Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit']);
-    Route::put('/gallery/{id}', [GalleryController::class, 'update']);
-    Route::delete('/gallery/{id}', [GalleryController::class, 'destroy']);
-
-    Route::get('/testimoni', [TestimoniController::class, 'index']);
-    Route::post('/testimoni', [TestimoniController::class, 'store']);
-    Route::get('/testimoni/{id}/edit', [TestimoniController::class, 'edit']);
-    Route::put('/testimoni/{id}', [TestimoniController::class, 'update']);
-    Route::delete('/testimoni/{id}', [TestimoniController::class, 'destroy']);
-});
-
-
-Route::get('/admin/carousel', [CarouselController::class, 'index']);
-Route::post('/admin/carousel', [CarouselController::class, 'store']);
-Route::delete('/admin/carousel/{id}', [CarouselController::class, 'destroy']);
-
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

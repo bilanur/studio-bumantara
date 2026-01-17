@@ -7,7 +7,18 @@
     @csrf
 
     <input class="form-control mb-2" name="title" placeholder="Judul Foto">
-    <input class="form-control mb-2" name="category" placeholder="Kategori (opsional)">
+    <select class="form-control mb-2" name="category">
+        <option value="">-- Pilih Kategori --</option>
+        <option value="wisuda">Wisuda</option>
+        <option value="keluarga">Keluarga</option>
+        <option value="BESTie">BESTie</option>
+        <option value="group">Group</option>
+        <option value="professional">Professional</option>
+        <option value="couple">Couple</option>
+        <option value="prewedding">Prewedding</option>
+        <option value="maternity">Maternity</option>
+    </select>
+
     <input type="file" class="form-control mb-2" name="image">
 
     <div class="form-check mb-3">

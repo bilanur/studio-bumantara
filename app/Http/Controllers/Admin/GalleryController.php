@@ -22,15 +22,23 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
-        $image = $request->file('image')->store('gallery', 'public');
-
-        Gallery::create([
-            'title' => $request->title,
-            'image' => $image,
-            'category' => $request->category,
-            'is_public' => $request->has('is_public') ? 1 : 0,
+        // ✅ VALIDASI
+        $request->validate([
+            'title' => 'required',
+            'image' => 'required|image',
+            'category' => 'nullable|in:wisuda,keluarga,BESTie,group,professional,couple,prewedding,maternity'
         ]);
 
+        // ✅ UPLOAD IMAGE
+        $image = $request->file('image')->store('gallery', 'public');
+
+        // ✅ SIMPAN DATA
+        Gallery::create([
+            'title'     => $request->title,
+            'image'     => $image,
+            'category'  => $request->category,
+            'is_public' => $request->has('is_public') ? 1 : 0,
+        ]);
 
         return redirect('/admin/gallery')->with('success', 'Foto berhasil ditambahkan');
     }
@@ -45,11 +53,20 @@ class GalleryController extends Controller
     {
         $gallery = Gallery::findOrFail($id);
 
-        $data = $request->only(['title', 'category']);
-        $data['is_public'] = $request->has('is_public') ? 1 : 0;
+        // ✅ VALIDASI
+        $request->validate([
+            'title' => 'required',
+            'category' => 'nullable|in:wisuda,keluarga,BESTie,group,professional,couple,prewedding,maternity'
+        ]);
 
+        $data = [
+            'title'     => $request->title,
+            'category'  => $request->category,
+            'is_public' => $request->has('is_public') ? 1 : 0,
+        ];
 
-        if ($request->image) {
+        // ✅ JIKA GANTI FOTO
+        if ($request->hasFile('image')) {
             Storage::disk('public')->delete($gallery->image);
             $data['image'] = $request->file('image')->store('gallery', 'public');
         }
