@@ -13,27 +13,15 @@ use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Admin\CarouselController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
-/*
-|--------------------------------------------------------------------------
-| PUBLIC PAGES (PAKAI PUNYAMU)
-|--------------------------------------------------------------------------
-*/
-// Route::get('/', fn () => view('home'))->name('home');
-// Route::get('/about', fn () => view('about'))->name('about');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-// Route::get('/packages', fn () => view('packages'))->name('packages');
 Route::get('/packages', [PackagePageController::class, 'index'])->name('packages');
 Route::get('/gallery', fn () => view('gallery'))->name('gallery');
 Route::get('/claimphoto', fn () => view('claimphoto'))->name('claimphoto');
 Route::get('/claim-2', fn () => view('claim2'))->name('claim2');
 Route::get('/testimoni', fn () => view('testimoni'))->name('testimoni');
 
-/*
-|--------------------------------------------------------------------------
-| BOOKING
-|--------------------------------------------------------------------------
-*/
 Route::get('/booking-1', fn () => view('booking1'))->name('booking1');
 Route::get('/booking-2', fn () => view('booking2'))->name('booking2');
 Route::get('/booking-3', fn () => view('booking3'))->name('booking3');
