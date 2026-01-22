@@ -11,72 +11,103 @@
 <x-layout>
 
     <div class="dashboard-layout">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <ul class="sidebar-menu">
-                <li class="sidebar-item">
+
+                <!-- USERNAME (BUKAN LINK) -->
+                <li class="sidebar-item user-item">
                     <span class="sidebar-icon">👤</span>
                     <span>Febri Harijadi</span>
                 </li>
-                <li class="sidebar-item">
+
+                <!-- PESANAN SAYA -->
+                <li class="sidebar-item {{ request()->routeIs('booking3') ? 'active' : '' }}">
                     <span class="sidebar-icon">📋</span>
-                    <span>Pesananan Saya</span>
+                    <a href="{{ route('booking3') }}" class="sidebar-link">
+                        Pesanan Saya
+                    </a>
                 </li>
-                <li class="sidebar-item active">
+
+                <li class="sidebar-item {{ request()->routeIs('testimoni') ? 'active' : '' }}">
                     <span class="sidebar-icon">✍️</span>
-                    <span>Tulis Testimoni Anda</span>
+                    <a href="{{ route('testimoni') }}" class="sidebar-link">
+                        Tulis Testimoni Anda
+                    </a>
                 </li>
+
+
             </ul>
         </aside>
 
-        <!-- Main Content -->
+
         <main class="main-content">
-            <!-- Page Title -->
             <div class="page-title">
                 <h1>Tulis Testimoni Anda</h1>
             </div>
 
-            <!-- Form Container -->
             <div class="form-container">
-                <form id="testimonialForm">
-                    <!-- Nama -->
-                    <div class="form-group">
-                        <label class="form-label">Nama</label>
-                        <input type="text" class="form-input" placeholder="Masukkan nama Anda" required>
-                    </div>
+
+                @if(session('success'))
+                <script>
+                    alert("{{ session('success') }}");
+                </script>
+                @endif
+
+                <form id="testimonialForm"
+                    action="{{ route('testimoni.store') }}"
+                    method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
 
                     <!-- Komentar -->
                     <div class="form-group">
                         <label class="form-label">Komentar</label>
-                        <textarea class="form-input form-textarea" placeholder="Tulis komentar Anda..." required></textarea>
+                        <textarea name="comment"
+                            class="form-input form-textarea"
+                            required></textarea>
                     </div>
 
                     <!-- Rating -->
                     <div class="rating-container">
                         <label class="rating-label">Rating</label>
                         <div class="rating-stars">
-                            <span class="star" data-rating="1">★</span>
-                            <span class="star" data-rating="2">★</span>
-                            <span class="star" data-rating="3">★</span>
-                            <span class="star" data-rating="4">★</span>
-                            <span class="star" data-rating="5">★</span>
+                            @for($i = 1; $i <= 5; $i++)
+                                <span class="star" data-rating="{{ $i }}">★</span>
+                                @endfor
                         </div>
-                        <p class="rating-hint">(klik bintang)</p>
+                        <input type="hidden" name="rating" id="ratingInput">
                     </div>
 
-                    <!-- Upload Area -->
-                    <div class="upload-area" id="uploadArea">
-                        <p class="upload-text">seret & letakkan file di sini ...</p>
+                    <!-- Upload Gambar -->
+                    <div class="form-group">
+                        <label class="form-label">Upload Gambar (Opsional)</label>
+
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <button type="button"
+                                class="upload-btn"
+                                id="uploadBtn">
+                                Tambahkan file
+                            </button>
+
+                            <span id="fileName"
+                                style="font-size:14px; color:#555;">
+                                Belum ada file
+                            </span>
+                        </div>
+
+                        <input type="file"
+                            name="image"
+                            id="fileInput"
+                            hidden>
                     </div>
 
-                    <!-- Buttons -->
+                    <!-- Submit -->
                     <div class="form-buttons">
-                        <button type="button" class="upload-btn" id="uploadBtn">
-                            <span>📤</span>
-                            <span>Tambahkan file</span>
+                        <button type="submit" class="submit-btn">
+                            Kirim
                         </button>
-                        <button type="submit" class="submit-btn">Kirim</button>
                     </div>
+
                 </form>
             </div>
         </main>

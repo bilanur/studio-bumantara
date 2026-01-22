@@ -1,94 +1,82 @@
-        // Sidebar menu interaction
-        const sidebarItems = document.querySelectorAll('.sidebar-item');
-        
-        sidebarItems.forEach(item => {
-            item.addEventListener('click', function() {
-                sidebarItems.forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
+document.addEventListener("DOMContentLoaded", function () {
+    /* ======================
+       SIDEBAR INTERACTION
+    ====================== */
+    const sidebarItems = document.querySelectorAll(".sidebar-item");
+
+    sidebarItems.forEach((item) => {
+        // abaikan user (username)
+        if (item.classList.contains("user-item")) return;
+
+        item.addEventListener("click", function () {
+            sidebarItems.forEach((i) => i.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+
+    /* ======================
+       RATING BINTANG
+    ====================== */
+    const stars = document.querySelectorAll(".star");
+    const ratingInput = document.getElementById("ratingInput");
+    const form = document.getElementById("testimonialForm");
+
+    stars.forEach((star) => {
+        star.addEventListener("click", function () {
+            const rating = this.dataset.rating;
+            ratingInput.value = rating;
+
+            stars.forEach((s) => {
+                s.classList.toggle("active", s.dataset.rating <= rating);
             });
         });
 
-        // Rating stars interaction
-        const stars = document.querySelectorAll('.star');
-        let selectedRating = 0;
-
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                selectedRating = parseInt(this.getAttribute('data-rating'));
-                updateStars();
-            });
-
-            star.addEventListener('mouseenter', function() {
-                const rating = parseInt(this.getAttribute('data-rating'));
-                highlightStars(rating);
+        star.addEventListener("mouseenter", function () {
+            const rating = this.dataset.rating;
+            stars.forEach((s) => {
+                s.classList.toggle("active", s.dataset.rating <= rating);
             });
         });
+    });
 
-        document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
-            updateStars();
-        });
-
-        function highlightStars(rating) {
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
+    const ratingContainer = document.querySelector(".rating-stars");
+    if (ratingContainer) {
+        ratingContainer.addEventListener("mouseleave", function () {
+            const rating = ratingInput.value;
+            stars.forEach((s) => {
+                s.classList.toggle("active", s.dataset.rating <= rating);
             });
+        });
+    }
+
+    /* ======================
+       UPLOAD FILE
+    ====================== */
+    const uploadBtn = document.getElementById("uploadBtn");
+    const fileInput = document.getElementById("fileInput");
+    const fileName = document.getElementById("fileName");
+
+    uploadBtn.addEventListener("click", function () {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener("change", function () {
+        if (this.files && this.files.length > 0) {
+            fileName.textContent = this.files[0].name;
+            fileName.style.color = "#2a4962";
+        } else {
+            fileName.textContent = "Belum ada file";
+            fileName.style.color = "#999";
         }
+    });
 
-        function updateStars() {
-            highlightStars(selectedRating);
+    /* ======================
+       VALIDASI SUBMIT
+    ====================== */
+    form.addEventListener("submit", function (e) {
+        if (!ratingInput.value) {
+            e.preventDefault();
+            alert("Silakan pilih rating bintang ⭐");
         }
-
-        // Upload button
-        document.getElementById('uploadBtn').addEventListener('click', function() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    alert('File terpilih: ' + file.name);
-                }
-            };
-            input.click();
-        });
-
-        // Upload area drag and drop
-        const uploadArea = document.getElementById('uploadArea');
-
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#5a7a91';
-            this.style.background = '#f0f3f5';
-        });
-
-        uploadArea.addEventListener('dragleave', function() {
-            this.style.borderColor = '#bdc3c7';
-            this.style.background = '#f8f9fa';
-        });
-
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#bdc3c7';
-            this.style.background = '#f8f9fa';
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                alert('File terpilih: ' + files[0].name);
-            }
-        });
-
-        // Form submission
-        document.getElementById('testimonialForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (selectedRating === 0) {
-                alert('Silakan pilih rating bintang!');
-                return;
-            }
-            
-            alert('Testimoni berhasil dikirim! Rating: ' + selectedRating + ' bintang');
-        });
+    });
+});

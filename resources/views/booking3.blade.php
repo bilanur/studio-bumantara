@@ -8,27 +8,34 @@
 <script src="{{ asset('assets/js/booking3.js') }}" defer></script>
 @endpush
 
-<x-layout>    
+<x-layout>
 
     <!-- Sidebar -->
     <div class="dashboard-layout">
         <aside class="sidebar">
             <ul class="sidebar-menu">
-                <li class="sidebar-item">
+
+                <!-- USERNAME (BUKAN LINK) -->
+                <li class="sidebar-item user-item">
                     <span class="sidebar-icon">👤</span>
                     <span>Febri Harijadi</span>
                 </li>
-                <li class="sidebar-item active">
+
+                <!-- PESANAN SAYA -->
+                <li class="sidebar-item {{ request()->routeIs('booking3') ? 'active' : '' }}">
                     <span class="sidebar-icon">📋</span>
-                    <span>Pesananan Saya</span>
+                    <a href="{{ route('booking3') }}" class="sidebar-link">
+                        Pesanan Saya
+                    </a>
                 </li>
-                <li class="sidebar-item">
+
+                <li class="sidebar-item {{ request()->routeIs('testimoni') ? 'active' : '' }}">
                     <span class="sidebar-icon">✍️</span>
-                    {{-- <span>Tulis Testimoni Anda</span> --}}
-                    <span><a href="{{ route('testimoni') }}" button class="send-btn" class="booking-btn">
-                  Tulis Testimoni Anda
-                 </a></span>
+                    <a href="{{ route('testimoni') }}" class="sidebar-link">
+                        Tulis Testimoni Anda
+                    </a>
                 </li>
+
             </ul>
         </aside>
 

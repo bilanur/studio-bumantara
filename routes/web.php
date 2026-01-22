@@ -14,7 +14,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
-use App\Http\Controllers\Admin\TestimoniController;
+use App\Http\Controllers\Admin\TestimoniController as AdminTestimoniController;
+use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\Admin\CarouselController;
 
 /*
@@ -77,12 +78,32 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         ->names('admin.gallery');
 
     // TESTIMONI
-    Route::resource('testimoni', TestimoniController::class);
+    Route::resource('testimoni', AdminTestimoniController::class)
+        ->names('admin.testimoni');
+
+
 
     // CAROUSEL
     Route::get('/carousel', [CarouselController::class, 'index']);
     Route::post('/carousel', [CarouselController::class, 'store']);
     Route::delete('/carousel/{id}', [CarouselController::class, 'destroy']);
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| TESTIMONI (PUBLIC)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/testimoni', function () {
+    return view('testimoni');
+})->name('testimoni');
+
+Route::post('/testimoni', [TestimoniController::class, 'store'])
+    ->middleware('auth')
+    ->name('testimoni.store');
+
+
 
 require __DIR__ . '/auth.php';

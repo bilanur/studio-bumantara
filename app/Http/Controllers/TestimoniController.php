@@ -4,62 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TestimoniController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'rating'  => 'required|integer|min:1|max:5',
+            'comment' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Testimoni $testimoni)
-    {
-        //
-    }
+        $imagePath = null;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Testimoni $testimoni)
-    {
-        //
-    }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')
+                ->store('testimoni', 'public');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Testimoni $testimoni)
-    {
-        //
-    }
+        Testimoni::create([
+            'user_id' => Auth::id(),
+            'rating'  => $request->rating,
+            'comment' => $request->comment,
+            'image'   => $imagePath,
+            'is_show' => true,
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Testimoni $testimoni)
-    {
-        //
+        return redirect()
+            ->route('testimoni')
+            ->with('success', 'Testimoni berhasil dikirim 🙏');
     }
 }
