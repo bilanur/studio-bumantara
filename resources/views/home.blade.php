@@ -11,14 +11,22 @@
 
 <x-layout>
 
-    <!-- Hero Carousel -->
     <div class="hero-carousel">
-        <!-- Slide 1 -->
-        <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/slider2.jpeg') }}')">
+
+        {{-- SLIDES --}}
+        @foreach($carousels as $index => $carousel)
+        <div class="hero-slide {{ $index == 0 ? 'active' : '' }}"
+            style="background-image: url('{{ asset('storage/'.$carousel->image) }}')">
+
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Abadikan Momen Berharga Anda Bersama Bumantara Studio</h1>
-                    <p>Studio foto profesional untuk pasangan, keluarga, dan personal dengan sistem booking yang mudah dan terjadwal</p>
+                    <h1>
+                        {{ $carousel->title ?? 'Abadikan Momen Berharga Anda Bersama Bumantara Studio' }}
+                    </h1>
+                    <p>
+                        Studio foto profesional untuk pasangan, keluarga, dan personal
+                        dengan sistem booking yang mudah dan terjadwal
+                    </p>
                     <div class="hero-buttons">
                         <a href="#" class="hero-btn">Jadwalkan Foto</a>
                         <a href="#" class="hero-link">Lihat Layanan</a>
@@ -26,46 +34,21 @@
                 </div>
             </div>
         </div>
+        @endforeach
 
-        <!-- Slide 2 -->
-        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/slider3.jpeg') }}')">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Wujudkan Foto Impian Anda dengan Sentuhan Profesional</h1>
-                    <p>Kami adalah tim fotografer berbakat yang siap membantu Anda mengabadikan setiap momen berharga yang tak kan terulang lagi</p>
-                    <div class="hero-buttons">
-                        <a href="#" class="hero-btn">Mulai Pesan Sekarang</a>
-                        <a href="#" class="hero-link">Pelajari Lainnya</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Hasil yang Memukau untuk Setiap Momen Spesial Anda</h1>
-                    <p>Dari foto pernikahan hingga sesi foto keluarga, kami hadir untuk memberikan hasil terbaik dan tak terlupakan</p>
-                    <div class="hero-buttons">
-                        <a href="#" class="hero-btn">Konsultasi Gratis</a>
-                        <a href="#" class="hero-link">Lihat Portfolio</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation -->
+        {{-- NAVIGATION --}}
         <button class="carousel-nav prev" onclick="changeSlide(-1)">‹</button>
         <button class="carousel-nav next" onclick="changeSlide(1)">›</button>
 
-        <!-- Indicators -->
+        {{-- INDICATORS --}}
         <div class="carousel-indicators">
-            <div class="indicator active" onclick="goToSlide(0)"></div>
-            <div class="indicator" onclick="goToSlide(1)"></div>
-            <div class="indicator" onclick="goToSlide(2)"></div>
+            @foreach($carousels as $index => $carousel)
+            <div class="indicator {{ $index == 0 ? 'active' : '' }}"
+                onclick="goToSlide({{ $index }})"></div>
+            @endforeach
         </div>
     </div>
+
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -166,39 +149,90 @@
         </div>
     </section>
 
+
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
+
         <div class="testimonials-header">
             <h2>APA KATA MEREKA?</h2>
             <p>Kepuasan klien adalah prioritas utama kami</p>
         </div>
 
-        <div class="testimonials-grid">
-            @foreach($testimonis as $item)
-            <div class="testimonial-card">
-                <div class="testimonial-image">
-                    <img src="{{ $item->image
-                        ? asset('storage/'.$item->image)
-                        : asset('assets/images/default.jpg') }}">
-                </div>
+        <!-- FILTER RATING -->
+        <div class="testimonial-filter">
+            <button class="filter-btn active" data-rating="all">Semua</button>
+            @for ($i = 5; $i >= 1; $i--)
+            <button class="filter-btn" data-rating="{{ $i }}">
+                {{ $i }} ★
+            </button>
+            @endfor
+        </div>
 
-                <div class="testimonial-content">
-                    <h4 class="testimonial-name">
-                        {{ $item->user->name }}
-                    </h4>
+        <div class="testimonials-wrapper">
+            <div class="testimonials-grid">
 
-                    <div class="stars">
-                        {{ str_repeat('★', $item->rating) }}
+                @forelse($testimonis as $item)
+                <div class="testimonial-card" data-rating="{{ $item->rating }}">
+
+                    @if($item->image)
+                    <div class="testimonial-image">
+                        <img src="{{ asset('storage/'.$item->image) }}" alt="Testimoni {{ $item->user->name }}">
+                    </div>
+                    @endif
+
+                    <div class="testimonial-content {{ !$item->image ? 'no-image' : '' }}">
+                        <h4 class="testimonial-name">
+                            {{ $item->user->name }}
+                        </h4>
+
+                        <div class="stars">
+                            {{ str_repeat('★', $item->rating) }}
+                        </div>
+
+                        <p class="testimonial-text">
+                            "{{ $item->comment }}"
+                        </p>
                     </div>
 
-                    <p class="testimonial-text">
-                        "{{ $item->comment }}"
-                    </p>
                 </div>
+
+                @empty
+                <div class="no-testimonial">
+                    Belum ada testimoni
+                </div>
+                @endforelse
+
             </div>
-            @endforeach
         </div>
+
     </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            const cards = document.querySelectorAll(".testimonial-card");
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener("click", function() {
+
+                    filterBtns.forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+
+                    const rating = this.dataset.rating;
+
+                    cards.forEach(card => {
+                        if (rating === "all" || card.dataset.rating === rating) {
+                            card.classList.remove("hidden");
+                        } else {
+                            card.classList.add("hidden");
+                        }
+                    });
+                });
+            });
+
+        });
+    </script>
 
 
 </x-layout>
