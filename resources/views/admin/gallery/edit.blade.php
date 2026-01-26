@@ -8,7 +8,29 @@
     @method('PUT')
 
     <input class="form-control mb-2" name="title" value="{{ $gallery->title }}">
-    <input class="form-control mb-2" name="category" value="{{ $gallery->category }}">
+    <select class="form-control mb-2" name="category">
+        <option value="">-- Pilih Kategori --</option>
+
+        @php
+        $categories = [
+        'wisuda',
+        'keluarga',
+        'BESTie',
+        'group',
+        'professional',
+        'couple',
+        'prewedding',
+        'maternity'
+        ];
+        @endphp
+
+        @foreach ($categories as $cat)
+        <option value="{{ $cat }}" {{ $gallery->category === $cat ? 'selected' : '' }}>
+            {{ ucfirst($cat) }}
+        </option>
+        @endforeach
+    </select>
+
 
     <img src="{{ asset('storage/'.$gallery->image) }}" width="200" class="mb-2"><br>
 

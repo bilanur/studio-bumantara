@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
+    // 🔖 daftar kategori terpusat
+    private array $categories = [
+        'wisuda',
+        'keluarga',
+        'bestie',
+        'group',
+        'professional',
+        'couple',
+        'prewedding',
+        'maternity',
+    ];
+
     public function index()
     {
         $galleries = Gallery::latest()->get();
@@ -17,54 +29,76 @@ class GalleryController extends Controller
 
     public function create()
     {
-        return view('admin.gallery.create');
+        $categories = $this->categories;
+        return view('admin.gallery.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'title'     => 'required',
+            'image'     => 'required|image',
+            'category'  => 'required|in:' . implode(',', $this->categories),
+        ]);
+
         $image = $request->file('image')->store('gallery', 'public');
 
         Gallery::create([
-            'title' => $request->title,
-            'image' => $image,
-            'category' => $request->category,
-            'is_public' => $request->has('is_public') ? 1 : 0,
+            'title'     => $request->title,
+            'image'     => $image,
+            'category'  => $request->category,
+            'is_public' => $request->has('is_public'),
         ]);
 
-
-        return redirect('/admin/gallery')->with('success', 'Foto berhasil ditambahkan');
+        return redirect()
+            ->route('admin.gallery.index')
+            ->with('success', 'Foto berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $gallery = Gallery::findOrFail($id);
-        return view('admin.gallery.edit', compact('gallery'));
+        $gallery    = Gallery::findOrFail($id);
+        $categories = $this->categories;
+
+        return view('admin.gallery.edit', compact('gallery', 'categories'));
     }
 
     public function update(Request $request, $id)
     {
         $gallery = Gallery::findOrFail($id);
 
-        $data = $request->only(['title', 'category']);
-        $data['is_public'] = $request->has('is_public') ? 1 : 0;
+        $request->validate([
+            'title'     => 'required',
+            'category'  => 'required|in:' . implode(',', $this->categories),
+        ]);
 
+        $data = [
+            'title'     => $request->title,
+            'category'  => $request->category,
+            'is_public' => $request->has('is_public'),
+        ];
 
-        if ($request->image) {
+        if ($request->hasFile('image')) {
             Storage::disk('public')->delete($gallery->image);
             $data['image'] = $request->file('image')->store('gallery', 'public');
         }
 
         $gallery->update($data);
 
-        return redirect('/admin/gallery')->with('success', 'Galeri berhasil diupdate');
+        return redirect()
+            ->route('admin.gallery.index')
+            ->with('success', 'Galeri berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
+
         Storage::disk('public')->delete($gallery->image);
         $gallery->delete();
 
-        return redirect('/admin/gallery')->with('success', 'Galeri berhasil dihapus');
+        return redirect()
+            ->route('admin.gallery.index')
+            ->with('success', 'Galeri berhasil dihapus');
     }
 }
