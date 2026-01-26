@@ -1,6 +1,6 @@
 <footer class="footer">
         <div class="footer-content">
-            <div class="footer-section logo-section">
+            {{-- <div class="footer-section logo-section">
                 <div class="logo-footer">
                     <div class="logo-circle">
                         <div class="logo-text">
@@ -13,7 +13,17 @@
                 <p class="address">
                     Jl. Cendana Raya, Sampiran, Kec. Talun, Kabupaten Cirebon
                 </p>
-            </div>
+            </div> --}}
+
+           <div class="footer-section logo-section">
+    <div class="logo-footer">
+        <img src="{{ asset('assets/images/logo-bumantara.png') }}" alt="Bumantara Studio Logo" class="footer-logo-img">
+    </div>
+    <h3>Studio Foto Profesional</h3>
+    <p class="address">
+        Jl. Cendana Raya, Sampiran, Kec. Talun, Kabupaten Cirebon
+    </p>
+</div>
 
             <div class="footer-section">
                 <h3>Layanan Kami</h3>

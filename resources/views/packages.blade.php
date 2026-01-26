@@ -39,8 +39,12 @@
                         @endforeach
                     </ul>
 
-                    <a href="{{ route('booking1') }}" class="booking-btn">
+                    {{-- <a href="{{ route('booking1') }}" class="booking-btn">
                         Booking Now
+                    </a> --}}
+
+                    <a href="{{ route('booking1', ['package_id' => $package->id]) }}" class="booking-btn">
+                     Booking Now
                     </a>
 
                     <button class="price-btn">
@@ -53,7 +57,5 @@
 
         </div>
     </section>
-
-
 
 </x-layout>
