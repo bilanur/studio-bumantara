@@ -208,7 +208,46 @@ body {
     white-space: nowrap;
 }
 
+/* Status Button Colors */
 .status-btn.pending {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+
+.status-btn.confirmed {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+}
+
+.status-btn.completed {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.status-btn.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.status-btn.expired {
+    background: #e5e7eb;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.status-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: default;
+}
+
+/* .status-btn.pending {
     background: #4a90c9;
     color: white;
 }
@@ -228,7 +267,7 @@ body {
     background: #059669;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
+} */
 
 /* Responsive */
 @media (max-width: 1024px) {

@@ -1,4 +1,6 @@
 /* Profile Layout Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,8 +8,8 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #d4e5e3;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
     padding: 20px;
 }
 
@@ -28,11 +30,12 @@ body {
 
 /* Profile Card untuk show.blade.php */
 .profile-show-wrapper .profile-card {
-    max-width: 700px;
+    max-width: 750px;
     width: 100%;
     background-color: white;
     padding: 40px;
-    border-radius: 8px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .profile-show-wrapper .profile-content {
@@ -45,29 +48,32 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    min-width: 150px;
+    gap: 18px;
+    min-width: 160px;
 }
 
 .profile-show-wrapper .profile-avatar {
-    width: 120px;
-    height: 120px;
-    background-color: #f0f0f0;
+    width: 130px;
+    height: 130px;
+    background-color: #2B4D62;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 60px;
-    border: 3px solid #e0e0e0;
+    font-size: 65px;
+    box-shadow: 0 6px 20px rgba(43, 77, 98, 0.25);
 }
 
 .profile-show-wrapper .profile-avatar::before {
     content: '👤';
+    filter: brightness(0) invert(1);
 }
 
 .profile-show-wrapper .profile-buttons {
     display: flex;
+    flex-direction: row;
     gap: 10px;
+    width: 100%;
 }
 
 .profile-show-wrapper .profile-right {
@@ -76,122 +82,136 @@ body {
 
 .profile-show-wrapper .profile-title {
     text-align: left;
-    margin-bottom: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
+    margin-bottom: 5px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1a202c;
 }
 
 .profile-show-wrapper .profile-subtitle {
     text-align: left;
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #555;
+    margin-bottom: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #718096;
 }
 
 .profile-show-wrapper .profile-details {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 .profile-show-wrapper .detail-row {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 170px 1fr;
     align-items: center;
-    padding: 10px 15px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
+    padding: 14px 20px;
+    background-color: #f7fafc;
+    border-radius: 10px;
+    border-left: 3px solid #2B4D62;
 }
 
-.profile-show-wrapper .detail-row:nth-child(even) {
-    background-color: #e9ecef;
+.profile-show-wrapper .detail-row:nth-child(2) {
+    border-left-color: #3d6a82;
+}
+
+.profile-show-wrapper .detail-row:nth-child(3) {
+    border-left-color: #5089a8;
+}
+
+.profile-show-wrapper .detail-row:nth-child(4) {
+    border-left-color: #6fa8c8;
 }
 
 .profile-show-wrapper .detail-label {
     font-weight: 600;
-    color: #333;
+    color: #2d3748;
     font-size: 14px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .profile-show-wrapper .detail-label::before {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .profile-show-wrapper .detail-value {
-    color: #555;
+    color: #4a5568;
     font-size: 14px;
+    font-weight: 500;
 }
 
 /* Icons untuk label */
-.profile-show-wrapper .detail-row:nth-child(1) .detail-label::before { content: '👤'; }
-.profile-show-wrapper .detail-row:nth-child(2) .detail-label::before { content: '✉️'; }
-.profile-show-wrapper .detail-row:nth-child(3) .detail-label::before { content: '🔒'; }
-.profile-show-wrapper .detail-row:nth-child(4) .detail-label::before { content: '📱'; }
-.profile-show-wrapper .detail-row:nth-child(5) .detail-label::before { content: '📱'; }
+.profile-show-wrapper .detail-row:nth-child(1) .detail-label::before { content: '👤'; filter: grayscale(100%); }
+.profile-show-wrapper .detail-row:nth-child(2) .detail-label::before { content: '✉'; filter: grayscale(100%); }
+.profile-show-wrapper .detail-row:nth-child(3) .detail-label::before { content: '🔒'; filter: grayscale(100%); }
+.profile-show-wrapper .detail-row:nth-child(4) .detail-label::before { content: '📱'; filter: grayscale(100%); }
+.profile-show-wrapper .detail-row:nth-child(5) .detail-label::before { content: '📱'; filter: grayscale(100%); }
 
 /* Button untuk halaman show profile */
 .profile-show-wrapper .btn {
-    padding: 8px 20px;
+    padding: 10px 18px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
     display: inline-block;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
 }
 
 .profile-show-wrapper .btn.primary {
-    background-color: #2c5f5d;
+    background-color: #2B4D62;
     color: white;
-    border: 1px solid #2c5f5d;
+    border: none;
 }
 
 .profile-show-wrapper .btn.primary:hover {
-    background-color: #1e4542;
-    border-color: #1e4542;
+    background-color: #1e3a4d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(43, 77, 98, 0.3);
 }
 
 .profile-show-wrapper .btn.secondary {
-    background-color: #ffc107;
-    color: #333;
-    border: 1px solid #ffc107;
+    background-color: white;
+    color: #2B4D62;
+    border: 2px solid #2B4D62;
 }
 
 .profile-show-wrapper .btn.secondary:hover {
-    background-color: #e0a800;
-    border-color: #e0a800;
+    background-color: #2B4D62;
+    color: white;
 }
 
-/* STYLE UNTUK HALAMAN EDIT - TETAP SAMA SEPERTI SEMULA */
+/* STYLE UNTUK HALAMAN EDIT */
 .profile-card {
-    max-width: 600px;
+    max-width: 580px;
     margin: 0 auto;
     background-color: white;
-    padding: 40px;
-    border-radius: 8px;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 /* Heading */
 h2 {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a202c;
 }
 
 /* Form Elements */
 label {
     margin-bottom: 8px;
-    font-weight: 500;
-    color: #333;
+    font-weight: 600;
+    color: #2d3748;
     font-size: 14px;
     display: block;
 }
@@ -199,32 +219,32 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    padding: 12px 15px;
-    background-color: #d4e5e3;
-    border: none;
-    border-radius: 5px;
+    padding: 12px 16px;
+    background-color: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
     font-size: 14px;
-    color: #333;
+    color: #2d3748;
     width: 100%;
     margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s;
 }
 
 input:disabled {
     cursor: not-allowed;
-    opacity: 0.8;
-}
-
-input:not(:disabled) {
-    background-color: #d4e5e3;
+    opacity: 0.6;
+    background-color: #edf2f7;
 }
 
 input:not(:disabled):focus {
-    outline: 2px solid #2c5f5d;
-    outline-offset: 2px;
+    outline: none;
+    border-color: #2B4D62;
+    box-shadow: 0 0 0 3px rgba(43, 77, 98, 0.1);
 }
 
 input::placeholder {
-    color: #666;
+    color: #a0aec0;
 }
 
 /* Form untuk edit.blade.php */
@@ -269,35 +289,43 @@ form > label:not(:first-of-type) {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
-    gap: 10px;
+    gap: 12px;
 }
 
 .form-actions .btn {
     flex: 1;
     text-align: center;
-    padding: 7px 15px;
+    padding: 11px 20px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
 }
 
-/* Button Batal di form edit (white dengan border) */
+/* Button Batal di form edit */
 .form-actions .btn:first-child {
     background-color: white;
-    color: #2c5f5d;
-    border: 1px solid #2c5f5d;
+    color: #2B4D62;
+    border: 2px solid #2B4D62;
 }
 
 .form-actions .btn:first-child:hover {
-    background-color: #f5f5f5;
+    background-color: #f7fafc;
 }
 
-/* Button Simpan di form edit (biru) */
+/* Button Simpan di form edit */
 .form-actions .btn:last-child {
-    background-color: #2c5f5d;
+    background-color: #2B4D62;
     color: white;
-    border: 1px solid #2c5f5d;
+    border: none;
 }
 
 .form-actions .btn:last-child:hover {
-    background-color: #234a48;
+    background-color: #1e3a4d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(43, 77, 98, 0.3);
 }
 
 /* Responsive Design */
@@ -307,13 +335,17 @@ form > label:not(:first-of-type) {
     }
 
     .profile-card {
-        padding: 20px;
+        padding: 25px;
+    }
+
+    .profile-show-wrapper .profile-card {
+        padding: 30px;
     }
 
     .profile-show-wrapper .profile-content {
         flex-direction: column;
         align-items: center;
-        gap: 25px;
+        gap: 30px;
     }
 
     .profile-show-wrapper .profile-title,
@@ -323,7 +355,7 @@ form > label:not(:first-of-type) {
 
     .profile-show-wrapper .detail-row {
         grid-template-columns: 1fr;
-        gap: 5px;
+        gap: 8px;
     }
 
     .profile-show-wrapper .detail-label {
@@ -331,7 +363,7 @@ form > label:not(:first-of-type) {
     }
 
     h2 {
-        font-size: 20px;
+        font-size: 24px;
         margin-bottom: 20px;
     }
 
@@ -344,27 +376,28 @@ form > label:not(:first-of-type) {
     }
 }
 
-/* Alert Messages (opsional) */
+/* Alert Messages */
 .alert {
     padding: 12px 20px;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background-color: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
 }
 
 .alert-error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: #fed7d7;
+    color: #742a2a;
+    border: 1px solid #fc8181;
 }
 
 .alert-warning {
-    background-color: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
+    background-color: #feebc8;
+    color: #7c2d12;
+    border: 1px solid #fbd38d;
 }
