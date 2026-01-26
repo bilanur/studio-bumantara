@@ -3,12 +3,18 @@
 @section('content')
 <h4>Edit Paket</h4>
 
-<form method="POST" action="{{ route('admin.package.update',$package->id) }}">
+<form method="POST" action="{{ route('admin.package.update',$package->id) }}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
     <p>nama paket</p>
     <input class="form-control mb-2" name="name" value="{{ $package->name }}">
+    @if($package->image)
+    <img src="{{ asset('storage/'.$package->image) }}" width="120" class="mb-2">
+    @endif
+
+    <p>gambar baru</p>
+    <input type="file" class="form-control mb-3" name="image">
     <p>deskripsi</p>
     <textarea class="form-control mb-2" name="description">{{ $package->description }}</textarea>
     <p>durasi</p>

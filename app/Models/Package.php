@@ -15,6 +15,7 @@ class Package extends Model
         'duration',
         'price',
         'max_people',
+        'image'
     ];
 
     protected $casts = [

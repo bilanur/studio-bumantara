@@ -12,6 +12,7 @@
         <tr>
             <th>No</th>
             <th>Nama</th>
+            <th>Gambar</th>
             <th>Durasi</th>
             <th>Harga</th>
             <th>Maks Orang</th>
@@ -23,6 +24,14 @@
         <tr>
             <td>{{ $i + 1 }}</td>
             <td>{{ $p->name }}</td>
+            <td>
+                @if($p->image)
+                <img src="{{ asset('storage/'.$p->image) }}" width="80">
+                @else
+                -
+                @endif
+            </td>
+
             <td>{{ $p->duration }} menit</td>
             <td>Rp {{ number_format($p->price,0,',','.') }}</td>
             <td>{{ $p->max_people }}</td>
