@@ -3,11 +3,14 @@
 @section('content')
 <h4>Tambah Paket</h4>
 
-<form method="POST" action="{{ route('admin.package.store') }}">
+<form method="POST" action="{{ route('admin.package.store') }}" enctype="multipart/form-data">
+
     @csrf
 
     <p>nama paket</p>
     <input class="form-control mb-2" name="name" placeholder="Nama Paket">
+    <p>gambar</p>
+    <input type="file" class="form-control mb-3" name="image">
     <p>deskripsi</p>
     <textarea class="form-control mb-2" name="description"></textarea>
     <p>durasi</p>
