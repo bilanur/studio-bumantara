@@ -6,6 +6,7 @@
 
 @push('styles')
 <link href="{{ asset('assets/css/booking1.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/booking1-additions.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')

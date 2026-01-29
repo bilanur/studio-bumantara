@@ -9,17 +9,19 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\TransactionController;
 
 /* ADMIN */
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PackageController;
-use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\TestimoniController as AdminTestimoniController;
 use App\Http\Controllers\Admin\CarouselController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\AdminTransactionController;
+use App\Http\Controllers\Admin\AdminTimeSlotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,23 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesanan', [BookingController::class, 'myBookings'])->name('booking3');
 });
 
+// Route tambahan dari file kedua
 Route::get('/booking', [BookingController::class, 'index'])->name('booking');
 
 Route::get('/booking-riwayat', [BookingController::class, 'riwayat'])
-    ->name('booking.riwayat');
-
-/* ADMIN */
-Route::get('/admin/booking', [BookingController::class, 'index'])
-    ->middleware('auth')
-    ->name('admin.booking');
-
-/* USER */
-Route::get('/booking', [BookingController::class, 'userBooking'])
-    ->middleware('auth')
-    ->name('booking');
-
-Route::get('/booking-riwayat', [BookingController::class, 'riwayat'])
-    ->middleware('auth')
     ->name('booking.riwayat');
 
 /*
@@ -88,6 +77,17 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| CLAIM PHOTO (TRANSACTIONS)
+|--------------------------------------------------------------------------
+*/
+
+// Route Customer
+Route::get('/claim-photo', [TransactionController::class, 'index'])->name('claim.index');
+Route::post('/claim/search', [TransactionController::class, 'search'])->name('claim.search');
+Route::get('/claim/detail/{id}', [TransactionController::class, 'detail'])->name('claim.detail');
+
+/*
+|--------------------------------------------------------------------------
 | ADMIN
 |--------------------------------------------------------------------------
 */
@@ -100,6 +100,19 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::get('/booking', [AdminBookingController::class, 'index'])->name('booking.index');
     Route::put('/booking/{id}/update-status', [AdminBookingController::class, 'updateStatus'])->name('booking.update-status');
     Route::put('/booking/{id}/update-payment', [AdminBookingController::class, 'updatePayment'])->name('booking.update-payment');
+
+    // TIME SLOTS
+    Route::get('/timeslots', [AdminTimeSlotController::class, 'index']);
+    Route::post('/timeslots', [AdminTimeSlotController::class, 'store']);
+    Route::put('/timeslots/{id}', [AdminTimeSlotController::class, 'update']);
+    Route::delete('/timeslots/{id}', [AdminTimeSlotController::class, 'destroy']);
+    Route::post('/timeslots/{id}/toggle', [AdminTimeSlotController::class, 'toggle']);
+    Route::post('/timeslots/bulk', [AdminTimeSlotController::class, 'bulkCreate']);
+
+    // TRANSACTIONS ADMIN
+    Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{id}/edit', [AdminTransactionController::class, 'edit'])->name('transactions.edit');
+    Route::put('/transactions/{id}', [AdminTransactionController::class, 'update'])->name('transactions.update');
 
     // USER
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
@@ -116,7 +129,6 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::get('/package/{id}/edit', [PackageController::class, 'edit'])->name('package.edit');
     Route::put('/package/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::delete('/package/{id}', [PackageController::class, 'destroy'])->name('package.destroy');
-
 
     // GALLERY
     Route::get('/gallery', [AdminGalleryController::class, 'index'])->name('gallery.index');
@@ -139,8 +151,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::delete('/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
 
     // REPORT
-    Route::get('/laporan', [ReportController::class, 'index'])
-        ->name('report.index');
+    Route::get('/laporan', [ReportController::class, 'index'])->name('report.index');
 });
 
 /*

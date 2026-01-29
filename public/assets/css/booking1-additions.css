@@ -1,0 +1,98 @@
+/* ============================================
+   BOOKING 1 - ADDITIONAL STYLES
+   Tambahan untuk loading, error, dan booked states
+   ============================================ */
+
+/* Loading Spinner */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.loading-spinner::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Error Message */
+.error-message {
+    padding: 20px;
+    text-align: center;
+    color: #dc2626;
+    background: #fee2e2;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+/* Empty Message */
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: #6b7280;
+    background: #f3f4f6;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+/* Time Slot - Booked State */
+.time-slot.booked {
+    background: #fee2e2 !important;
+    color: #991b1b !important;
+    border-color: #fca5a5 !important;
+    cursor: not-allowed !important;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.time-slot.booked:hover {
+    background: #fee2e2 !important;
+    transform: none !important;
+}
+
+/* Time Slot - Disabled State */
+.time-slot.disabled {
+    background: #f3f4f6 !important;
+    color: #9ca3af !important;
+    border-color: #e5e7eb !important;
+    cursor: not-allowed !important;
+}
+
+.time-slot.disabled:hover {
+    background: #f3f4f6 !important;
+    transform: none !important;
+}
+
+/* Tooltip untuk booked slots */
+.time-slot[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    background: #1f2937;
+    color: white;
+    font-size: 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    z-index: 1000;
+}
+
+.time-slot {
+    position: relative;
+}
