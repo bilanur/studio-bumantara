@@ -20,9 +20,43 @@ class BookingController extends Controller
         $bookings = Booking::with('package')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
-        
+
         return view('admin.booking.index', compact('bookings'));
     }
+
+    /**
+     * USER - pesanan aktif
+     */
+    public function userBooking()
+    {
+        $email = auth()->user()->email;
+
+        $bookings = Booking::with('package')
+            ->where('email', $email)
+            ->where('status', '!=', 'Selesai')
+            ->latest()
+            ->get();
+
+        return view('booking3', compact('bookings'));
+    }
+
+
+    /**
+     * USER - riwayat selesai
+     */
+    public function riwayat()
+    {
+        $email = auth()->user()->email;
+
+        $bookings = Booking::with('package')
+            ->where('email', $email)
+            ->where('status', 'Selesai')
+            ->latest()
+            ->get();
+
+        return view('riwayat', compact('bookings'));
+    }
+
 
     /**
      * Tampilkan halaman daftar packages

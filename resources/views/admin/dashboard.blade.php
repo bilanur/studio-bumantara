@@ -12,19 +12,21 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h6>Jadwal Hari Ini</h6>
-                <h3>{{ $jadwalHariIni }}</h3>
+                <h6>Booking Bulan Ini</h6>
+                <h3>{{ $bookingBulanIni }}</h3>
             </div>
         </div>
     </div>
+
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h6>Booking Terbaru</h6>
-                <h3>{{ $bookingTerbaru }}</h3>
+                <h6>Booking Hari Ini</h6>
+                <h3>{{ $bookingHariIni }}</h3>
             </div>
         </div>
     </div>
@@ -43,30 +45,37 @@
     </div>
 </div>
 
+
 <script>
-    const lineCtx = document.getElementById('lineChart');
-    new Chart(lineCtx, {
+    const lineData = @json($chartLine);
+
+    new Chart(document.getElementById('lineChart'), {
         type: 'line',
         data: {
-            labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+            labels: lineData.map(x => x.tgl),
             datasets: [{
-                label: 'Booking',
-                data: [12, 19, 10, 15, 22, 30, 25],
+                label: 'Booking Selesai',
+                data: lineData.map(x => x.total),
                 fill: true,
                 tension: 0.4
             }]
         }
     });
+</script>
 
-    const donutCtx = document.getElementById('donutChart');
-    new Chart(donutCtx, {
+<script>
+    const donut = @json($donut);
+
+    new Chart(document.getElementById('donutChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Selesai', 'Diproses', 'Batal'],
+            labels: donut.map(x => x.status),
             datasets: [{
-                data: [60, 30, 10]
+                data: donut.map(x => x.total)
             }]
         }
     });
 </script>
+
+
 @endsection

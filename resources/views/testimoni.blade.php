@@ -14,31 +14,25 @@
         <aside class="sidebar">
             <ul class="sidebar-menu">
 
-                <!-- USERNAME (BUKAN LINK) -->
                 <li class="sidebar-item user-item">
                     <span class="sidebar-icon">👤</span>
                     <span>Febri Harijadi</span>
                 </li>
 
-                <!-- PESANAN SAYA -->
-                <li class="sidebar-item {{ request()->routeIs('booking3') ? 'active' : '' }}">
-                    <span class="sidebar-icon">📋</span>
-                    <a href="{{ route('booking3') }}" class="sidebar-link">
-                        Pesanan Saya
-                    </a>
+                <li class="sidebar-item active">
+                    📋 Pesanan Aktif
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('testimoni') ? 'active' : '' }}">
-                    <span class="sidebar-icon">✍️</span>
-                    <a href="{{ route('testimoni') }}" class="sidebar-link">
-                        Tulis Testimoni Anda
-                    </a>
+                <li class="sidebar-item">
+                    <a href="{{ route('booking.riwayat') }}">🕘 Riwayat Pesanan</a>
                 </li>
 
+                <li class="sidebar-item">
+                    <a href="{{ route('testimoni') }}">✍️ Tulis Testimoni</a>
+                </li>
 
             </ul>
         </aside>
-
 
         <main class="main-content">
             <div class="page-title">

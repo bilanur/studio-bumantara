@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\TestimoniController as AdminTestimoniController;
 use App\Http\Controllers\Admin\CarouselController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 
 /*
@@ -50,6 +51,25 @@ Route::post('/booking/available-slots', [BookingController::class, 'getAvailable
 Route::middleware('auth')->group(function () {
     Route::get('/pesanan', [BookingController::class, 'myBookings'])->name('booking3');
 });
+
+Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+
+Route::get('/booking-riwayat', [BookingController::class, 'riwayat'])
+    ->name('booking.riwayat');
+
+/* ADMIN */
+Route::get('/admin/booking', [BookingController::class, 'index'])
+    ->middleware('auth')
+    ->name('admin.booking');
+
+/* USER */
+Route::get('/booking', [BookingController::class, 'userBooking'])
+    ->middleware('auth')
+    ->name('booking');
+
+Route::get('/booking-riwayat', [BookingController::class, 'riwayat'])
+    ->middleware('auth')
+    ->name('booking.riwayat');
 
 /*
 |--------------------------------------------------------------------------
@@ -97,13 +117,6 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::put('/package/{id}', [PackageController::class, 'update'])->name('package.update');
     Route::delete('/package/{id}', [PackageController::class, 'destroy'])->name('package.destroy');
 
-    // SCHEDULE
-    Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
-    Route::get('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
-    Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
-    Route::get('/schedule/{id}/edit', [ScheduleController::class, 'edit'])->name('schedule.edit');
-    Route::put('/schedule/{id}', [ScheduleController::class, 'update'])->name('schedule.update');
-    Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
 
     // GALLERY
     Route::get('/gallery', [AdminGalleryController::class, 'index'])->name('gallery.index');
@@ -124,6 +137,10 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::get('/carousel', [CarouselController::class, 'index'])->name('carousel.index');
     Route::post('/carousel', [CarouselController::class, 'store'])->name('carousel.store');
     Route::delete('/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
+
+    // REPORT
+    Route::get('/laporan', [ReportController::class, 'index'])
+        ->name('report.index');
 });
 
 /*

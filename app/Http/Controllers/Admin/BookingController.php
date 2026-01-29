@@ -11,11 +11,16 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = Booking::with('package')
+            ->where(function ($q) {
+                $q->where('status_pembayaran', '!=', 'Lunas')
+                    ->orWhere('status', '!=', 'Selesai');
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-        
+
         return view('admin.booking.index', compact('bookings'));
     }
+
 
     public function updateStatus(Request $request, $id)
     {
