@@ -144,4 +144,11 @@ class Booking extends Model
         
         return "$dayName, $day $month $year | $time {$this->zona_waktu}";
     }
+
+    // Tambahkan di dalam class Booking
+public function transaction()
+{
+    return $this->hasOne(Transaction::class);
+}
+
 }

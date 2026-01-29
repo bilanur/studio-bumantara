@@ -1,6 +1,6 @@
 // ============================================
 // BOOKING 1 - PILIH TANGGAL & WAKTU
-// Version: Form Submit
+// Version: Dynamic Time Slots from Database
 // ============================================
 
 let currentMonth = 11;
@@ -10,6 +10,7 @@ let selectedTime = null;
 let extraPeopleCount = 0;
 let selectedZone = 'WIB';
 let packagePrice = 0;
+let availableTimeSlots = []; // Menyimpan data dari API
 
 const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -30,12 +31,109 @@ document.addEventListener('DOMContentLoaded', function() {
     currentYear = now.getFullYear();
 
     generateCalendar(currentMonth, currentYear);
-    generateTimeSlots();
     initEventListeners();
+    
+    // Load time slots dari database
+    loadTimeSlots();
 });
 
 // ============================================
-// GENERATE CALENDAR
+// LOAD TIME SLOTS DARI DATABASE - INI YANG PENTING!
+// ============================================
+async function loadTimeSlots(date = null) {
+    const slots = document.getElementById('timeSlots');
+    if (!slots) return;
+    
+    // Show loading
+    slots.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b7280;">Loading...</div>';
+    
+    try {
+        // Format date untuk API
+        const formattedDate = date ? date.toISOString().split('T')[0] : '';
+        
+        // Call API - PASTIKAN ROUTE INI ADA!
+        const url = `/api/available-times?date=${formattedDate}&timezone=${selectedZone}`;
+        console.log('🔄 Fetching time slots from:', url);
+        
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ Time slots loaded:', data);
+        
+        if (data.success && data.time_slots) {
+            availableTimeSlots = data.time_slots;
+            renderTimeSlots();
+        } else {
+            slots.innerHTML = '<div style="padding: 20px; text-align: center; color: #dc2626;">Gagal memuat jam booking</div>';
+        }
+        
+    } catch (error) {
+        console.error('❌ Error loading time slots:', error);
+        slots.innerHTML = '<div style="padding: 20px; text-align: center; color: #dc2626;">Error: ' + error.message + '</div>';
+    }
+}
+
+// ============================================
+// RENDER TIME SLOTS - YANG INI JUGA PENTING!
+// ============================================
+function renderTimeSlots() {
+    const slots = document.getElementById('timeSlots');
+    if (!slots) return;
+    
+    slots.innerHTML = '';
+    
+    if (availableTimeSlots.length === 0) {
+        slots.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b7280;">Belum ada jam booking. Hubungi admin.</div>';
+        return;
+    }
+    
+    availableTimeSlots.forEach((timeSlot, index) => {
+        const slot = document.createElement('div');
+        slot.className = 'time-slot';
+        slot.textContent = timeSlot.time;
+        slot.dataset.time = timeSlot.time;
+        
+        // JIKA JAM SUDAH DIBOOKING - DISABLE DAN SILANG
+        if (timeSlot.is_booked || !timeSlot.available) {
+            slot.style.background = '#fee2e2';
+            slot.style.color = '#991b1b';
+            slot.style.textDecoration = 'line-through';
+            slot.style.opacity = '0.6';
+            slot.style.cursor = 'not-allowed';
+            slot.title = 'Jam ini sudah dibooking';
+        } else {
+            // Auto select first available
+            if (index === 0 && !selectedTime) {
+                slot.classList.add('selected');
+                selectedTime = timeSlot.time;
+                updateSelectedDateTime();
+            }
+            
+            // Click event
+            slot.addEventListener('click', function() {
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedTime = this.dataset.time;
+                updateSelectedDateTime();
+            });
+        }
+        
+        slots.appendChild(slot);
+    });
+}
+
+// ============================================
+// SISANYA SAMA SEPERTI SEBELUMNYA
 // ============================================
 function generateCalendar(month, year) {
     const grid = document.getElementById('calendarGrid');
@@ -68,10 +166,11 @@ function generateCalendar(month, year) {
         if (dayDate < today) {
             dayCell.classList.add('disabled');
         } else {
-            if (!selectedDate) {
+            if (!selectedDate && dayDate.getTime() === today.getTime()) {
                 dayCell.classList.add('selected');
                 selectedDate = dayDate;
                 updateSelectedDateTime();
+                loadTimeSlots(dayDate);
             }
             
             dayCell.addEventListener('click', function() {
@@ -79,7 +178,9 @@ function generateCalendar(month, year) {
                     document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedDate = new Date(year, month, day);
+                    selectedTime = null;
                     updateSelectedDateTime();
+                    loadTimeSlots(selectedDate); // RELOAD JAM UNTUK TANGGAL INI
                 }
             });
         }
@@ -88,50 +189,6 @@ function generateCalendar(month, year) {
     }
 }
 
-// ============================================
-// GENERATE TIME SLOTS
-// ============================================
-function generateTimeSlots() {
-    const slots = document.getElementById('timeSlots');
-    if (!slots) return;
-    
-    slots.innerHTML = '';
-    
-    const times = [
-        '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
-        '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
-        '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'
-    ];
-    
-    times.forEach((time, index) => {
-        const slot = document.createElement('div');
-        slot.className = 'time-slot';
-        slot.textContent = time;
-        slot.dataset.time = time;
-        
-        if (index === 0 && !selectedTime) {
-            slot.classList.add('selected');
-            selectedTime = time;
-            updateSelectedDateTime();
-        }
-        
-        slot.addEventListener('click', function() {
-            if (!this.classList.contains('disabled')) {
-                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedTime = this.dataset.time;
-                updateSelectedDateTime();
-                console.log('⏰ Selected time:', selectedTime);
-            }
-        });
-        
-        slots.appendChild(slot);
-    });
-}
-
-// ============================================
-// EVENT LISTENERS
-// ============================================
 function initEventListeners() {
     document.getElementById('prevMonth')?.addEventListener('click', function() {
         currentMonth--;
@@ -169,58 +226,38 @@ function initEventListeners() {
 
     document.querySelector('.timezone-selector select')?.addEventListener('change', (e) => {
         selectedZone = e.target.value.split(': ')[1] || 'WIB';
-        console.log('🌍 Selected zone:', selectedZone);
+        if (selectedDate) {
+            loadTimeSlots(selectedDate); // RELOAD JAM DENGAN ZONA BARU
+        }
     });
 
-    // FORM SUBMIT
     const bookingForm = document.getElementById('bookingForm');
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop default submit
+            e.preventDefault();
             
-            console.log('📝 Form submit triggered');
-            
-            // Validasi
             if (!selectedDate) {
-                alert('⚠️ Silakan pilih TANGGAL terlebih dahulu!');
+                alert('⚠️ Silakan pilih TANGGAL!');
                 return false;
             }
 
             if (!selectedTime) {
-                alert('⚠️ Silakan pilih WAKTU terlebih dahulu!');
+                alert('⚠️ Silakan pilih WAKTU!');
                 return false;
             }
 
-            // Format tanggal
             const formattedDate = selectedDate.toISOString().split('T')[0];
             
-            // Update hidden inputs
             document.getElementById('hiddenDate').value = formattedDate;
             document.getElementById('hiddenTime').value = selectedTime;
             document.getElementById('hiddenExtra').value = extraPeopleCount;
             document.getElementById('hiddenZone').value = selectedZone;
 
-            // Log data
-            console.log('📦 Form data:', {
-                package_id: document.querySelector('input[name="package_id"]').value,
-                tanggal: formattedDate,
-                waktu: selectedTime,
-                extra_people: extraPeopleCount,
-                zona_waktu: selectedZone
-            });
-
-            // Submit form
-            console.log('🚀 Submitting form...');
             this.submit();
         });
-        
-        console.log('✅ Form listener attached');
     }
 }
 
-// ============================================
-// UPDATE DISPLAY
-// ============================================
 function updateSelectedDateTime() {
     const display = document.getElementById('selectedDateTime');
     if (!display) return;

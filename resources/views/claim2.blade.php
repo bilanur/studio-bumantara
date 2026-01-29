@@ -10,7 +10,6 @@
 
 <x-layout>
     <div class="claim-result-page">
-
         <div class="container">
             <div class="page-title">
                 <h1>Detail Transaksi</h1>
@@ -20,43 +19,46 @@
             <div class="transaction-card">
                 <div class="card-header">
                     <h2>Informasi Transaksi</h2>
-                    <span class="status-badge status-success">Selesai</span>
+                    <span class="status-badge {{ $transaction->status_badge }}">
+                        {{ $transaction->status_text }}
+                    </span>
                 </div>
 
                 <div class="card-body">
                     <div class="info-row">
                         <span class="label">No Transaksi</span>
-                        <span class="value">TRX-2024-001234</span>
+                        <span class="value">{{ $transaction->transaction_number }}</span>
                     </div>
 
                     <div class="info-row">
                         <span class="label">Email</span>
-                        <span class="value">customer@email.com</span>
+                        <span class="value">{{ $transaction->email }}</span>
                     </div>
 
                     <div class="info-row">
                         <span class="label">Nama</span>
-                        <span class="value">John Doe</span>
+                        <span class="value">{{ $transaction->customer_name }}</span>
                     </div>
 
                     <div class="info-row">
                         <span class="label">Paket</span>
-                        <span class="value">Paket Wisuda Premium</span>
+                        <span class="value">{{ $transaction->package_name }}</span>
                     </div>
 
                     <div class="info-row">
                         <span class="label">Tanggal Booking</span>
-                        <span class="value">15 Januari 2026</span>
+                        <span class="value">{{ $transaction->formatted_booking_date }}</span>
                     </div>
 
                     <div class="info-row">
                         <span class="label">Total Pembayaran</span>
-                        <span class="value price">Rp 500.000</span>
+                        <span class="value price">{{ $transaction->formatted_price }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Google Drive Link Card -->
+            @if($transaction->drive_link)
             <div class="drive-card">
                 <div class="drive-header">
                     <div class="drive-icon-title">
@@ -74,6 +76,7 @@
 
                 <div class="drive-body">
                     <!-- Expiry Info -->
+                    @if($transaction->expiry_date)
                     <div class="expiry-box">
                         <div class="expiry-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -83,12 +86,13 @@
                         </div>
                         <div class="expiry-text">
                             <strong>Masa Berlaku: 7 Hari</strong>
-                            <span>Berakhir pada: 22 Januari 2026</span>
+                            <span>Berakhir pada: {{ $transaction->formatted_expiry_date }}</span>
                         </div>
                     </div>
+                    @endif
 
                     <!-- Drive Button -->
-                    <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID" target="_blank" class="btn-drive">
+                    <a href="{{ $transaction->drive_link }}" target="_blank" class="btn-drive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                             <polyline points="15 3 21 3 21 9"></polyline>
@@ -108,10 +112,9 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
 
-        <!-- Wave -->
         <div class="clouds"></div>
-
     </div>
 </x-layout>
