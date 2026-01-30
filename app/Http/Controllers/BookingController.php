@@ -102,7 +102,7 @@ class BookingController extends Controller
             $zonaWaktu = $request->zona_waktu;
             $extraPeople = (int) $request->extra_people;
             $hargaPaket = $package->price;
-            $hargaExtra = $extraPeople * 20000;
+            $hargaExtra = $extraPeople * 25000; // FIXED: Changed from 20000 to 25000
             $totalPembayaran = $hargaPaket + $hargaExtra;
             
             $bookingData = [
@@ -167,7 +167,7 @@ class BookingController extends Controller
             $package = Package::findOrFail($request->package_id);
 
             $hargaPaket = $package->price;
-            $hargaExtra = $request->extra_people * 20000;
+            $hargaExtra = $request->extra_people * 25000; // FIXED: Changed from 20000 to 25000
             $totalPembayaran = $hargaPaket + $hargaExtra;
 
             $booking = Booking::create([
