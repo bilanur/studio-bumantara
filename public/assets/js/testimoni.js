@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const sidebarItems = document.querySelectorAll(".sidebar-item");
 
     sidebarItems.forEach((item) => {
-        // abaikan user (username)
-        if (item.classList.contains("user-item")) return;
-
         item.addEventListener("click", function () {
             sidebarItems.forEach((i) => i.classList.remove("active"));
             this.classList.add("active");

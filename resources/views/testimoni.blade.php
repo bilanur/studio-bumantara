@@ -19,14 +19,13 @@
                     <span>Febri Harijadi</span>
                 </li>
 
-                <li class="sidebar-item active">
-                    📋 Pesanan Aktif
-                </li>
-
                 <li class="sidebar-item">
-                    <a href="{{ route('booking.riwayat') }}">🕘 Riwayat Pesanan</a>
+                    <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>
                 </li>
 
+                <li class="sidebar-item active">
+                    🕘 Riwayat Pesanan
+                </li>
                 <li class="sidebar-item">
                     <a href="{{ route('testimoni') }}">✍️ Tulis Testimoni</a>
                 </li>

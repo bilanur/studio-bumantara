@@ -71,13 +71,7 @@
 
             <!-- CARD JAM -->
             <div class="calendar-section">
-                <div class="timezone-selector">
-                    <select>
-                        <option selected>Zona waktu: WIB</option>
-                        <option>Zona waktu: WITA</option>
-                        <option>Zona waktu: WIT</option>
-                    </select>
-                </div>
+                <h3>pilih waktu anda</h3>
 
                 <div class="time-slots" id="timeSlots"></div>
             </div>

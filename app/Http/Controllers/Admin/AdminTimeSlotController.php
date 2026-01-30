@@ -16,36 +16,40 @@ class AdminTimeSlotController extends Controller
 
     public function store(Request $request)
     {
-        TimeSlot::create([
-            'time' => $request->time . ':00',
-            'is_active' => true
+        $request->validate([
+            'time' => 'required|unique:time_slots,time'
         ]);
 
-        return response()->json(['success'=>true,'message'=>'Jam ditambahkan']);
+        TimeSlot::create([
+            'time' => $request->time . ':00',
+            'is_active' => 1
+        ]);
+
+        return back()->with('success', 'Jam berhasil ditambahkan');
     }
 
     public function update(Request $request, $id)
     {
-        TimeSlot::find($id)->update([
-            'time'=>$request->time.':00'
+        TimeSlot::findOrFail($id)->update([
+            'time' => $request->time . ':00'
         ]);
 
-        return response()->json(['success'=>true]);
+        return back()->with('success', 'Jam berhasil diupdate');
     }
 
     public function destroy($id)
     {
-        TimeSlot::destroy($id);
-        return response()->json(['success'=>true]);
+        TimeSlot::findOrFail($id)->delete();
+
+        return back()->with('success', 'Jam dihapus');
     }
 
     public function toggle($id)
     {
-        $slot = TimeSlot::find($id);
-        $slot->is_active = !$slot->is_active;
-        $slot->save();
+        $slot = TimeSlot::findOrFail($id);
+        $slot->update(['is_active' => !$slot->is_active]);
 
-        return response()->json(['success'=>true]);
+        return back()->with('success', 'Status diubah');
     }
 
     public function bulkCreate(Request $request)
@@ -54,16 +58,12 @@ class AdminTimeSlotController extends Controller
         $end = strtotime($request->end_time);
         $interval = $request->interval * 60;
 
-        for ($i=$start;$i<=$end;$i+=$interval) {
-            $time = date('H:i:s',$i);
-
+        for ($i = $start; $i <= $end; $i += $interval) {
             TimeSlot::firstOrCreate([
-                'time'=>$time
-            ],[
-                'is_active'=>true
-            ]);
+                'time' => date('H:i:s', $i)
+            ], ['is_active' => 1]);
         }
 
-        return response()->json(['success'=>true,'message'=>'Jam massal dibuat']);
+        return back()->with('success', 'Jam massal dibuat');
     }
 }
