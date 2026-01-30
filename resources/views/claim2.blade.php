@@ -3,7 +3,33 @@
 @push('styles')
 <link href="{{ asset('assets/css/claim2.css') }}" rel="stylesheet">
 @endpush
-
+    <style>
+        header,
+        header *,
+        nav,
+        nav *,
+        footer,
+        footer *,
+        .footer,
+        .footer *,
+        .logo,
+        .logo-text-main,
+        .logo-text-sub,
+        .nav-links,
+        .nav-links *,
+        .nav-right *,
+        .masuk-btn,
+        .masuk-btn-outline,
+        .profile-trigger,
+        .profile-dropdown,
+        .profile-dropdown *,
+        .footer-section,
+        .footer-section *,
+        .copyright,
+        .social-section * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+    </style>
 @push('scripts')
 <script src="{{ asset('assets/js/claim-result.js') }}" defer></script>
 @endpush

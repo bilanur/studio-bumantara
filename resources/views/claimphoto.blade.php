@@ -3,6 +3,32 @@
 @push('styles')
 <link href="{{ asset('assets/css/claim.css') }}" rel="stylesheet">
 <style>
+    /* Force Poppins font untuk navbar dan footer */
+    header,
+    header *,
+    nav,
+    nav *,
+    .logo,
+    .logo *,
+    .nav-links,
+    .nav-links *,
+    .nav-right,
+    .nav-right *,
+    .masuk-btn,
+    .masuk-btn-outline,
+    .profile-trigger,
+    .profile-dropdown,
+    .profile-dropdown *,
+    footer,
+    footer *,
+    .footer,
+    .footer *,
+    .footer-section,
+    .footer-section *,
+    .copyright {
+        font-family: 'Poppins', sans-serif !important;
+    }
+
     .alert {
         padding: 1rem;
         border-radius: 8px;

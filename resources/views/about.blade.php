@@ -96,7 +96,7 @@
             <div class="map-wrapper">
                 <div class="map-frame">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.6489!2d112.6345!3d-7.9666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNTcnNTkuOCJTIDExMsKwMzgnMDQuMiJF!5e0!3m2!1sen!2sid!4v1234567890"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15844.936!2d108.5106989!3d-6.7600494!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f1df3da7d2547%3A0x2918cc37973e7452!2sBumantara%20Foto%20Studio!5e0!3m2!1sid!2sid"
                         width="100%"
                         height="100%"
                         style="border:0;"
