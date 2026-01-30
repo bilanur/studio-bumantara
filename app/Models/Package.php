@@ -15,36 +15,50 @@ class Package extends Model
         'duration',
         'price',
         'max_people',
-        'image'
+        'image',
+        'theme_count',
+        'print_count',
+        'edited_count',
+        'has_gdrive'
     ];
 
     protected $casts = [
         'duration' => 'integer',
         'price' => 'integer',
         'max_people' => 'integer',
+        'theme_count' => 'integer',
+        'print_count' => 'integer',
+        'edited_count' => 'integer',
+        'has_gdrive' => 'boolean',
     ];
 
-    /**
-     * Relasi ke Booking
-     */
     public function bookings()
     {
         return $this->hasMany(Booking::class);
     }
 
-    /**
-     * Format harga ke Rupiah
-     */
     public function getFormattedPriceAttribute()
     {
         return 'Rp ' . number_format($this->price, 0, ',', '.');
     }
 
-    /**
-     * Get description sebagai array
-     */
     public function getDescriptionArrayAttribute()
     {
         return explode("\n", $this->description);
+    }
+
+    /**
+     * Get fitur yang tersedia
+     */
+    public function getAvailableFeaturesAttribute()
+    {
+        $features = [];
+        
+        if ($this->theme_count) $features[] = $this->theme_count . ' Tema';
+        if ($this->print_count) $features[] = 'Cetak ' . $this->print_count . ' Foto';
+        if ($this->edited_count) $features[] = $this->edited_count . ' Edited File';
+        if ($this->has_gdrive) $features[] = 'All File by G.Drive';
+        
+        return $features;
     }
 }

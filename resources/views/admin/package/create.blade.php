@@ -3,23 +3,107 @@
 @section('content')
 <h4>Tambah Paket</h4>
 
-<form method="POST" action="{{ route('admin.package.store') }}" enctype="multipart/form-data">
-
+<form action="{{ route('admin.package.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+    
+    <div class="mb-3">
+        <label class="form-label">Nama Paket</label>
+        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
+               value="{{ old('name') }}">
+        @error('name')
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
-    <p>nama paket</p>
-    <input class="form-control mb-2" name="name" placeholder="Nama Paket">
-    <p>gambar</p>
-    <input type="file" class="form-control mb-3" name="image">
-    <p>deskripsi</p>
-    <textarea class="form-control mb-2" name="description"></textarea>
-    <p>durasi</p>
-    <input type="number" class="form-control mb-2" name="duration">
-    <p>harga</p>
-    <input type="number" class="form-control mb-2" name="price">
-    <p>maksimal orang</p>
-    <input type="number" class="form-control mb-3" name="max_people">
+    <div class="mb-3">
+        <label class="form-label">Deskripsi</label>
+        <textarea name="description" class="form-control @error('description') is-invalid @enderror" 
+                  rows="4">{{ old('description') }}</textarea>
+        @error('description')
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
-    <button class="btn btn-success">Simpan</button>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Durasi (menit)</label>
+            <input type="number" name="duration" class="form-control @error('duration') is-invalid @enderror" 
+                   value="{{ old('duration') }}" placeholder="Opsional">
+            @error('duration')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Harga</label>
+            <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" 
+                   value="{{ old('price') }}" placeholder="Opsional">
+            @error('price')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Maks Orang</label>
+            <input type="number" name="max_people" class="form-control @error('max_people') is-invalid @enderror" 
+                   value="{{ old('max_people') }}" placeholder="Opsional">
+            @error('max_people')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Gambar</label>
+        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+        @error('image')
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <hr>
+    <h5 class="mb-3">Fitur Tambahan (Opsional)</h5>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Jumlah Tema</label>
+            <input type="number" name="theme_count" class="form-control @error('theme_count') is-invalid @enderror" 
+                   value="{{ old('theme_count') }}" placeholder="Kosongkan jika tidak ada" min="0">
+            @error('theme_count')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Jumlah Cetak Foto</label>
+            <input type="number" name="print_count" class="form-control @error('print_count') is-invalid @enderror" 
+                   value="{{ old('print_count') }}" placeholder="Kosongkan jika tidak ada" min="0">
+            @error('print_count')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Jumlah Edited File</label>
+            <input type="number" name="edited_count" class="form-control @error('edited_count') is-invalid @enderror" 
+                   value="{{ old('edited_count') }}" placeholder="Kosongkan jika tidak ada" min="0">
+            @error('edited_count')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="has_gdrive" id="has_gdrive" 
+                   value="1" {{ old('has_gdrive') ? 'checked' : '' }}>
+            <label class="form-check-label" for="has_gdrive">
+                All File by G.Drive
+            </label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="{{ route('admin.package.index') }}" class="btn btn-secondary">Batal</a>
 </form>
 @endsection

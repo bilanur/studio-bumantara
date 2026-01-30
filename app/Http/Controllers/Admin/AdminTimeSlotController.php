@@ -66,4 +66,17 @@ class AdminTimeSlotController extends Controller
 
         return back()->with('success', 'Jam massal dibuat');
     }
+
+    public function getActiveSlots()
+{
+    $timeSlots = TimeSlot::where('is_active', 1)
+        ->orderBy('time')
+        ->get(['id', 'time', 'is_active']);
+    
+    return response()->json([
+        'success' => true,
+        'timeslots' => $timeSlots
+    ]);
+}
+
 }

@@ -21,35 +21,61 @@
             <div class="package-card">
 
                 <div class="package-header">
-                    <h3>{{ $package->name }}</h3>
+                    <h3>{{ $package->name ?? 'Paket' }}</h3>
                 </div>
 
-                <img src="{{ asset('assets/images/j.jpeg') }}"
-                    alt="{{ $package->name }}"
+                <img src="{{ $package->image ? asset('storage/'.$package->image) : asset('assets/images/j.jpeg') }}"
+                    alt="{{ $package->name ?? 'Package' }}"
                     class="package-image">
 
                 <div class="package-content">
 
                     <!-- DURASI & MAX PEOPLE -->
                     <ul class="package-features">
+                        @if($package->duration)
                         <li><strong>Durasi:</strong> {{ $package->duration }} menit</li>
+                        @endif
+                        
+                        @if($package->max_people)
                         <li><strong>Maksimal:</strong> {{ $package->max_people }} orang</li>
-                        @foreach (explode("\n", $package->description) as $item)
-                        <li>{{ $item }}</li>
-                        @endforeach
+                        @endif
+
+                        <!-- DESKRIPSI -->
+                        @if($package->description)
+                            @foreach (explode("\n", $package->description) as $item)
+                                @if(trim($item))
+                                <li>{{ $item }}</li>
+                                @endif
+                            @endforeach
+                        @endif
+
+                        <!-- FITUR TAMBAHAN -->
+                        @if($package->theme_count)
+                        <li><strong>✨ Tema:</strong> {{ $package->theme_count }} pilihan</li>
+                        @endif
+
+                        @if($package->print_count)
+                        <li><strong>📸 Cetak Foto:</strong> {{ $package->print_count }} lembar</li>
+                        @endif
+
+                        @if($package->edited_count)
+                        <li><strong>🎨 Edited File:</strong> {{ $package->edited_count }} file</li>
+                        @endif
+
+                        @if($package->has_gdrive)
+                        <li><strong>☁️ All File by G.Drive</strong></li>
+                        @endif
                     </ul>
 
-                    {{-- <a href="{{ route('booking1') }}" class="booking-btn">
-                        Booking Now
-                    </a> --}}
-
                     <a href="{{ route('booking1', ['package_id' => $package->id]) }}" class="booking-btn">
-                     Booking Now
+                        Booking Now
                     </a>
 
+                    @if($package->price)
                     <button class="price-btn">
                         Rp {{ number_format($package->price, 0, ',', '.') }}
                     </button>
+                    @endif
 
                 </div>
             </div>

@@ -22,21 +22,67 @@
         <p class="page-subtitle">Check Out Ketersediaan Kami Serta Pesan Tanggal Dan Waktu Yang Cocok Dengan Anda</p>
     </section>
 
-    <!-- Booking Container -->
+      <!-- Booking Container -->
     <div class="booking-container">
         <!-- Left: Package Info -->
         <div class="package-info">
             <div class="package-image">
-                <img src="{{ asset('assets/images/j.jpeg') }}" alt="{{ $package->name ?? 'Package' }}">
+                <img src="{{ $package && $package->image ? asset('storage/'.$package->image) : asset('assets/images/j.jpeg') }}" 
+                     alt="{{ $package->name ?? 'Package' }}">
             </div>
             <h3 class="package-title">{{ $package->name ?? 'Package Name' }}</h3>
             <ul class="package-features">
-                <li>{{ $package->max_people ?? 0 }} person(s)</li>
-                <li>{{ $package->duration ?? 0 }} mins photo session</li>
+                @if($package && $package->max_people)
+                <li>
+                    <span class="feature-icon">👥</span>
+                    <span>Maksimal: {{ $package->max_people }} orang</span>
+                </li>
+                @endif
+
+                @if($package && $package->duration)
+                <li>
+                    <span class="feature-icon">🕐</span>
+                    <span>Durasi: {{ $package->duration }} menit</span>
+                </li>
+                @endif
+
                 @if($package && $package->description)
                     @foreach (explode("\n", $package->description) as $item)
-                        <li>{{ $item }}</li>
+                        @if(trim($item))
+                        <li>
+                            <span class="feature-icon">✓</span>
+                            <span>{{ $item }}</span>
+                        </li>
+                        @endif
                     @endforeach
+                @endif
+
+                @if($package && $package->theme_count)
+                <li>
+                    <span class="feature-icon">🎨</span>
+                    <span>Tema: {{ $package->theme_count }} pilihan</span>
+                </li>
+                @endif
+
+                @if($package && $package->print_count)
+                <li>
+                    <span class="feature-icon">📷</span>
+                    <span>Cetak Foto: {{ $package->print_count }} lembar</span>
+                </li>
+                @endif
+
+                @if($package && $package->edited_count)
+                <li>
+                    <span class="feature-icon">✂</span>
+                    <span>Edited File: {{ $package->edited_count }} file</span>
+                </li>
+                @endif
+
+                @if($package && $package->has_gdrive)
+                <li>
+                    <span class="feature-icon">☁</span>
+                    <span>All File by G.Drive</span>
+                </li>
                 @endif
             </ul>
         </div>

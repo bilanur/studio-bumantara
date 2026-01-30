@@ -53,8 +53,9 @@
 
     <!-- Description Section -->
     <section class="description-section">
-        <p>Bumantara Studio foto adalah studio fotografi yang mengkhususkan diri pada berbagai jenis sesi foto dengan pendekatan yang hangat dan personal. Kami berkeras memahami visi setiap klien dan bekerja dengan penuh dedikasi untuk menghasilkan foto yang berkelas, dan penuh makna.</p>
-        <p>Dengan tim fotografer profesional yang berpengalaman dan peralatan yang terkini, kami siap menciptakan foto-foto yang bercerita. Sesi kami seluruhnya dirancang untuk memberikan kenyamanan, mulai dari personal hingga komersial. Setiap sesi kami tentang agar nyaman dan menghasilkan karya yang berkelas.</p>
+        <p>Bumantara Studio Foto adalah ruang kreatif tempat setiap momen diberi makna. Kami menghadirkan layanan fotografi untuk berbagai jenis sesi foto dengan pendekatan yang hangat, personal, dan penuh perhatian terhadap detail. Bagi kami, setiap klien memiliki cerita dan visi yang unik—dan tugas kami adalah memahami serta menerjemahkannya ke dalam karya visual yang berkelas.</p>
+        <p>Didukung oleh tim fotografer profesional yang berpengalaman dan peralatan fotografi terkini, kami bekerja dengan dedikasi tinggi untuk menghasilkan foto yang tidak hanya indah secara visual, tetapi juga mampu bercerita dan menyampaikan emosi. Mulai dari sesi personal, keluarga, hingga kebutuhan komersial, setiap proses pemotretan kami rancang dengan matang agar klien merasa nyaman dan percaya diri.</p>
+        <p>Di Bumantara Studio Foto, kami percaya bahwa kenyamanan adalah kunci untuk menciptakan hasil terbaik. Oleh karena itu, setiap sesi dirancang secara khusus agar terasa santai, menyenangkan, dan tetap profesional, sehingga setiap foto yang dihasilkan memiliki karakter, kualitas, dan nilai yang bermakna.</p>
     </section>
 
     <!-- Features Section -->

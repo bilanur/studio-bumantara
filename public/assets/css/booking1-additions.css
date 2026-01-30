@@ -96,3 +96,28 @@
 .time-slot {
     position: relative;
 }
+
+/* Style untuk jam yang sudah dibooking */
+.time-slot.booked {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+    position: relative;
+}
+
+.time-slot.booked:hover {
+    background-color: #fee2e2 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.time-slot.booked::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #dc2626;
+    top: 50%;
+    left: 0;
+}

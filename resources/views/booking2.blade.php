@@ -237,7 +237,7 @@
                         <div class="account-detail-item">
                             <span class="account-detail-label">Nomor Rekening</span>
                             <div class="account-number-container">
-                                <span class="account-number-large" id="bca-number">1234567890</span>
+                                <span class="account-number-large" id="bca-number">8180635182</span>
                                 <button class="copy-btn-large" onclick="copyToClipboard('bca-number')">
                                     <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -249,7 +249,7 @@
                         </div>
                         <div class="account-detail-item">
                             <span class="account-detail-label">Atas Nama</span>
-                            <span class="account-name-large">Bumantara Studio</span>
+                            <span class="account-name-large">An. Dewi Puspita sari</span>
                         </div>
                         <div class="account-detail-item">
                             <span class="account-detail-label">Jumlah Transfer</span>
@@ -280,7 +280,7 @@
                         <div class="account-detail-item">
                             <span class="account-detail-label">Nomor DANA</span>
                             <div class="account-number-container">
-                                <span class="account-number-large" id="dana-number">081234567890</span>
+                                <span class="account-number-large" id="dana-number">082318776859</span>
                                 <button class="copy-btn-large" onclick="copyToClipboard('dana-number')">
                                     <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -292,7 +292,7 @@
                         </div>
                         <div class="account-detail-item">
                             <span class="account-detail-label">Atas Nama</span>
-                            <span class="account-name-large">Bumantara Studio</span>
+                            <span class="account-name-large">An. Dewi Puspita sari</span>
                         </div>
                         <div class="account-detail-item">
                             <span class="account-detail-label">Jumlah Transfer</span>

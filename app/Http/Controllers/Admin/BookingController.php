@@ -91,4 +91,23 @@ class BookingController extends Controller
             ]);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $booking = Booking::findOrFail($id);
+            $kodeBooking = $booking->kode_booking;
+            
+            // Hapus booking
+            $booking->delete();
+            
+            return redirect()->route('admin.booking.index')
+                ->with('success', "Booking {$kodeBooking} berhasil dihapus!");
+                
+        } catch (\Exception $e) {
+            return redirect()->route('admin.booking.index')
+                ->with('error', 'Gagal menghapus booking: ' . $e->getMessage());
+        }
+    }
+    
 }

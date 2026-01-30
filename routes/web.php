@@ -47,6 +47,11 @@ Route::view('/testimoni', 'testimoni')->name('testimoni');
 Route::get('/booking1', [BookingController::class, 'booking1'])->name('booking1');
 Route::get('/booking2', [BookingController::class, 'booking2'])->name('booking2');
 
+// ⬇️ TAMBAHKAN ROUTE API INI ⬇️
+Route::get('/api/available-times', [BookingController::class, 'getAvailableTimes']);
+Route::get('/api/booked-slots', [BookingController::class, 'getBookedSlots']);
+Route::get('/api/timeslots', [AdminTimeSlotController::class, 'getActiveSlots']);
+
 Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
 Route::post('/booking/available-slots', [BookingController::class, 'getAvailableSlots'])->name('booking.slots');
 
@@ -100,6 +105,9 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::get('/booking', [AdminBookingController::class, 'index'])->name('booking.index');
     Route::put('/booking/{id}/update-status', [AdminBookingController::class, 'updateStatus'])->name('booking.update-status');
     Route::put('/booking/{id}/update-payment', [AdminBookingController::class, 'updatePayment'])->name('booking.update-payment');
+
+     // Route baru untuk delete
+    Route::delete('/booking/{id}', [AdminBookingController::class, 'destroy'])->name('booking.destroy');
 
     // TIME SLOTS
     Route::get('/timeslots', [AdminTimeSlotController::class, 'index']);

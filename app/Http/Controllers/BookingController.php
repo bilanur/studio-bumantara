@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Package;
+use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +41,6 @@ class BookingController extends Controller
         return view('booking3', compact('bookings'));
     }
 
-
     /**
      * USER - riwayat selesai
      */
@@ -56,7 +56,6 @@ class BookingController extends Controller
 
         return view('riwayat', compact('bookings'));
     }
-
 
     /**
      * Tampilkan halaman daftar packages
@@ -83,6 +82,7 @@ class BookingController extends Controller
 
     /**
      * Halaman Booking Step 2 - Konfirmasi & Pembayaran
+     * ✅ FIX 1: Gunakan createFromFormat untuk parsing tanggal yang aman
      */
     public function booking2(Request $request)
     {
@@ -93,16 +93,21 @@ class BookingController extends Controller
 
             $package = Package::findOrFail($request->package_id);
             
-            $tanggalFormatted = Carbon::parse($request->tanggal)
-                ->locale('id')
-                ->translatedFormat('d F Y');
+            // ✅ FIX: Parsing tanggal dengan format eksplisit YYYY-MM-DD
+            try {
+                $tanggalFormatted = Carbon::createFromFormat('Y-m-d', $request->tanggal)
+                    ->locale('id')
+                    ->translatedFormat('d F Y');
+            } catch (\Exception $e) {
+                return redirect()->route('packages')->with('error', 'Format tanggal tidak valid. Gunakan YYYY-MM-DD');
+            }
             
             $tanggal = $request->tanggal;
             $waktu = $request->waktu;
             $zonaWaktu = $request->zona_waktu;
             $extraPeople = (int) $request->extra_people;
             $hargaPaket = $package->price;
-            $hargaExtra = $extraPeople * 25000; // FIXED: Changed from 20000 to 25000
+            $hargaExtra = $extraPeople * 25000;
             $totalPembayaran = $hargaPaket + $hargaExtra;
             
             $bookingData = [
@@ -137,6 +142,7 @@ class BookingController extends Controller
 
     /**
      * Simpan booking ke database
+     * ✅ FIX 2: Tambahkan pengecekan double booking di backend
      */
     public function store(Request $request)
     {
@@ -145,7 +151,7 @@ class BookingController extends Controller
             'nama_pelanggan' => 'required|string|max:255',
             'nomor_telepon' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date_format:Y-m-d',
             'waktu' => 'required',
             'zona_waktu' => 'required|in:WIB,WITA,WIT',
             'extra_people' => 'required|integer|min:0',
@@ -164,10 +170,25 @@ class BookingController extends Controller
         try {
             DB::beginTransaction();
 
+            // ✅ FIX 2: CEK DOUBLE BOOKING SEBELUM SIMPAN
+            $exists = Booking::whereDate('tanggal', $request->tanggal)
+                ->where('waktu', $request->waktu)
+                ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
+                ->exists();
+
+            if ($exists) {
+                DB::rollBack();
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ Maaf, jam ini sudah dibooking oleh orang lain. Silakan pilih jam lain.',
+                    'error_type' => 'double_booking'
+                ], 409);
+            }
+
             $package = Package::findOrFail($request->package_id);
 
             $hargaPaket = $package->price;
-            $hargaExtra = $request->extra_people * 25000; // FIXED: Changed from 20000 to 25000
+            $hargaExtra = $request->extra_people * 25000;
             $totalPembayaran = $hargaPaket + $hargaExtra;
 
             $booking = Booking::create([
@@ -216,6 +237,9 @@ class BookingController extends Controller
         }
     }
 
+    /**
+     * Generate WhatsApp Message
+     */
     private function generateWhatsAppMessage($booking)
     {
         $message = "🎉 *BOOKING BARU - BUMANTARA STUDIO*\n\n";
@@ -248,6 +272,102 @@ class BookingController extends Controller
         return $message;
     }
 
+    /**
+     * API - Get Available Time Slots dengan Pengecekan Booking
+     * ✅ FIX 3: Gunakan whereDate untuk keamanan lebih baik
+     */
+    public function getAvailableTimes(Request $request)
+    {
+        try {
+            $date = $request->query('date');
+            $timezone = $request->query('timezone', 'WIB');
+            
+            // Jika tanggal kosong, return semua time slots
+            if (!$date) {
+                $timeSlots = TimeSlot::where('is_active', 1)
+                    ->orderBy('time')
+                    ->get()
+                    ->map(function($slot) {
+                        return [
+                            'time' => date('H:i', strtotime($slot->time)),
+                            'available' => true,
+                            'is_booked' => false
+                        ];
+                    });
+                
+                return response()->json([
+                    'success' => true,
+                    'time_slots' => $timeSlots
+                ]);
+            }
+            
+            // Ambil semua time slots yang aktif dari database
+            $allTimeSlots = TimeSlot::where('is_active', 1)
+                ->orderBy('time')
+                ->get();
+            
+            // ✅ FIX 3: Gunakan whereDate untuk keamanan lebih baik
+            $bookedTimes = Booking::whereDate('tanggal', $date)
+                ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
+                ->pluck('waktu')
+                ->map(function($time) {
+                    return date('H:i', strtotime($time));
+                })
+                ->toArray();
+            
+            // Gabungkan data: cek mana yang sudah dibooking
+            $timeSlots = $allTimeSlots->map(function($slot) use ($bookedTimes) {
+                $timeFormatted = date('H:i', strtotime($slot->time));
+                $isBooked = in_array($timeFormatted, $bookedTimes);
+                
+                return [
+                    'time' => $timeFormatted,
+                    'available' => !$isBooked,
+                    'is_booked' => $isBooked
+                ];
+            });
+            
+            return response()->json([
+                'success' => true,
+                'time_slots' => $timeSlots,
+                'booked_count' => count($bookedTimes),
+                'date' => $date
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * API - Get Booked Slots Only
+     * ✅ FIX 3: Gunakan whereDate
+     */
+    public function getBookedSlots(Request $request)
+    {
+        $date = $request->query('date');
+        
+        $bookedTimes = Booking::whereDate('tanggal', $date)
+            ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
+            ->pluck('waktu')
+            ->map(function($time) {
+                return date('H:i', strtotime($time));
+            })
+            ->toArray();
+        
+        return response()->json([
+            'success' => true,
+            'booked_slots' => $bookedTimes,
+            'count' => count($bookedTimes)
+        ]);
+    }
+
+    /**
+     * API - Get Available Slots (Legacy - untuk backward compatibility)
+     */
     public function getAvailableSlots(Request $request)
     {
         $request->validate([
@@ -255,7 +375,7 @@ class BookingController extends Controller
             'package_id' => 'required|exists:packages,id',
         ]);
 
-        $bookedSlots = Booking::where('tanggal', $request->tanggal)
+        $bookedSlots = Booking::whereDate('tanggal', $request->tanggal)
                              ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
                              ->pluck('waktu')
                              ->map(function($time) {
@@ -283,6 +403,9 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * My Bookings - Semua booking user yang login
+     */
     public function myBookings()
     {
         if (!Auth::check()) {

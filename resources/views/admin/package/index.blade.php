@@ -16,6 +16,7 @@
             <th>Durasi</th>
             <th>Harga</th>
             <th>Maks Orang</th>
+            <th>Fitur Tambahan</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -23,7 +24,7 @@
         @foreach ($packages as $i => $p)
         <tr>
             <td>{{ $i + 1 }}</td>
-            <td>{{ $p->name }}</td>
+            <td>{{ $p->name ?? '-' }}</td>
             <td>
                 @if($p->image)
                 <img src="{{ asset('storage/'.$p->image) }}" width="80">
@@ -31,17 +32,33 @@
                 -
                 @endif
             </td>
-
-            <td>{{ $p->duration }} menit</td>
-            <td>Rp {{ number_format($p->price,0,',','.') }}</td>
-            <td>{{ $p->max_people }}</td>
+            <td>{{ $p->duration ? $p->duration . ' menit' : '-' }}</td>
+            <td>{{ $p->price ? 'Rp ' . number_format($p->price,0,',','.') : '-' }}</td>
+            <td>{{ $p->max_people ?? '-' }}</td>
+            <td>
+                @if($p->theme_count)
+                <span class="badge bg-info">{{ $p->theme_count }} Tema</span>
+                @endif
+                @if($p->print_count)
+                <span class="badge bg-warning text-dark">Cetak {{ $p->print_count }} Foto</span>
+                @endif
+                @if($p->edited_count)
+                <span class="badge bg-primary">{{ $p->edited_count }} Edited File</span>
+                @endif
+                @if($p->has_gdrive)
+                <span class="badge bg-success">G.Drive</span>
+                @endif
+                @if(!$p->theme_count && !$p->print_count && !$p->edited_count && !$p->has_gdrive)
+                <span class="text-muted">-</span>
+                @endif
+            </td>
             <td>
                 <a href="{{ route('admin.package.edit',$p->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                 <form action="{{ route('admin.package.destroy',$p->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger btn-sm">Hapus</button>
+                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus paket ini?')">Hapus</button>
                 </form>
             </td>
         </tr>

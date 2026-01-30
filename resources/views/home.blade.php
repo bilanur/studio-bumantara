@@ -28,8 +28,8 @@
                         dengan sistem booking yang mudah dan terjadwal
                     </p>
                     <div class="hero-buttons">
-                        <a href="#" class="hero-btn">Jadwalkan Foto</a>
-                        <a href="#" class="hero-link">Lihat Layanan</a>
+                        <a href="{{ route('packages') }}" class="hero-btn">Jadwalkan Foto</a>
+        
                     </div>
                 </div>
             </div>
@@ -55,22 +55,21 @@
         <div class="about-content">
             <div class="about-badge">✨ Tentang Kami</div>
             <h2>Bumantara Studio itu apa sih?</h2>
-            <p>Bumantara Studio adalah studio foto profesional yang menyediakan layanan foto pasangan, keluarga, wisuda, dan foto grup dengan konsep modern dan nyaman.</p>
-            <p>Kami hadir dengan peralatan terkini dan tim fotografer berpengalaman untuk mengabadikan setiap momen berharga Anda.</p>
+            <p>Bumantara Studio adalah studio foto profesional yang menyediakan layanan foto keluarga, wisuda, bestie, grup, couple, prawedding, maternity, dan pas foto dengan konsep modern dan nyaman.</p>
 
-            <a href="{{ route('about') }}" class="about-btn">Baca Selengkapnya</a>
+            <a href="#service" class="about-btn">Lihat Layanan</a>
         </div>
 
         <div class="about-images">
             <div class="image-grid">
                 <div class="about-img-card large">
-                    <img src="{{ asset('assets/images/wisuda.jpeg') }}" alt="Foto Wisuda">
+                    <img src="{{ asset('assets/images/1.jpeg') }}" alt="Foto Wisuda">
                     <div class="img-overlay">
                         <span>Foto Wisuda</span>
                     </div>
                 </div>
                 <div class="about-img-card">
-                    <img src="{{ asset('assets/images/keluarga.jpeg') }}" alt="Foto Keluarga">
+                    <img src="{{ asset('assets/images/3.jpeg') }}" alt="Foto Keluarga">
                     <div class="img-overlay">
                         <span>Foto Keluarga</span>
                     </div>
@@ -82,7 +81,7 @@
                     </div>
                 </div>
                 <div class="about-img-card wide">
-                    <img src="{{ asset('assets/images/group.jpg') }}" alt="Foto Group">
+                    <img src="{{ asset('assets/images/4.jpeg') }}" alt="Foto Group">
                     <div class="img-overlay">
                         <span>Foto Group</span>
                     </div>
@@ -96,7 +95,7 @@
         <div class="services-container">
             <h2>Layanan Kami</h2>
             <div class="services-grid">
-                <div class="service-card" style="background-image: url('{{ asset('assets/images/wisuda.jpeg') }}')">
+                <div class="service-card" style="background-image: url('{{ asset('assets/images/10.jpeg') }}')">
                     <div class="service-overlay">
                         <h3>Foto Wisuda</h3>
                     </div>
@@ -108,13 +107,13 @@
                     </div>
                 </div>
 
-                <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
+                <div class="service-card" style="background-image: url('{{ asset('assets/images/6.jpeg') }}')">
                     <div class="service-overlay">
                         <h3>Foto Bestie</h3>
                     </div>
                 </div>
 
-                <div class="service-card" style="background-image: url('{{ asset('assets/images/group.jpg') }}')">
+                <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
                     <div class="service-overlay">
                         <h3>Foto Group</h3>
                     </div>
@@ -128,19 +127,19 @@
                     </div>
                 </div>
 
-                <div class="service-card" style="background-image: url('{{ asset('assets/images/couple.jpg') }}')">
+                <div class="service-card" style="background-image: url('{{ asset('assets/images/11.jpeg') }}')">
                     <div class="service-overlay">
                         <h3>Foto Couple</h3>
                     </div>
                 </div>
 
-                <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
+                <div class="service-card" style="background-image: url('{{ asset('assets/images/8.jpeg') }}')">
                     <div class="service-overlay">
                         <h3>Foto Prawedding</h3>
                     </div>
                 </div>
 
-                <div class="service-card" style="background-image: url('{{ asset('assets/images/j.jpeg') }}')">
+                <div class="service-card" style="background-image: url('{{ asset('assets/images/9.jpeg') }}')">
                     <div class="service-overlay">
                         <h3>Foto Maternity</h3>
                     </div>

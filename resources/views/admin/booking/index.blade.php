@@ -10,6 +10,14 @@
     </div>
     @endif
 
+    <!-- Alert Error -->
+    @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-md-8">
@@ -40,7 +48,7 @@
                             <th class="text-end" style="width: 120px;">Total</th>
                             <th class="text-center" style="width: 120px;">Status Booking</th>
                             <th class="text-center" style="width: 120px;">Status Bayar</th>
-                            <th class="text-center" style="width: 100px;">Aksi</th>
+                            <th class="text-center" style="width: 140px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,13 +106,27 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-info" 
-                                        type="button"
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#detailModal{{ $booking->id }}"
-                                        style="padding: 0.25rem 0.75rem;">
-                                    Detail
-                                </button>
+                                <div class="d-flex flex-column gap-2">
+                                    <button class="btn btn-sm btn-info" 
+                                            type="button"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#detailModal{{ $booking->id }}"
+                                            style="padding: 0.25rem 0.75rem;">
+                                        Detail
+                                    </button>
+                                    
+                                    <!-- Form Delete langsung di tombol -->
+                                    <form action="{{ route('admin.booking.destroy', $booking->id) }}" 
+                                          method="POST" 
+                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus booking {{ $booking->kode_booking }}?\n\nData yang dihapus tidak dapat dikembalikan!')"
+                                          style="margin: 0;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger w-100" style="padding: 0.25rem 0.75rem;">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
