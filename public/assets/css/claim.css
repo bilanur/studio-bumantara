@@ -1,15 +1,39 @@
 /* ===============================
    FIX NAVBAR FONT
 ================================ */
+/* ===============================
+   FIX NAVBAR FONT
+================================ */
 .claim-page header,
+.claim-page header *,
 .claim-page nav,
+.claim-page nav *,
 .claim-page .logo,
+.claim-page .logo-text-main,
+.claim-page .logo-text-sub,
 .claim-page .nav-links,
+.claim-page .nav-links li,
 .claim-page .nav-links a,
 .claim-page .nav-right,
 .claim-page .masuk-btn,
-.claim-page .masuk-btn-outline {
-    font-family: f !important;
+.claim-page .masuk-btn-outline,
+.claim-page .profile-trigger,
+.claim-page .profile-dropdown,
+.claim-page .profile-dropdown a,
+.claim-page .profile-dropdown button,
+.claim-page footer,
+.claim-page footer *,
+.claim-page .footer,
+.claim-page .footer *,
+.claim-page .footer-section,
+.claim-page .footer-section h3,
+.claim-page .footer-section ul,
+.claim-page .footer-section ul li,
+.claim-page .footer-section ul li a,
+.claim-page .social-section,
+.claim-page .social-section p,
+.claim-page .copyright {
+    font-family: 'Poppins', sans-serif !important;
 }
 
 /* ===============================

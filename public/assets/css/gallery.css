@@ -137,18 +137,20 @@
         }
 
         .filter-btn {
-            padding: 0.6rem 1.5rem;
-            border: 2px solid #2c5f7c;
-            background: white;
-            color: #2c5f7c;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s;
-            text-transform: capitalize;
-        }
+    padding: 0.6rem 1.5rem;
+    border: 2px solid #2c5f7c;
+    background: white;
+    color: #2c5f7c;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+    text-transform: capitalize;
+    text-decoration: none;  /* ← Tambahkan ini */
+    display: inline-block;  /* ← Tambahkan ini juga untuk spacing yang lebih baik */
+}
 
         .filter-btn:hover {
             background: #e3f2fd;
