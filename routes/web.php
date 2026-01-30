@@ -105,8 +105,8 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::get('/timeslots', [AdminTimeSlotController::class, 'index']);
     Route::post('/timeslots', [AdminTimeSlotController::class, 'store']);
     Route::put('/timeslots/{id}', [AdminTimeSlotController::class, 'update']);
-    Route::delete('/timeslots/{id}', [AdminTimeSlotController::class, 'destroy']);
     Route::post('/timeslots/{id}/toggle', [AdminTimeSlotController::class, 'toggle']);
+    Route::delete('/timeslots/{id}', [AdminTimeSlotController::class, 'destroy']);
     Route::post('/timeslots/bulk', [AdminTimeSlotController::class, 'bulkCreate']);
 
     // TRANSACTIONS ADMIN

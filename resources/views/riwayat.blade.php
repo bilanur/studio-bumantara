@@ -1,7 +1,7 @@
 @php($title = 'Riwayat Pesanan | Bumantara Studio')
 
 @push('styles')
-<link href="{{ asset('assets/css/booking3.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/riwayat.css') }}" rel="stylesheet">
 @endpush
 
 <x-layout>
@@ -17,7 +17,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{ route('booking') }}">📋 Pesanan Aktif</a>
+                    <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>
                 </li>
 
                 <li class="sidebar-item active">
