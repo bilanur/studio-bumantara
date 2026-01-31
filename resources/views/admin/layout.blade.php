@@ -203,6 +203,8 @@
         .mobile-toggle {
             display: none;
         }
+
+
     </style>
 </head>
 
@@ -242,10 +244,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/booking" class="nav-link">
-                        <i class="bi bi-calendar-check"></i>
-                        <span>Data Booking</span>
+                    <a href="/admin/booking" class="nav-link d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Data Booking</span>
+                        </div>
+
+                        @if($newBookingCount > 0)
+                        <span class="badge bg-danger rounded-pill">
+                            {{ $newBookingCount }}
+                        </span>
+                        @endif
                     </a>
+
                 </li>
                 <li>
                     <a href="/admin/timeslots" class="nav-link">
@@ -326,7 +337,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            
+
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
                 if (href && currentPath.includes(href) && href !== '/') {
@@ -344,9 +355,9 @@
         document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('sidebar');
             const toggle = document.querySelector('.mobile-toggle');
-            
-            if (window.innerWidth <= 768 && 
-                !sidebar.contains(event.target) && 
+
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(event.target) &&
                 !toggle.contains(event.target) &&
                 sidebar.classList.contains('show')) {
                 sidebar.classList.remove('show');
