@@ -78,23 +78,25 @@
 
         .package-features {
             list-style: none;
+            padding-left: 0;
         }
 
         .package-features li {
             font-size: 0.8rem;
             color: #6b7280;
             padding: 0.5rem 0;
-            padding-left: 1.5rem;
+            padding-left: 2rem;
             position: relative;
         }
 
-        .package-features li::before {
-            content: "✓";
+        /* HAPUS CENTANG - Ganti dengan icon Font Awesome */
+        .package-features li i {
             position: absolute;
             left: 0;
+            top: 0.6rem;
             color: #6b7280;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 14px;
+            width: 18px;
         }
 
         /* Calendar Section */

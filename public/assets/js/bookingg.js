@@ -294,13 +294,46 @@ async function processBooking() {
 // ==========================================
 // PROMO CODE
 // ==========================================
-document.querySelector('.apply-btn')?.addEventListener('click', function() {
-    const promoCode = document.getElementById('promoCode').value.trim();
-    
-    if (!promoCode) {
-        alert('Masukkan kode promo terlebih dahulu!');
-        return;
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const applyBtn = document.querySelector('.apply-btn');
+    const promoInput = document.getElementById('promoCode');
 
-    alert('Fitur promo code akan segera tersedia!');
+    applyBtn.addEventListener('click', function () {
+        const code = promoInput.value.trim();
+        if (!code) {
+            alert('Masukkan kode voucher');
+            return;
+        }
+
+        fetch('/voucher/apply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                code: code
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+
+            // Update voucher
+            document.querySelector('.summary-item .text-danger').innerText =
+                '- Rp ' + data.discount.toLocaleString('id-ID');
+
+            // Update total
+            document.querySelector('.total-amount').innerText =
+                'Rp ' + data.total.toLocaleString('id-ID');
+
+            alert('Voucher berhasil digunakan!');
+        })
+        .catch(() => {
+            alert('Terjadi kesalahan');
+        });
+    });
 });

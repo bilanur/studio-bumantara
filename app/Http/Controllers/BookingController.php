@@ -84,61 +84,73 @@ class BookingController extends Controller
      * Halaman Booking Step 2 - Konfirmasi & Pembayaran
      * ✅ FIX 1: Gunakan createFromFormat untuk parsing tanggal yang aman
      */
-    public function booking2(Request $request)
-    {
-        try {
-            if (!$request->has(['package_id', 'tanggal', 'waktu', 'extra_people', 'zona_waktu'])) {
-                return redirect()->route('packages')->with('error', 'Data tidak lengkap');
-            }
-
-            $package = Package::findOrFail($request->package_id);
-            
-            // ✅ FIX: Parsing tanggal dengan format eksplisit YYYY-MM-DD
-            try {
-                $tanggalFormatted = Carbon::createFromFormat('Y-m-d', $request->tanggal)
-                    ->locale('id')
-                    ->translatedFormat('d F Y');
-            } catch (\Exception $e) {
-                return redirect()->route('packages')->with('error', 'Format tanggal tidak valid. Gunakan YYYY-MM-DD');
-            }
-            
-            $tanggal = $request->tanggal;
-            $waktu = $request->waktu;
-            $zonaWaktu = $request->zona_waktu;
-            $extraPeople = (int) $request->extra_people;
-            $hargaPaket = $package->price;
-            $hargaExtra = $extraPeople * 25000;
-            $totalPembayaran = $hargaPaket + $hargaExtra;
-            
-            $bookingData = [
-                'package_id' => $request->package_id,
-                'tanggal' => $tanggal,
-                'tanggalFormatted' => $tanggalFormatted,
-                'waktu' => $waktu,
-                'extra_people' => $extraPeople,
-                'zona_waktu' => $zonaWaktu,
-                'harga_paket' => $hargaPaket,
-                'harga_extra_people' => $hargaExtra,
-                'total_pembayaran' => $totalPembayaran,
-            ];
-            
-            return view('booking2', compact(
-                'package', 
-                'bookingData', 
-                'tanggal',
-                'tanggalFormatted', 
-                'waktu', 
-                'zonaWaktu', 
-                'extraPeople', 
-                'hargaPaket', 
-                'hargaExtra', 
-                'totalPembayaran'
-            ));
-            
-        } catch (\Exception $e) {
-            return redirect()->route('packages')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+public function booking2(Request $request)
+{
+    try {
+        if (!$request->has(['package_id', 'tanggal', 'waktu', 'extra_people', 'zona_waktu'])) {
+            return redirect()->route('packages')->with('error', 'Data tidak lengkap');
         }
+
+        $package = Package::findOrFail($request->package_id);
+        
+        try {
+            $tanggalFormatted = Carbon::createFromFormat('Y-m-d', $request->tanggal)
+                ->locale('id')
+                ->translatedFormat('d F Y');
+        } catch (\Exception $e) {
+            return redirect()->route('packages')->with('error', 'Format tanggal tidak valid');
+        }
+        
+        $tanggal = $request->tanggal;
+        $waktu = $request->waktu;
+        $zonaWaktu = $request->zona_waktu;
+        $extraPeople = (int) $request->extra_people;
+        
+        $hargaPaket = $package->price;
+        $hargaExtra = $extraPeople * 25000;
+        
+        // Add-ons (default 0)
+        $addonsTotal = 0;
+        
+        // Voucher dari session
+        $voucherDiscount = session('voucher.discount', 0);
+        $voucherCode = session('voucher.code', null);
+        
+        // Total final
+        $totalPembayaran = $hargaPaket + $hargaExtra + $addonsTotal - $voucherDiscount;
+        
+        $bookingData = [
+            'package_id' => $request->package_id,
+            'tanggal' => $tanggal,
+            'tanggalFormatted' => $tanggalFormatted,
+            'waktu' => $waktu,
+            'extra_people' => $extraPeople,
+            'zona_waktu' => $zonaWaktu,
+            'harga_paket' => $hargaPaket,
+            'harga_extra_people' => $hargaExtra,
+            'total_pembayaran' => $totalPembayaran,
+        ];
+        
+        return view('booking2', compact(
+            'package', 
+            'bookingData', 
+            'tanggal',
+            'tanggalFormatted', 
+            'waktu', 
+            'zonaWaktu', 
+            'extraPeople', 
+            'hargaPaket', 
+            'hargaExtra',
+            'addonsTotal',
+            'voucherDiscount',
+            'voucherCode',
+            'totalPembayaran'
+        ));
+        
+    } catch (\Exception $e) {
+        return redirect()->route('packages')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
+}
 
     /**
      * Simpan booking ke database
@@ -167,51 +179,73 @@ class BookingController extends Controller
             ], 422);
         }
 
-        try {
-            DB::beginTransaction();
+// ... validasi di atas tetap sama ...
 
-            // ✅ FIX 2: CEK DOUBLE BOOKING SEBELUM SIMPAN
-            $exists = Booking::whereDate('tanggal', $request->tanggal)
-                ->where('waktu', $request->waktu)
-                ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
-                ->exists();
+try {
+    DB::beginTransaction();
 
-            if ($exists) {
-                DB::rollBack();
-                return response()->json([
-                    'success' => false,
-                    'message' => '❌ Maaf, jam ini sudah dibooking oleh orang lain. Silakan pilih jam lain.',
-                    'error_type' => 'double_booking'
-                ], 409);
-            }
+    // Cek double booking
+    $exists = Booking::whereDate('tanggal', $request->tanggal)
+        ->where('waktu', $request->waktu)
+        ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
+        ->exists();
 
-            $package = Package::findOrFail($request->package_id);
+    if ($exists) {
+        DB::rollBack();
+        return response()->json([
+            'success' => false,
+            'message' => '❌ Maaf, jam ini sudah dibooking.',
+            'error_type' => 'double_booking'
+        ], 409);
+    }
 
-            $hargaPaket = $package->price;
-            $hargaExtra = $request->extra_people * 25000;
-            $totalPembayaran = $hargaPaket + $hargaExtra;
+    $package = Package::findOrFail($request->package_id);
 
-            $booking = Booking::create([
-                'kode_booking' => Booking::generateKodeBooking(),
-                'package_id' => $request->package_id,
-                'nama_pelanggan' => $request->nama_pelanggan,
-                'nomor_telepon' => $request->nomor_telepon,
-                'email' => $request->email,
-                'tanggal' => $request->tanggal,
-                'waktu' => $request->waktu,
-                'zona_waktu' => $request->zona_waktu,
-                'durasi' => $package->duration . ' menit',
-                'extra_people' => $request->extra_people,
-                'harga_paket' => $hargaPaket,
-                'harga_extra_people' => $hargaExtra,
-                'total_pembayaran' => $totalPembayaran,
-                'metode_pembayaran' => strtoupper($request->metode_pembayaran),
-                'status' => 'Menunggu Pembayaran',
-                'izin_sosmed' => $request->izin_sosmed,
-                'catatan' => $request->catatan ?? null,
-            ]);
+    $hargaPaket = $package->price;
+    $hargaExtra = $request->extra_people * 25000;
+    
+    // 🔹 VOUCHER
+    $voucherDiscount = 0;
+    if (session()->has('voucher')) {
+        $voucherDiscount = session('voucher.discount', 0);
+    }
+    
+    // 🔹 TOTAL (sudah dikurangi voucher)
+    $totalPembayaran = $hargaPaket + $hargaExtra - $voucherDiscount;
 
-            DB::commit();
+    $booking = Booking::create([
+        'kode_booking' => Booking::generateKodeBooking(),
+        'package_id' => $request->package_id,
+        'nama_pelanggan' => $request->nama_pelanggan,
+        'nomor_telepon' => $request->nomor_telepon,
+        'email' => $request->email,
+        'tanggal' => $request->tanggal,
+        'waktu' => $request->waktu,
+        'zona_waktu' => $request->zona_waktu,
+        'durasi' => $package->duration . ' menit',
+        'extra_people' => $request->extra_people,
+        'harga_paket' => $hargaPaket,
+        'harga_extra_people' => $hargaExtra,
+        'total_pembayaran' => $totalPembayaran,
+        'metode_pembayaran' => strtoupper($request->metode_pembayaran),
+        'status' => 'Menunggu Pembayaran',
+        'izin_sosmed' => $request->izin_sosmed,
+        'catatan' => $request->catatan ?? null,
+    ]);
+
+    // 🔹 KURANGI QUOTA VOUCHER
+    if (session()->has('voucher')) {
+        $voucherData = session('voucher');
+        $voucher = \App\Models\Voucher::find($voucherData['id']);
+        
+        if ($voucher && $voucher->quota > 0) {
+            $voucher->decrement('quota');
+        }
+        
+        session()->forget('voucher');
+    }
+
+    DB::commit();
 
             $waMessage = $this->generateWhatsAppMessage($booking);
             $waNumber = '62859109851955';

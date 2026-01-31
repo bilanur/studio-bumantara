@@ -2,6 +2,8 @@
 
 @push('styles')
 <link href="{{ asset('assets/css/packages.css') }}" rel="stylesheet">
+<!-- Font Awesome untuk icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 @endpush
 
 <x-layout>
@@ -33,37 +35,37 @@
                     <!-- DURASI & MAX PEOPLE -->
                     <ul class="package-features">
                         @if($package->duration)
-                        <li><strong>Durasi:</strong> {{ $package->duration }} menit</li>
+                        <li><i class="far fa-clock"></i> Durasi: {{ $package->duration }} menit</li>
                         @endif
                         
                         @if($package->max_people)
-                        <li><strong>Maksimal:</strong> {{ $package->max_people }} orang</li>
+                        <li><i class="far fa-user"></i> Maksimal: {{ $package->max_people }} orang</li>
                         @endif
 
                         <!-- DESKRIPSI -->
                         @if($package->description)
                             @foreach (explode("\n", $package->description) as $item)
                                 @if(trim($item))
-                                <li>{{ $item }}</li>
+                                <li><i class="far fa-circle"></i> {{ $item }}</li>
                                 @endif
                             @endforeach
                         @endif
 
                         <!-- FITUR TAMBAHAN -->
                         @if($package->theme_count)
-                        <li><strong>✨ Tema:</strong> {{ $package->theme_count }} pilihan</li>
+                        <li><i class="far fa-palette"></i> Tema: {{ $package->theme_count }} pilihan</li>
                         @endif
 
                         @if($package->print_count)
-                        <li><strong>📸 Cetak Foto:</strong> {{ $package->print_count }} lembar</li>
+                        <li><i class="far fa-image"></i> Cetak Foto: {{ $package->print_count }} lembar</li>
                         @endif
 
                         @if($package->edited_count)
-                        <li><strong>🎨 Edited File:</strong> {{ $package->edited_count }} file</li>
+                        <li><i class="far fa-file-image"></i> Edited File: {{ $package->edited_count }} file</li>
                         @endif
 
                         @if($package->has_gdrive)
-                        <li><strong>☁️ All File by G.Drive</strong></li>
+                        <li><i class="fab fa-google-drive"></i> All File by G.Drive</li>
                         @endif
                     </ul>
 

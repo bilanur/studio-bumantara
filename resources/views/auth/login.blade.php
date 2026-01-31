@@ -193,10 +193,9 @@
         <!-- RIGHT - NOW BLUE PANEL -->
         <div class="right">
             <div>
-                <h1>Halo, Teman!</h1>
+                <h1>Belum punya akun?</h1>
                 <p>
-                    Untuk tetap terhubung dengan kami<br>
-                    silakan login dengan informasi pribadi Anda
+                  Daftar sekarang dan nikmati kemudahan booking foto studio secara online.
                 </p>
                 <a href="{{ route('register') }}">Daftar</a>
             </div>

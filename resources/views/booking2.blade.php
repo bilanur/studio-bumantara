@@ -156,10 +156,20 @@
                             <span class="summary-label">Extra People ({{ $extraPeople }} orang)</span>
                             <span class="summary-value">Rp {{ number_format($hargaExtra, 0, ',', '.') }}</span>
                         </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Add-ons</span>
-                            <span class="summary-value">Rp 0</span>
-                        </div>
+                       <div class="summary-item">
+    <span class="summary-label">Add-ons</span>
+    <span class="summary-value">
+        Rp {{ number_format($addonsTotal, 0, ',', '.') }}
+    </span>
+</div>
+
+<div class="summary-item">
+    <span class="summary-label">Voucher</span>
+    <span class="summary-value text-danger">
+        - Rp {{ number_format($voucherDiscount, 0, ',', '.') }}
+    </span>
+</div>
+
                     </div>
 
                     <!-- Promo -->

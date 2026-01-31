@@ -19,8 +19,7 @@
             <div>
                 <h1>Selamat Datang!</h1>
                 <p>
-                    Untuk tetap terhubung dengan kami<br>
-                    silakan login dengan informasi pribadi Anda
+                  Buat akun sekarang dan nikmati kemudahan booking foto studio secara online.
                 </p>
 
                 <a href="{{ route('login') }}">Masuk</a>

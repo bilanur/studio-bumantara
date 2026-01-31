@@ -22,7 +22,7 @@
         <p class="page-subtitle">Check Out Ketersediaan Kami Serta Pesan Tanggal Dan Waktu Yang Cocok Dengan Anda</p>
     </section>
 
-      <!-- Booking Container -->
+<!-- Booking Container -->
     <div class="booking-container">
         <!-- Left: Package Info -->
         <div class="package-info">
@@ -34,14 +34,14 @@
             <ul class="package-features">
                 @if($package && $package->max_people)
                 <li>
-                    <span class="feature-icon">👥</span>
+                    <i class="fas fa-user"></i>
                     <span>Maksimal: {{ $package->max_people }} orang</span>
                 </li>
                 @endif
 
                 @if($package && $package->duration)
                 <li>
-                    <span class="feature-icon">🕐</span>
+                    <i class="fas fa-clock"></i>
                     <span>Durasi: {{ $package->duration }} menit</span>
                 </li>
                 @endif
@@ -50,7 +50,7 @@
                     @foreach (explode("\n", $package->description) as $item)
                         @if(trim($item))
                         <li>
-                            <span class="feature-icon">✓</span>
+                            <i class="fas fa-circle"></i>
                             <span>{{ $item }}</span>
                         </li>
                         @endif
@@ -59,28 +59,28 @@
 
                 @if($package && $package->theme_count)
                 <li>
-                    <span class="feature-icon">🎨</span>
+                    <i class="fas fa-palette"></i>
                     <span>Tema: {{ $package->theme_count }} pilihan</span>
                 </li>
                 @endif
 
                 @if($package && $package->print_count)
                 <li>
-                    <span class="feature-icon">📷</span>
+                    <i class="fas fa-image"></i>
                     <span>Cetak Foto: {{ $package->print_count }} lembar</span>
                 </li>
                 @endif
 
                 @if($package && $package->edited_count)
                 <li>
-                    <span class="feature-icon">✂</span>
+                    <i class="fas fa-file-image"></i>
                     <span>Edited File: {{ $package->edited_count }} file</span>
                 </li>
                 @endif
 
                 @if($package && $package->has_gdrive)
                 <li>
-                    <span class="feature-icon">☁</span>
+                    <i class="fab fa-google-drive"></i>
                     <span>All File by G.Drive</span>
                 </li>
                 @endif

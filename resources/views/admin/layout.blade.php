@@ -260,6 +260,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/admin/vouchers" class="nav-link">
+                        <i class="bi bi-ticket-perforated"></i>
+                        <span>Voucher</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/admin/transactions" class="nav-link">
                         <i class="bi bi-cloud-upload"></i>
                         <span>Upload Foto</span>
