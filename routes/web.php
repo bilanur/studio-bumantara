@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminTimeSlotController;
+use App\Http\Controllers\Admin\AdminPromoCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,8 @@ Route::middleware('auth')->group(function () {
 
 // Route tambahan dari file kedua
 Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+
+Route::get('/check-promo', [BookingController::class, 'checkPromo']);
 
 Route::get('/booking-riwayat', [BookingController::class, 'riwayat'])
     ->name('booking.riwayat');
@@ -160,6 +163,12 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
 
     // REPORT
     Route::get('/laporan', [ReportController::class, 'index'])->name('report.index');
+
+    // CODE PROMO
+    Route::get('/kodepromo', [AdminPromoCodeController::class, 'index'])->name('codepromo.index');
+    Route::post('/kodepromo', [AdminPromoCodeController::class, 'store']);
+    Route::delete('/kodepromo/{id}', [AdminPromoCodeController::class, 'destroy']);
+    Route::post('/kodepromo/{id}/toggle', [AdminPromoCodeController::class, 'toggle']);
 });
 
 /*

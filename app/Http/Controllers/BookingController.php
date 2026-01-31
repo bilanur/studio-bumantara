@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PromoCode;
 use Carbon\Carbon;
 
 class BookingController extends Controller
@@ -157,6 +158,7 @@ class BookingController extends Controller
             'extra_people' => 'required|integer|min:0',
             'metode_pembayaran' => 'required|in:qris,bca,dana',
             'izin_sosmed' => 'nullable|string|max:50',
+            'promo_code' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
@@ -191,6 +193,23 @@ class BookingController extends Controller
             $hargaExtra = $request->extra_people * 25000;
             $totalPembayaran = $hargaPaket + $hargaExtra;
 
+            $discount = 0;
+            $promoCode = null;
+
+            if ($request->promo_code) {
+
+                $promo = PromoCode::where('code', strtoupper($request->promo_code))
+                    ->where('is_active', 1)
+                    ->first();
+
+                if ($promo) {
+                    $discount = $promo->discount;
+                    $promoCode = $promo->code;
+                    $totalPembayaran = max(0, $totalPembayaran - $discount);
+                }
+            }
+
+
             $booking = Booking::create([
                 'kode_booking' => Booking::generateKodeBooking(),
                 'package_id' => $request->package_id,
@@ -205,6 +224,8 @@ class BookingController extends Controller
                 'harga_paket' => $hargaPaket,
                 'harga_extra_people' => $hargaExtra,
                 'total_pembayaran' => $totalPembayaran,
+                'promo_code' => $promoCode,
+                'discount' => $discount,
                 'metode_pembayaran' => strtoupper($request->metode_pembayaran),
                 'status' => 'Menunggu Pembayaran',
                 'izin_sosmed' => $request->izin_sosmed,
@@ -241,36 +262,44 @@ class BookingController extends Controller
      * Generate WhatsApp Message
      */
     private function generateWhatsAppMessage($booking)
-    {
-        $message = "🎉 *BOOKING BARU - BUMANTARA STUDIO*\n\n";
-        $message .= "📋 *Kode Booking:* {$booking->kode_booking}\n";
-        $message .= "━━━━━━━━━━━━━━━━━━━━\n\n";
-        
-        $message .= "👤 *DATA CUSTOMER*\n";
-        $message .= "Nama: {$booking->nama_pelanggan}\n";
-        $message .= "Telepon: {$booking->nomor_telepon}\n";
-        $message .= "Email: {$booking->email}\n\n";
-        
-        $message .= "📸 *DETAIL PAKET*\n";
-        $message .= "Paket: {$booking->package->name}\n";
-        $message .= "Tanggal: {$booking->tanggal->format('d/m/Y')}\n";
-        $message .= "Waktu: " . date('H:i', strtotime($booking->waktu)) . " {$booking->zona_waktu}\n";
-        $message .= "Durasi: {$booking->durasi}\n";
-        $message .= "Extra People: {$booking->extra_people} orang\n\n";
-        
-        $message .= "💰 *RINCIAN HARGA*\n";
-        $message .= "Harga Paket: Rp " . number_format($booking->harga_paket, 0, ',', '.') . "\n";
-        $message .= "Extra People: Rp " . number_format($booking->harga_extra_people, 0, ',', '.') . "\n";
-        $message .= "━━━━━━━━━━━━━━━━━━━━\n";
-        $message .= "TOTAL: *Rp " . number_format($booking->total_pembayaran, 0, ',', '.') . "*\n\n";
-        
-        $message .= "💳 *Metode Pembayaran:* " . strtoupper($booking->metode_pembayaran) . "\n\n";
-        
-        $message .= "Mohon konfirmasi dan lakukan pembayaran untuk menyelesaikan booking.\n\n";
-        $message .= "Terima kasih! 🙏";
-        
-        return $message;
+{
+    $message = "🎉 *BOOKING BARU - BUMANTARA STUDIO*\n\n";
+    $message .= "📋 *Kode Booking:* {$booking->kode_booking}\n";
+    $message .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+    
+    $message .= "👤 *DATA CUSTOMER*\n";
+    $message .= "Nama: {$booking->nama_pelanggan}\n";
+    $message .= "Telepon: {$booking->nomor_telepon}\n";
+    $message .= "Email: {$booking->email}\n\n";
+    
+    $message .= "📸 *DETAIL PAKET*\n";
+    $message .= "Paket: {$booking->package->name}\n";
+    $message .= "Tanggal: {$booking->tanggal->format('d/m/Y')}\n";
+    $message .= "Waktu: " . date('H:i', strtotime($booking->waktu)) . " {$booking->zona_waktu}\n";
+    $message .= "Durasi: {$booking->durasi}\n";
+    $message .= "Extra People: {$booking->extra_people} orang\n\n";
+    
+    $message .= "💰 *RINCIAN HARGA*\n";
+    $message .= "Harga Paket: Rp " . number_format($booking->harga_paket, 0, ',', '.') . "\n";
+    $message .= "Extra People: Rp " . number_format($booking->harga_extra_people, 0, ',', '.') . "\n";
+
+    // PROMO (AMAN)
+    if (!empty($booking->promo_code) && $booking->discount > 0) {
+        $message .= "Kode Promo: {$booking->promo_code}\n";
+        $message .= "Diskon: -Rp " . number_format($booking->discount, 0, ',', '.') . "\n";
     }
+
+    $message .= "━━━━━━━━━━━━━━━━━━━━\n";
+    $message .= "TOTAL: *Rp " . number_format($booking->total_pembayaran, 0, ',', '.') . "*\n\n";
+    
+    $message .= "💳 *Metode Pembayaran:* " . strtoupper($booking->metode_pembayaran) . "\n\n";
+    
+    $message .= "Mohon konfirmasi dan lakukan pembayaran untuk menyelesaikan booking.\n\n";
+    $message .= "Terima kasih! 🙏";
+    
+    return $message;
+}
+
 
     /**
      * API - Get Available Time Slots dengan Pengecekan Booking
@@ -431,5 +460,25 @@ class BookingController extends Controller
             ->get();
         
         return view('booking3', compact('bookings'));
+    }
+
+    public function checkPromo(Request $request)
+    {
+        $promo = PromoCode::where('code', strtoupper($request->code))
+            ->where('is_active', 1)
+            ->first();
+
+        if (!$promo) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kode promo tidak valid'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'discount' => $promo->discount,
+            'new_total' => max(0, $request->total - $promo->discount)
+        ]);
     }
 }

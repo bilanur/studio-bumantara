@@ -233,17 +233,18 @@ async function processBooking() {
     const urlParams = new URLSearchParams(window.location.search);
     
     const bookingData = {
-        package_id: urlParams.get('package_id'),
-        nama_pelanggan: document.getElementById('namaLengkap').value.trim(),
-        nomor_telepon: document.getElementById('nomorTelepon').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        tanggal: urlParams.get('tanggal'),
-        waktu: urlParams.get('waktu'),
-        zona_waktu: urlParams.get('zona_waktu') || 'WIB',
-        extra_people: parseInt(urlParams.get('extra_people') || 0),
+        package_id: urlParams.get("package_id"),
+        nama_pelanggan: document.getElementById("namaLengkap").value.trim(),
+        nomor_telepon: document.getElementById("nomorTelepon").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        tanggal: urlParams.get("tanggal"),
+        waktu: urlParams.get("waktu"),
+        zona_waktu: urlParams.get("zona_waktu") || "WIB",
+        extra_people: parseInt(urlParams.get("extra_people") || 0),
         metode_pembayaran: selectedMethod,
-        izin_sosmed: document.getElementById('sosialMedia').value,
-        catatan: null
+        izin_sosmed: document.getElementById("sosialMedia").value,
+        catatan: null,
+        promo_code: document.getElementById("promoCode").value.trim(),
     };
 
     console.log('Booking Data:', bookingData);
@@ -294,13 +295,35 @@ async function processBooking() {
 // ==========================================
 // PROMO CODE
 // ==========================================
-document.querySelector('.apply-btn')?.addEventListener('click', function() {
-    const promoCode = document.getElementById('promoCode').value.trim();
-    
-    if (!promoCode) {
-        alert('Masukkan kode promo terlebih dahulu!');
-        return;
-    }
+document
+    .querySelector(".apply-btn")
+    ?.addEventListener("click", async function () {
+        const code = document.getElementById("promoCode").value.trim();
+        const totalEl = document.getElementById("totalAmount");
+        const originalTotal = parseInt(totalEl.dataset.original);
 
-    alert('Fitur promo code akan segera tersedia!');
-});
+        if (!code) {
+            alert("Masukkan kode promo!");
+            return;
+        }
+
+        try {
+            const res = await fetch(`/check-promo?code=${code}`);
+            const data = await res.json();
+
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+
+            const newTotal = originalTotal - data.discount;
+
+            totalEl.innerText = "Rp " + newTotal.toLocaleString("id-ID");
+
+            document.getElementById("discountValue").value = data.discount;
+
+            alert("Promo berhasil dipakai 🎉");
+        } catch (e) {
+            alert("Server error");
+        }
+    });

@@ -10,7 +10,7 @@
 
 <x-layout>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <div class="container">
         <div class="checkout-grid">
             <!-- Left Column -->
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Detail Customer -->
                 <div class="card">
                     <div class="card-header">
@@ -81,7 +81,7 @@
                         <h2 class="card-title">Detail Customer</h2>
                     </div>
                     <p class="form-subtitle">Masukkan data lengkap kamu</p>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Nama Lengkap</label>
                         <input type="text" id="namaLengkap" class="form-input" placeholder="Masukkan nama lengkap">
@@ -123,7 +123,7 @@
                         </div>
                         <h2 class="card-title">Pilih Metode Pembayaran</h2>
                     </div>
-                    
+
                     <div class="payment-grid">
                         <div class="payment-option" data-method="qris">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/QRIS_logo.svg/2560px-QRIS_logo.svg.png" alt="QRIS" class="payment-logo">
@@ -164,15 +164,29 @@
 
                     <!-- Promo -->
                     <div class="promo-section">
-                        <input type="text" id="promoCode" class="form-input promo-input" placeholder="Masukkan kode promo">
-                        <button class="apply-btn">Apply</button>
+                        <input type="text"
+                            id="promoCode"
+                            name="promo_code"
+                            class="form-input promo-input"
+                            placeholder="Masukkan kode promo">
+
+                        <button type="button" class="apply-btn">
+                            Apply
+                        </button>
+
+                        <!-- hidden -->
+                        <input type="hidden" id="discountValue" value="0">
                     </div>
+
 
                     <!-- Total -->
                     <div class="total-section">
                         <div class="total-row">
                             <span class="total-label">Total Pembayaran</span>
-                            <span class="total-amount">Rp {{ number_format($totalPembayaran, 0, ',', '.') }}</span>
+                            <span class="total-amount" id="totalAmount"
+                                data-original="{{ $totalPembayaran }}">
+                                Rp {{ number_format($totalPembayaran, 0, ',', '.') }}
+                            </span>
                         </div>
 
                         <button id="btnKonfirmasi" class="payment-btn">
@@ -352,7 +366,7 @@
                             <span class="confirm-value-total" id="confirm-total">Rp {{ number_format($totalPembayaran, 0, ',', '.') }}</span>
                         </div>
                     </div>
-                    
+
                     <div class="confirm-actions">
                         <button class="btn-cancel" onclick="closeConfirmModal()">
                             Cek Lagi
