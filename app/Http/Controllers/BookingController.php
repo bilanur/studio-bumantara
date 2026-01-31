@@ -255,20 +255,7 @@ try {
                 'izin_sosmed' => $request->izin_sosmed,
                 'catatan' => $request->catatan ?? null,
             ]);
-
-
-    // 🔹 KURANGI QUOTA VOUCHER
-    if (session()->has('voucher')) {
-        $voucherData = session('voucher');
-        $voucher = \App\Models\Voucher::find($voucherData['id']);
-        
-        if ($voucher && $voucher->quota > 0) {
-            $voucher->decrement('quota');
-        }
-        
-        session()->forget('voucher');
-    }
-
+            
     DB::commit();
 
             $waMessage = $this->generateWhatsAppMessage($booking);

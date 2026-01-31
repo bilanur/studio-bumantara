@@ -10,7 +10,6 @@ use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\VoucherController;
 
 /* ADMIN */
 use App\Http\Controllers\Admin\DashboardController;
@@ -23,7 +22,6 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminTimeSlotController;
-use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\Admin\AdminPromoCodeController;
 
 /*
@@ -105,11 +103,6 @@ Route::get('/claim/detail/{id}', [TransactionController::class, 'detail'])->name
 Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::resource('vouchers', AdminVoucherController::class);
-    Route::patch('/vouchers/{id}/toggle', [AdminVoucherController::class, 'toggle']);
-    Route::post('/voucher/apply', [VoucherController::class, 'apply']);
-
 
     // BOOKING ADMIN
     Route::get('/booking', [AdminBookingController::class, 'index'])->name('booking.index');
