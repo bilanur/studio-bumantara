@@ -35,18 +35,18 @@
                         @if($package->duration)
                         <li><strong>Durasi:</strong> {{ $package->duration }} menit</li>
                         @endif
-                        
+
                         @if($package->max_people)
                         <li><strong>Maksimal:</strong> {{ $package->max_people }} orang</li>
                         @endif
 
                         <!-- DESKRIPSI -->
                         @if($package->description)
-                            @foreach (explode("\n", $package->description) as $item)
-                                @if(trim($item))
-                                <li>{{ $item }}</li>
-                                @endif
-                            @endforeach
+                        @foreach (explode("\n", $package->description) as $item)
+                        @if(trim($item))
+                        <li>{{ $item }}</li>
+                        @endif
+                        @endforeach
                         @endif
 
                         <!-- FITUR TAMBAHAN -->
@@ -67,9 +67,17 @@
                         @endif
                     </ul>
 
+                    @auth
                     <a href="{{ route('booking1', ['package_id' => $package->id]) }}" class="booking-btn">
                         Booking Now
                     </a>
+                    @else
+                    <button type="button"
+                        class="booking-btn"
+                        onclick="showLoginAlert()">
+                        Booking Now
+                    </button>
+                    @endauth
 
                     @if($package->price)
                     <button class="price-btn">
@@ -83,5 +91,12 @@
 
         </div>
     </section>
+
+    <script>
+        function showLoginAlert() {
+            alert('Silakan login terlebih dahulu untuk melakukan booking 🙏');
+        }
+    </script>
+
 
 </x-layout>
