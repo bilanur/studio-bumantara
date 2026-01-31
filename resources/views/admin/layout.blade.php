@@ -271,7 +271,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/vouchers" class="nav-link">
+                    <a href="{{ route('admin.codepromo.index') }}" class="nav-link">
                         <i class="bi bi-ticket-perforated"></i>
                         <span>Voucher</span>
                     </a>
@@ -304,12 +304,6 @@
                     <a href="{{ route('admin.report.index') }}" class="nav-link">
                         <i class="bi bi-file-earmark-bar-graph"></i>
                         <span>Laporan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.codepromo.index') }}" class="nav-link">
-                        <i class="bi bi-file-earmark-bar-graph"></i>
-                        <span>Code Promo</span>
                     </a>
                 </li>
 
