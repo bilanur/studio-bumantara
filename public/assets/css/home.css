@@ -1,4 +1,4 @@
-/* HOME.CSS - Complete Styling */
+/* HOME.CSS - Complete Responsive Styling */
 
 * {
     margin: 0;
@@ -49,6 +49,7 @@ body {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 /* Content Container */
@@ -59,15 +60,13 @@ body {
     align-items: center;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 3% 0 0;
+    padding: 0 6%;
+    z-index: 2;
 }
 
 .hero-text {
     max-width: 600px;
     margin-right: auto;
-    padding-left: 100px;
-    position: relative;
-    top: -50px;
 }
 
 /* Animations */
@@ -98,7 +97,7 @@ body {
 
 /* Text Styling */
 .hero-text h1 {
-    font-size: 2.3rem;
+    font-size: 2.5rem;
     color: #000000;
     margin-bottom: 1.5rem;
     line-height: 1.3;
@@ -110,7 +109,7 @@ body {
 .hero-text p {
     color: #000000;
     margin-bottom: 2.5rem;
-    font-size: 0.85rem;
+    font-size: 1rem;
     line-height: 1.8;
     opacity: 0;
 }
@@ -121,6 +120,7 @@ body {
     gap: 1.5rem;
     align-items: center;
     opacity: 0;
+    flex-wrap: wrap;
 }
 
 .hero-btn {
@@ -154,8 +154,8 @@ body {
 }
 
 .hero-link:hover {
-    color: #e0e0e0;
-    border-bottom-color: #e0e0e0;
+    color: #1e4d6b;
+    border-bottom-color: #1e4d6b;
 }
 
 /* Navigation Arrows */
@@ -173,6 +173,9 @@ body {
     cursor: pointer;
     font-size: 1.5rem;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .carousel-nav:hover {
@@ -185,7 +188,7 @@ body {
 }
 
 .carousel-nav.next {
-    right: 2%;
+    right: 30px;
 }
 
 /* Indicators */
@@ -258,8 +261,6 @@ body {
     line-height: 1.8;
     font-size: 0.95rem;
 }
-
-/* Stats section removed */
 
 .about-btn {
     background: #1e4d6b;
@@ -436,7 +437,7 @@ body {
 
 .testimonials-header {
     text-align: center;
-    margin-bottom: 3.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .testimonials-header h2 {
@@ -453,16 +454,53 @@ body {
     font-size: 1rem;
 }
 
+/* FILTER */
+.testimonial-filter {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0 30px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: #1e4d6b;
+    color: #1e4d6b;
+}
+
+.filter-btn.active {
+    background: #1e4d6b;
+    color: #fff;
+    border-color: #1e4d6b;
+}
+
+/* TESTIMONIALS GRID */
+.testimonials-wrapper {
+    overflow: visible;
+}
+
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
 }
 
+/* CARD */
 .testimonial-card {
     background: white;
     padding: 2rem;
-    border-radius: 0;
+    border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     transition: all 0.3s;
     border: 1px solid #e9ecef;
@@ -476,9 +514,14 @@ body {
     border-color: #1e4d6b;
 }
 
+/* HIDDEN UNTUK FILTER */
+.testimonial-card.hidden {
+    display: none;
+}
+
+/* IMAGE */
 .testimonial-image {
     width: 120px;
-    height: 100%;
     min-height: 180px;
     overflow: hidden;
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
@@ -496,6 +539,10 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+.testimonial-content.no-image {
+    padding: 0;
 }
 
 .testimonial-name {
@@ -518,18 +565,28 @@ body {
     line-height: 1.7;
 }
 
+/* EMPTY */
+.no-testimonial {
+    padding: 40px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    grid-column: 1 / -1;
+}
+
 /* ========================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - TABLET
+   (max-width: 968px)
 ======================================== */
 @media (max-width: 968px) {
     /* Hero */
     .hero-carousel {
-        height: 70vh;
-        min-height: 500px;
+        height: 80vh;
+        min-height: 550px;
     }
 
-    .hero-text {
-        padding-left: 50px;
+    .hero-content {
+        padding: 0 5%;
     }
 
     .hero-text h1 {
@@ -537,13 +594,132 @@ body {
     }
 
     .hero-text p {
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero-btn {
+        padding: 0.8rem 1.8rem;
         font-size: 0.85rem;
+    }
+
+    .carousel-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    .carousel-nav.prev {
+        left: 20px;
+    }
+
+    .carousel-nav.next {
+        right: 20px;
+    }
+
+    /* About */
+    .about {
+        flex-direction: column;
+        gap: 3rem;
+        padding: 4rem 5%;
+    }
+
+    .about h2 {
+        font-size: 2rem;
+    }
+
+    .image-grid {
+        grid-template-rows: repeat(3, 160px);
+    }
+
+    /* Services */
+    .services {
+        padding: 4rem 5%;
+    }
+
+    .services h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    .service-card {
+        height: 280px;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        padding: 4rem 5%;
+    }
+
+    .testimonials-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - MOBILE
+   (max-width: 640px)
+======================================== */
+@media (max-width: 640px) {
+    /* Hero */
+    .hero-carousel {
+        height: 70vh;
+        min-height: 500px;
+    }
+
+    .hero-content {
+        padding: 0 5%;
+        align-items: flex-start;
+        padding-top: 20%;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .hero-text p {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
     }
 
     .hero-buttons {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 1rem;
+        width: 100%;
+    }
+
+    .hero-btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.9rem 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .hero-link {
+        text-align: center;
+        width: 100%;
     }
 
     .carousel-nav {
@@ -552,41 +728,59 @@ body {
         font-size: 1.2rem;
     }
 
+    .carousel-nav.prev {
+        left: 15px;
+    }
+
+    .carousel-nav.next {
+        right: 15px;
+    }
+
+    .carousel-indicators {
+        bottom: 20px;
+        gap: 8px;
+    }
+
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+
+    .indicator.active {
+        width: 28px;
+    }
+
     /* About */
     .about {
-        flex-direction: column;
-        gap: 3rem;
+        padding: 3rem 5%;
+        gap: 2.5rem;
     }
 
-    /* Services */
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .about-badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 1rem;
     }
 
-    /* Testimonials */
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 640px) {
-    /* Hero */
-    .hero-text {
-        padding-left: 30px;
-    }
-
-    .hero-text h1 {
-        font-size: 1.6rem;
-    }
-
-    /* About */
     .about h2 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .about p {
+        font-size: 0.9rem;
+    }
+
+    .about-btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.9rem 2rem;
+        font-size: 0.85rem;
     }
 
     .image-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 180px);
+        grid-template-rows: repeat(4, 200px);
+        gap: 0.8rem;
     }
 
     .about-img-card.large,
@@ -595,89 +789,194 @@ body {
         grid-column: span 1;
     }
 
+    .img-overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    }
+
     /* Services */
+    .services {
+        padding: 3rem 5%;
+    }
+
+    .services h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+    }
+
     .services-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
     }
 
     .service-card {
         height: 250px;
     }
 
+    .service-overlay {
+        padding: 1.2rem;
+    }
+
+    .service-overlay h3 {
+        font-size: 0.95rem;
+    }
+
     /* Testimonials */
+    .testimonials {
+        padding: 3rem 5%;
+    }
+
+    .testimonials-header {
+        margin-bottom: 2rem;
+    }
+
     .testimonials-header h2 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: 1px;
+    }
+
+    .testimonials-header p {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-filter {
+        gap: 8px;
+        margin: 15px 0 20px;
+    }
+
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .testimonials-grid {
+        gap: 1.2rem;
+    }
+
+    .testimonial-card {
+        flex-direction: column;
+        padding: 1.2rem;
+        gap: 1rem;
+    }
+
+    .testimonial-image {
+        width: 100%;
+        height: 200px;
+        min-height: 200px;
+    }
+
+    .testimonial-name {
+        font-size: 1rem;
+    }
+
+    .stars {
+        font-size: 0.85rem;
+    }
+
+    .testimonial-text {
+        font-size: 0.85rem;
+        line-height: 1.6;
     }
 }
 
-/* FILTER */
-.testimonial-filter {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin: 20px 0;
-    flex-wrap: wrap;
+/* ========================================
+   RESPONSIVE DESIGN - SMALL MOBILE
+   (max-width: 480px)
+======================================== */
+@media (max-width: 480px) {
+    /* Hero */
+    .hero-carousel {
+        height: 65vh;
+        min-height: 450px;
+    }
+
+    .hero-text h1 {
+        font-size: 1.4rem;
+    }
+
+    .hero-text p {
+        font-size: 0.8rem;
+    }
+
+    .carousel-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .carousel-nav.prev {
+        left: 10px;
+    }
+
+    .carousel-nav.next {
+        right: 10px;
+    }
+
+    /* About */
+    .about {
+        padding: 2.5rem 4%;
+    }
+
+    .about h2 {
+        font-size: 1.4rem;
+    }
+
+    .image-grid {
+        grid-template-rows: repeat(4, 180px);
+    }
+
+    /* Services */
+    .services {
+        padding: 2.5rem 4%;
+    }
+
+    .services h2 {
+        font-size: 1.3rem;
+    }
+
+    .service-card {
+        height: 220px;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        padding: 2.5rem 4%;
+    }
+
+    .testimonials-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .testimonial-image {
+        height: 180px;
+        min-height: 180px;
+    }
 }
 
-.filter-btn {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    background: #fff;
-    cursor: pointer;
-    font-weight: 500;
+/* ========================================
+   UTILITY CLASSES
+======================================== */
+.text-center {
+    text-align: center;
 }
 
-.filter-btn.active {
-    background: #2a4962;
-    color: #fff;
-    border-color: #2a4962;
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 6%;
 }
 
-/* SCROLL HORIZONTAL */
-.testimonials-wrapper {
-    overflow-x: auto;
-    padding-bottom: 15px;
-    scroll-behavior: smooth;
+@media (max-width: 768px) {
+    .container {
+        padding: 0 5%;
+    }
 }
 
-.testimonials-grid {
-    display: flex;
-    gap: 20px;
-    flex-wrap: nowrap;
-}
-
-/* CARD */
-.testimonial-card {
-    min-width: 280px;
-    flex-shrink: 0;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    padding: 16px;
-    transition: transform .3s;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-4px);
-}
-
-/* HIDDEN UNTUK FILTER */
-.testimonial-card.hidden {
-    display: none;
-}
-
-/* IMAGE */
-.testimonial-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* EMPTY */
-.no-testimonial {
-    padding: 40px;
-    color: #888;
-    font-style: italic;
+@media (max-width: 480px) {
+    .container {
+        padding: 0 4%;
+    }
 }

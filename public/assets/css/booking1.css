@@ -1,474 +1,928 @@
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: #333;
-            line-height: 1.6;
-            background: #f8f9fa;
-        }
-
-        /* Page Header */
-        .page-header {
-            text-align: center;
-            padding: 3rem 6% 2rem;
-            background: white;
-        }
-
-        .page-header h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 0.8rem;
-        }
-
-        .page-subtitle {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            font-weight: 400;
-        }
-
-        /* Booking Container */
-        .booking-container {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 6%;
-            display: grid;
-            grid-template-columns: 280px 1fr 330px;
-            gap: 2rem;
-        }
-
-        /* Package Card Left */
-        .package-info {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            height: fit-content;
-        }
-
-        .package-image {
-            width: 100%;
-            height: 200px;
-            background: #e3e3e3;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            object-fit: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .package-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .package-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-        }
-
-        .package-features {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .package-features li {
-            font-size: 0.8rem;
-            color: #6b7280;
-            padding: 0.5rem 0;
-            padding-left: 2rem;
-            position: relative;
-        }
-
-        /* HAPUS CENTANG - Ganti dengan icon Font Awesome */
-        .package-features li i {
-            position: absolute;
-            left: 0;
-            top: 0.6rem;
-            color: #6b7280;
-            font-size: 14px;
-            width: 18px;
-        }
-
-        /* Calendar Section */
-        .calendar-section {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .calendar-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .calendar-header h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        .calendar-subheader {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .month-year {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .month-year-display {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #2c3e50;
-            min-width: 120px;
-        }
-
-        .nav-arrow {
-            width: 28px;
-            height: 28px;
-            border: none;
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.2rem;
-            color: #7f8c8d;
-        }
-
-        .nav-arrow:hover {
-            color: #1e4d6b;
-        }
-
-        .weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .weekday {
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #7f8c8d;
-            padding: 0.4rem;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: #2c3e50;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-            background: #f8f9fa;
-        }
-
-        .calendar-day:hover:not(.disabled) {
-            background: #e3f2fd;
-            border-color: #90caf9;
-        }
-
-        .calendar-day.selected {
-            background: #1e4d6b;
-            color: white;
-            font-weight: 600;
-        }
-
-        .calendar-day.disabled {
-            color: #bdc3c7;
-            cursor: not-allowed;
-            background: transparent;
-        }
-
-        /* Timezone */
-        .timezone-selector {
-            margin-bottom: 1.5rem;
-        }
-
-        .timezone-selector select {
-            width: 100%;
-            padding: 0.65rem 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-family: 'Poppins', sans-serif;
-            color: #5a6c7d;
-            background: white;
-        }
-
-        /* Time Slots */
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.6rem;
-        }
-
-        .time-slot {
-            padding: 0.65rem;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .time-slot:hover:not(.disabled) {
-            border-color: #1e4d6b;
-            background: #e3f2fd;
-        }
-
-        .time-slot.selected {
-            background: #1e4d6b;
-            color: white;
-            border-color: #1e4d6b;
-            font-weight: 600;
-        }
-
-        .time-slot.disabled {
-            background: #f5f5f5;
-            color: #bdc3c7;
-            text-decoration: line-through;
-            cursor: not-allowed;
-        }
-
-        /* Summary Card Right */
-        .summary-card {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .summary-section {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .summary-section.no-padding-bottom {
-            padding-bottom: 1rem;
-        }
-
-        .summary-section h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 0.8rem;
-        }
-
-        .summary-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .summary-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 1.1rem;
-            color: #6b7280;
-        }
-
-        .summary-text {
-            flex: 1;
-        }
-
-        .summary-label {
-            font-size: 0.75rem;
-            color: #7f8c8d;
-            margin-bottom: 0.3rem;
-        }
-
-        .summary-value {
-            font-size: 0.85rem;
-            color: #2c3e50;
-            font-weight: 400;
-            margin-bottom: 0.8rem;
-        }
-
-        .counter-controls {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            background: white;
-            border: 1.5px solid #e5e7eb;
-            border-radius: 50px;
-            width: fit-content;
-            margin-left: auto;
-        }
-
-        .counter-btn {
-            width: 28px;
-            height: 28px;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .counter-btn.minus {
-            background: #e5e7eb;
-            color: #6b7280;
-        }
-
-        .counter-btn.minus:hover {
-            background: #d1d5db;
-        }
-
-        .counter-btn.plus {
-            background: #1e4d6b;
-            color: white;
-        }
-
-        .counter-btn.plus:hover {
-            background: #163d54;
-        }
-
-        .counter-display {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1f2937;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .selected-datetime {
-            padding: 0;
-            background: transparent;
-            margin-bottom: 1.5rem;
-        }
-
-        .datetime-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .datetime-icon {
-            font-size: 1.5rem;
-            color: #1e4d6b;
-        }
-
-        .datetime-text {
-            font-size: 1rem;
-            color: #1f2937;
-            font-weight: 600;
-        }
-
-        .datetime-text .time {
-            color: #6b7280;
-            font-weight: 400;
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .price-label {
-            font-size: 0.95rem;
-            color: #1f2937;
-            font-weight: 500;
-        }
-
-        .price-value {
-            font-size: 1.5rem;
-            color: #1f2937;
-            font-weight: 700;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            background: #1e4d6b;
-            color: white;
-
-            height: 44px;
-            padding: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-family: 'Poppins', sans-serif;
-            text-decoration: none; 
-        }
-
-        .checkout-btn:hover {
-            background: #163d54;
-        }
-
-        .center-title {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .center-title h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .calendar-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .calendar-section .time-slots {
-            margin-top: 0.8rem;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background: #f8f9fa;
+}
+
+/* Page Header */
+.page-header {
+    text-align: center;
+    padding: 3rem 6% 2rem;
+    background: white;
+}
+
+.page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.8rem;
+}
+
+.page-subtitle {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    font-weight: 400;
+}
+
+/* Booking Container */
+.booking-container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 6%;
+    display: grid;
+    grid-template-columns: 280px 1fr 330px;
+    gap: 2rem;
+}
+
+/* Package Card Left */
+.package-info {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    height: fit-content;
+}
+
+.package-image {
+    width: 100%;
+    height: 200px;
+    background: #e3e3e3;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.package-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.package-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.package-features {
+    list-style: none;
+    padding-left: 0;
+}
+
+.package-features li {
+    font-size: 0.8rem;
+    color: #6b7280;
+    padding: 0.5rem 0;
+    padding-left: 2rem;
+    position: relative;
+}
+
+/* HAPUS CENTANG - Ganti dengan icon Font Awesome */
+.package-features li i {
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    color: #6b7280;
+    font-size: 14px;
+    width: 18px;
+}
+
+/* Calendar Section */
+.calendar-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.calendar-header {
+    margin-bottom: 1.5rem;
+}
+
+.calendar-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.calendar-subheader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.month-year {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.month-year-display {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2c3e50;
+    min-width: 120px;
+    text-align: center;
+}
+
+.nav-arrow {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+.nav-arrow:hover {
+    color: #1e4d6b;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.weekday {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #7f8c8d;
+    padding: 0.4rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #2c3e50;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    background: #f8f9fa;
+}
+
+.calendar-day:hover:not(.disabled) {
+    background: #e3f2fd;
+    border-color: #90caf9;
+}
+
+.calendar-day.selected {
+    background: #1e4d6b;
+    color: white;
+    font-weight: 600;
+}
+
+.calendar-day.disabled {
+    color: #bdc3c7;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+/* Timezone */
+.timezone-selector {
+    margin-bottom: 1.5rem;
+}
+
+.timezone-selector select {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-family: 'Poppins', sans-serif;
+    color: #5a6c7d;
+    background: white;
+}
+
+/* Time Slots */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+}
+
+.time-slot {
+    padding: 0.65rem;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+}
+
+.time-slot:hover:not(.disabled) {
+    border-color: #1e4d6b;
+    background: #e3f2fd;
+}
+
+.time-slot.selected {
+    background: #1e4d6b;
+    color: white;
+    border-color: #1e4d6b;
+    font-weight: 600;
+}
+
+.time-slot.disabled {
+    background: #f5f5f5;
+    color: #bdc3c7;
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+/* Summary Card Right */
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.summary-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.summary-section.no-padding-bottom {
+    padding-bottom: 1rem;
+}
+
+.summary-section h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.8rem;
+}
+
+.summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.summary-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+.summary-text {
+    flex: 1;
+}
+
+.summary-label {
+    font-size: 0.75rem;
+    color: #7f8c8d;
+    margin-bottom: 0.3rem;
+}
+
+.summary-value {
+    font-size: 0.85rem;
+    color: #2c3e50;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 50px;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.counter-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.counter-btn.minus {
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+.counter-btn.minus:hover {
+    background: #d1d5db;
+}
+
+.counter-btn.plus {
+    background: #1e4d6b;
+    color: white;
+}
+
+.counter-btn.plus:hover {
+    background: #163d54;
+}
+
+.counter-display {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+    min-width: 30px;
+    text-align: center;
+}
+
+.selected-datetime {
+    padding: 0;
+    background: transparent;
+    margin-bottom: 1.5rem;
+}
+
+.datetime-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.datetime-icon {
+    font-size: 1.5rem;
+    color: #1e4d6b;
+}
+
+.datetime-text {
+    font-size: 1rem;
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.datetime-text .time {
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.price-label {
+    font-size: 0.95rem;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.price-value {
+    font-size: 1.5rem;
+    color: #1f2937;
+    font-weight: 700;
+}
+
+.checkout-btn {
+    width: 100%;
+    background: #1e4d6b;
+    color: white;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none; 
+}
+
+.checkout-btn:hover {
+    background: #163d54;
+}
+
+.center-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.center-title h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.calendar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.calendar-section .time-slots {
+    margin-top: 0.8rem;
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+================================ */
+
+/* Tablet Large - 1024px */
+@media (max-width: 1024px) {
+    .booking-container {
+        grid-template-columns: 240px 1fr 300px;
+        gap: 1.5rem;
+        padding: 0 4%;
+        margin: 2.5rem auto;
+    }
+
+    .page-header {
+        padding: 2.5rem 4% 1.75rem;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .package-image {
+        height: 180px;
+    }
+
+    .calendar-section {
+        padding: 1.75rem;
+    }
+}
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 2rem 3% 1.5rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .booking-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 3%;
+        margin: 2rem auto;
+    }
+
+    /* Package info jadi full width di atas */
+    .package-info {
+        order: -2;
+        padding: 1.25rem;
+    }
+
+    .package-image {
+        height: 220px;
+    }
+
+    .package-title {
+        font-size: 1.05rem;
+    }
+
+    .package-features li {
+        font-size: 0.85rem;
+    }
+
+    /* Calendar di tengah */
+    .calendar-wrapper {
+        order: -1;
+    }
+
+    .calendar-section {
+        padding: 1.5rem;
+    }
+
+    .calendar-header h2 {
+        font-size: 1.05rem;
+    }
+
+    .center-title h2 {
+        font-size: 1.1rem;
+    }
+
+    .weekday {
+        font-size: 0.7rem;
+    }
+
+    .calendar-day {
+        font-size: 0.75rem;
+    }
+
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    .time-slot {
+        padding: 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    /* Summary card di bawah */
+    .summary-card {
+        order: 1;
+        gap: 1.25rem;
+    }
+
+    .summary-section {
+        padding: 1.25rem;
+    }
+
+    .summary-section h3 {
+        font-size: 0.9rem;
+    }
+
+    .counter-controls {
+        padding: 0.55rem 1rem;
+    }
+
+    .counter-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 1rem;
+    }
+
+    .counter-display {
+        font-size: 1.1rem;
+    }
+
+    .datetime-icon {
+        font-size: 1.3rem;
+    }
+
+    .datetime-text {
+        font-size: 0.95rem;
+    }
+
+    .price-label {
+        font-size: 0.9rem;
+    }
+
+    .price-value {
+        font-size: 1.3rem;
+    }
+
+    .checkout-btn {
+        height: 42px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+    .page-header {
+        padding: 1.75rem 5% 1.25rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .booking-container {
+        padding: 0 5%;
+        gap: 1.25rem;
+        margin: 1.5rem auto;
+    }
+
+    .package-info {
+        padding: 1rem;
+    }
+
+    .package-image {
+        height: 200px;
+    }
+
+    .package-title {
+        font-size: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .package-features li {
+        font-size: 0.8rem;
+        padding: 0.4rem 0;
+        padding-left: 1.75rem;
+    }
+
+    .package-features li i {
+        font-size: 13px;
+        top: 0.5rem;
+    }
+
+    .calendar-section {
+        padding: 1.25rem;
+    }
+
+    .calendar-section h3 {
+        font-size: 0.95rem;
+    }
+
+    .calendar-header h2,
+    .center-title h2 {
+        font-size: 1rem;
+    }
+
+    .month-year-display {
+        font-size: 0.85rem;
+        min-width: 100px;
+    }
+
+    .nav-arrow {
+        width: 26px;
+        height: 26px;
+        font-size: 1.1rem;
+    }
+
+    .weekdays {
+        gap: 0.2rem;
+    }
+
+    .weekday {
+        font-size: 0.65rem;
+        padding: 0.3rem;
+    }
+
+    .calendar-grid {
+        gap: 0.3rem;
+    }
+
+    .calendar-day {
+        font-size: 0.7rem;
+    }
+
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .time-slot {
+        padding: 0.7rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .summary-section {
+        padding: 1rem;
+    }
+
+    .summary-section h3 {
+        font-size: 0.85rem;
+        margin-bottom: 0.7rem;
+    }
+
+    .summary-item {
+        gap: 0.75rem;
+    }
+
+    .summary-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 1rem;
+    }
+
+    .summary-label {
+        font-size: 0.7rem;
+    }
+
+    .summary-value {
+        font-size: 0.8rem;
+    }
+
+    .counter-controls {
+        padding: 0.5rem 0.9rem;
+        gap: 0.85rem;
+    }
+
+    .counter-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 0.95rem;
+    }
+
+    .counter-display {
+        font-size: 1rem;
+        min-width: 25px;
+    }
+
+    .datetime-row {
+        gap: 0.6rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .datetime-icon {
+        font-size: 1.2rem;
+    }
+
+    .datetime-text {
+        font-size: 0.9rem;
+    }
+
+    .price-row {
+        margin-bottom: 1.25rem;
+    }
+
+    .price-label {
+        font-size: 0.85rem;
+    }
+
+    .price-value {
+        font-size: 1.2rem;
+    }
+
+    .checkout-btn {
+        height: 40px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mobile Extra Small - 360px */
+@media (max-width: 360px) {
+    .page-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .booking-container {
+        gap: 1rem;
+    }
+
+    .package-image {
+        height: 180px;
+    }
+
+    .package-title {
+        font-size: 0.95rem;
+    }
+
+    .package-features li {
+        font-size: 0.75rem;
+        padding-left: 1.5rem;
+    }
+
+    .package-features li i {
+        font-size: 12px;
+        width: 16px;
+    }
+
+    .calendar-section {
+        padding: 1rem;
+    }
+
+    .calendar-header h2,
+    .center-title h2 {
+        font-size: 0.95rem;
+    }
+
+    .month-year {
+        gap: 0.75rem;
+    }
+
+    .month-year-display {
+        font-size: 0.8rem;
+        min-width: 90px;
+    }
+
+    .nav-arrow {
+        width: 24px;
+        height: 24px;
+        font-size: 1rem;
+    }
+
+    .weekday {
+        font-size: 0.6rem;
+    }
+
+    .calendar-day {
+        font-size: 0.65rem;
+    }
+
+    .time-slots {
+        grid-template-columns: 1fr;
+    }
+
+    .time-slot {
+        padding: 0.65rem;
+        font-size: 0.7rem;
+    }
+
+    .summary-section {
+        padding: 0.875rem;
+    }
+
+    .summary-section h3 {
+        font-size: 0.8rem;
+    }
+
+    .summary-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 0.95rem;
+    }
+
+    .summary-label {
+        font-size: 0.65rem;
+    }
+
+    .summary-value {
+        font-size: 0.75rem;
+    }
+
+    .counter-controls {
+        padding: 0.45rem 0.8rem;
+        gap: 0.75rem;
+    }
+
+    .counter-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 0.9rem;
+    }
+
+    .counter-display {
+        font-size: 0.95rem;
+    }
+
+    .datetime-icon {
+        font-size: 1.1rem;
+    }
+
+    .datetime-text {
+        font-size: 0.85rem;
+    }
+
+    .price-label {
+        font-size: 0.8rem;
+    }
+
+    .price-value {
+        font-size: 1.1rem;
+    }
+
+    .checkout-btn {
+        height: 38px;
+        font-size: 0.75rem;
+    }
+}

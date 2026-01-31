@@ -8,7 +8,15 @@
             </div>
         </div>
 
-        <ul class="nav-links">
+        <!-- Hamburger Button -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- PASTIKAN SEMUA 5 MENU INI ADA -->
+        <ul class="nav-links" id="navLinks">
             <li><a href="{{ route('home') }}">HOME</a></li>
             <li><a href="{{ route('about') }}">ABOUT US</a></li>
             <li><a href="{{ route('packages') }}">PACKAGE</a></li>
@@ -38,12 +46,8 @@
                 </div>
 
                 <div class="profile-dropdown">
-
-                    {{-- 🔐 ADMIN --}}
                     @if(Auth::user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-
-                    {{-- 👤 USER --}}
                     @else
                     <a href="{{ route('profile.show') }}">Profile</a>
                     <a href="{{ route('booking3') }}">Pesanan</a>
@@ -56,7 +60,74 @@
                 </div>
             </div>
             @endauth
-
         </div>
     </nav>
 </header>
+
+<script>
+    // Toggle Mobile Menu - FIXED VERSION
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const body = document.body;
+    
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        });
+
+        // Close menu when clicking on a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                body.classList.remove('menu-open');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (body.classList.contains('menu-open') && 
+                !e.target.closest('nav') && 
+                !e.target.closest('.hamburger')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                body.classList.remove('menu-open');
+            }
+        });
+    }
+
+    // Profile Dropdown Toggle
+    function toggleDropdown(event) {
+        event.stopPropagation();
+        const profileMenu = document.getElementById('profileMenu');
+        if (profileMenu) {
+            profileMenu.classList.toggle('active');
+        }
+    }
+
+    // Close profile dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        const profileMenu = document.getElementById('profileMenu');
+        if (profileMenu && !e.target.closest('.profile-menu')) {
+            profileMenu.classList.remove('active');
+        }
+    });
+
+    // Auto close menu saat resize ke desktop
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (window.innerWidth > 768) {
+                if (hamburger && navLinks) {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    body.classList.remove('menu-open');
+                }
+            }
+        }, 250);
+    });
+</script>
