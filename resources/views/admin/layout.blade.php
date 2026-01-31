@@ -295,6 +295,12 @@
                         <span>Laporan</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.codepromo.index') }}" class="nav-link">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                        <span>Code Promo</span>
+                    </a>
+                </li>
 
                 <li class="logout-section">
                     <form method="POST" action="{{ route('logout') }}" class="mb-0">

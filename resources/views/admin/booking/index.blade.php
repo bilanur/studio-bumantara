@@ -45,6 +45,7 @@
                             <th style="width: 200px;">Customer</th>
                             <th style="width: 120px;">Paket</th>
                             <th style="width: 150px;">Jadwal</th>
+                            <th class="text-center" style="width: 120px;">Promo</th>
                             <th class="text-end" style="width: 120px;">Total</th>
                             <th class="text-center" style="width: 120px;">Status Booking</th>
                             <th class="text-center" style="width: 120px;">Status Bayar</th>
@@ -74,19 +75,28 @@
                                     <small class="text-muted">{{ date('H:i', strtotime($booking->waktu)) }} {{ $booking->zona_waktu }}</small>
                                 </div>
                             </td>
+                            <td class="text-center">
+                                @if($booking->promo_code)
+                                <span class="badge bg-success">{{ $booking->promo_code }}</span><br>
+                                <small class="text-danger">-Rp {{ number_format($booking->discount,0,',','.') }}</small>
+                                @else
+                                <span class="text-muted">-</span>
+                                @endif
+                            </td>
+
                             <td class="text-end">
                                 <strong style="color: #16a34a;">Rp {{ number_format($booking->total_pembayaran, 0, ',', '.') }}</strong>
                             </td>
                             <td class="text-center">
                                 @php
-                                    $statusMap = [
-                                        'Menunggu Pembayaran' => ['bg' => '#f59e0b', 'text' => 'Menunggu'],
-                                        'Dikonfirmasi' => ['bg' => '#3b82f6', 'text' => 'Dikonfirmasi'],
-                                        'Selesai' => ['bg' => '#10b981', 'text' => 'Selesai'],
-                                        'Batal' => ['bg' => '#ef4444', 'text' => 'Batal'],
-                                        'Expired' => ['bg' => '#6b7280', 'text' => 'Expired'],
-                                    ];
-                                    $status = $statusMap[$booking->status] ?? ['bg' => '#6b7280', 'text' => $booking->status];
+                                $statusMap = [
+                                'Menunggu Pembayaran' => ['bg' => '#f59e0b', 'text' => 'Menunggu'],
+                                'Dikonfirmasi' => ['bg' => '#3b82f6', 'text' => 'Dikonfirmasi'],
+                                'Selesai' => ['bg' => '#10b981', 'text' => 'Selesai'],
+                                'Batal' => ['bg' => '#ef4444', 'text' => 'Batal'],
+                                'Expired' => ['bg' => '#6b7280', 'text' => 'Expired'],
+                                ];
+                                $status = $statusMap[$booking->status] ?? ['bg' => '#6b7280', 'text' => $booking->status];
                                 @endphp
                                 <span class="badge" style="background: {{ $status['bg'] }}; font-size: 0.85rem;">
                                     {{ $status['text'] }}
@@ -94,12 +104,12 @@
                             </td>
                             <td class="text-center">
                                 @php
-                                    $statusBayar = $booking->status_pembayaran ?? 'Belum Lunas';
-                                    $bayarMap = [
-                                        'Lunas' => ['bg' => '#10b981', 'text' => 'Lunas'],
-                                        'Belum Lunas' => ['bg' => '#f59e0b', 'text' => 'Belum Lunas'],
-                                    ];
-                                    $bayar = $bayarMap[$statusBayar] ?? ['bg' => '#6b7280', 'text' => $statusBayar];
+                                $statusBayar = $booking->status_pembayaran ?? 'Belum Lunas';
+                                $bayarMap = [
+                                'Lunas' => ['bg' => '#10b981', 'text' => 'Lunas'],
+                                'Belum Lunas' => ['bg' => '#f59e0b', 'text' => 'Belum Lunas'],
+                                ];
+                                $bayar = $bayarMap[$statusBayar] ?? ['bg' => '#6b7280', 'text' => $statusBayar];
                                 @endphp
                                 <span class="badge" style="background: {{ $bayar['bg'] }}; font-size: 0.85rem;">
                                     {{ $bayar['text'] }}
@@ -107,19 +117,19 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex flex-column gap-2">
-                                    <button class="btn btn-sm btn-info" 
-                                            type="button"
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#detailModal{{ $booking->id }}"
-                                            style="padding: 0.25rem 0.75rem;">
+                                    <button class="btn btn-sm btn-info"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#detailModal{{ $booking->id }}"
+                                        style="padding: 0.25rem 0.75rem;">
                                         Detail
                                     </button>
-                                    
+
                                     <!-- Form Delete langsung di tombol -->
-                                    <form action="{{ route('admin.booking.destroy', $booking->id) }}" 
-                                          method="POST" 
-                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus booking {{ $booking->kode_booking }}?\n\nData yang dihapus tidak dapat dikembalikan!')"
-                                          style="margin: 0;">
+                                    <form action="{{ route('admin.booking.destroy', $booking->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus booking {{ $booking->kode_booking }}?\n\nData yang dihapus tidak dapat dikembalikan!')"
+                                        style="margin: 0;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger w-100" style="padding: 0.25rem 0.75rem;">
@@ -176,10 +186,22 @@
                             <i class="bi bi-person-circle" style="color: #6b7280;"></i> Data Customer
                         </h6>
                         <table class="table table-sm table-borderless">
-                            <tr><td width="100"><strong>Nama</strong></td><td>: {{ $booking->nama_pelanggan }}</td></tr>
-                            <tr><td><strong>Email</strong></td><td>: {{ $booking->email }}</td></tr>
-                            <tr><td><strong>Telepon</strong></td><td>: {{ $booking->nomor_telepon }}</td></tr>
-                            <tr><td><strong>Sosmed</strong></td><td>: {{ $booking->izin_sosmed }}</td></tr>
+                            <tr>
+                                <td width="100"><strong>Nama</strong></td>
+                                <td>: {{ $booking->nama_pelanggan }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td>: {{ $booking->email }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Telepon</strong></td>
+                                <td>: {{ $booking->nomor_telepon }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sosmed</strong></td>
+                                <td>: {{ $booking->izin_sosmed }}</td>
+                            </tr>
                         </table>
                     </div>
                     <div class="col-md-6">
@@ -187,11 +209,26 @@
                             <i class="bi bi-camera" style="color: #6b7280;"></i> Detail Paket
                         </h6>
                         <table class="table table-sm table-borderless">
-                            <tr><td width="100"><strong>Paket</strong></td><td>: {{ $booking->package->name ?? '-' }}</td></tr>
-                            <tr><td><strong>Tanggal</strong></td><td>: {{ \Carbon\Carbon::parse($booking->tanggal)->format('d F Y') }}</td></tr>
-                            <tr><td><strong>Waktu</strong></td><td>: {{ date('H:i', strtotime($booking->waktu)) }} {{ $booking->zona_waktu }}</td></tr>
-                            <tr><td><strong>Durasi</strong></td><td>: {{ $booking->durasi }}</td></tr>
-                            <tr><td><strong>Extra</strong></td><td>: {{ $booking->extra_people }} orang</td></tr>
+                            <tr>
+                                <td width="100"><strong>Paket</strong></td>
+                                <td>: {{ $booking->package->name ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tanggal</strong></td>
+                                <td>: {{ \Carbon\Carbon::parse($booking->tanggal)->format('d F Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Waktu</strong></td>
+                                <td>: {{ date('H:i', strtotime($booking->waktu)) }} {{ $booking->zona_waktu }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Durasi</strong></td>
+                                <td>: {{ $booking->durasi }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Extra</strong></td>
+                                <td>: {{ $booking->extra_people }} orang</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -200,8 +237,30 @@
                     <i class="bi bi-cash-coin" style="color: #6b7280;"></i> Rincian Pembayaran
                 </h6>
                 <table class="table table-sm">
-                    <tr><td>Harga Paket</td><td class="text-end">Rp {{ number_format($booking->harga_paket, 0, ',', '.') }}</td></tr>
-                    <tr><td>Extra People</td><td class="text-end">Rp {{ number_format($booking->harga_extra_people, 0, ',', '.') }}</td></tr>
+                    <tr>
+                        <td>Harga Paket</td>
+                        <td class="text-end">Rp {{ number_format($booking->harga_paket, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Extra People</td>
+                        <td class="text-end">Rp {{ number_format($booking->harga_extra_people, 0, ',', '.') }}</td>
+                    </tr>
+                    @if($booking->promo_code)
+                    <tr>
+                        <td>Kode Promo</td>
+                        <td class="text-end">
+                            <span class="badge bg-success">{{ $booking->promo_code }}</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Diskon</td>
+                        <td class="text-end text-danger">
+                            -Rp {{ number_format($booking->discount,0,',','.') }}
+                        </td>
+                    </tr>
+                    @endif
+
                     <tr style="background: #f3f4f6;">
                         <td><strong>Total</strong></td>
                         <td class="text-end"><strong style="color: #16a34a;">Rp {{ number_format($booking->total_pembayaran, 0, ',', '.') }}</strong></td>
@@ -214,12 +273,12 @@
                         <td>Status Pembayaran</td>
                         <td class="text-end">
                             @php
-                                $statusBayar = $booking->status_pembayaran ?? 'Belum Lunas';
-                                $bayarMap = [
-                                    'Lunas' => ['bg' => '#10b981', 'text' => 'Lunas'],
-                                    'Belum Lunas' => ['bg' => '#f59e0b', 'text' => 'Belum Lunas'],
-                                ];
-                                $bayar = $bayarMap[$statusBayar] ?? ['bg' => '#6b7280', 'text' => $statusBayar];
+                            $statusBayar = $booking->status_pembayaran ?? 'Belum Lunas';
+                            $bayarMap = [
+                            'Lunas' => ['bg' => '#10b981', 'text' => 'Lunas'],
+                            'Belum Lunas' => ['bg' => '#f59e0b', 'text' => 'Belum Lunas'],
+                            ];
+                            $bayar = $bayarMap[$statusBayar] ?? ['bg' => '#6b7280', 'text' => $statusBayar];
                             @endphp
                             <span class="badge" style="background: {{ $bayar['bg'] }};">{{ $bayar['text'] }}</span>
                         </td>
@@ -228,14 +287,14 @@
                         <td>Status Booking</td>
                         <td class="text-end">
                             @php
-                                $statusMap = [
-                                    'Menunggu Pembayaran' => ['bg' => '#f59e0b', 'text' => 'Menunggu'],
-                                    'Dikonfirmasi' => ['bg' => '#3b82f6', 'text' => 'Dikonfirmasi'],
-                                    'Selesai' => ['bg' => '#10b981', 'text' => 'Selesai'],
-                                    'Batal' => ['bg' => '#ef4444', 'text' => 'Batal'],
-                                    'Expired' => ['bg' => '#6b7280', 'text' => 'Expired'],
-                                ];
-                                $status = $statusMap[$booking->status] ?? ['bg' => '#6b7280', 'text' => $booking->status];
+                            $statusMap = [
+                            'Menunggu Pembayaran' => ['bg' => '#f59e0b', 'text' => 'Menunggu'],
+                            'Dikonfirmasi' => ['bg' => '#3b82f6', 'text' => 'Dikonfirmasi'],
+                            'Selesai' => ['bg' => '#10b981', 'text' => 'Selesai'],
+                            'Batal' => ['bg' => '#ef4444', 'text' => 'Batal'],
+                            'Expired' => ['bg' => '#6b7280', 'text' => 'Expired'],
+                            ];
+                            $status = $statusMap[$booking->status] ?? ['bg' => '#6b7280', 'text' => $booking->status];
                             @endphp
                             <span class="badge" style="background: {{ $status['bg'] }};">{{ $status['text'] }}</span>
                         </td>
@@ -341,13 +400,13 @@
 
 @push('scripts')
 <script>
-// Debug: Cek apakah Bootstrap loaded
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof bootstrap === 'undefined') {
-        console.error('Bootstrap JS belum loaded! Modal tidak akan berfungsi.');
-    } else {
-        console.log('Bootstrap JS loaded successfully');
-    }
-});
+    // Debug: Cek apakah Bootstrap loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof bootstrap === 'undefined') {
+            console.error('Bootstrap JS belum loaded! Modal tidak akan berfungsi.');
+        } else {
+            console.log('Bootstrap JS loaded successfully');
+        }
+    });
 </script>
 @endpush

@@ -28,6 +28,8 @@ class Booking extends Model
         'status',
         'izin_sosmed',
         'catatan',
+        'promo_code',
+        'discount',
     ];
 
     protected $casts = [
