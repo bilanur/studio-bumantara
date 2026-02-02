@@ -9,21 +9,27 @@ use Carbon\Carbon;
 
 class AdminTransactionController extends Controller
 {
-    // Halaman daftar semua transaksi dengan pagination
+    /**
+     * Display a listing of transactions
+     */
     public function index()
     {
         $transactions = Transaction::orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transactions.index', compact('transactions'));
     }
 
-    // Halaman edit transaksi (upload drive link)
+    /**
+     * Show the form for editing the transaction drive link
+     */
     public function edit($id)
     {
         $transaction = Transaction::findOrFail($id);
         return view('admin.transactions.edit', compact('transaction'));
     }
 
-    // Proses update drive link
+    /**
+     * Update the transaction drive link with expiry date
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -37,17 +43,55 @@ class AdminTransactionController extends Controller
             'expiry_days.max' => 'Maksimal 30 hari'
         ]);
 
-        $transaction = Transaction::findOrFail($id);
-        
-        // ✅ FIX: Cast expiry_days ke integer
-        $transaction->update([
-            'drive_link' => $request->drive_link,
-            'expiry_date' => now()->addDays((int)$request->expiry_days),
-            'status' => 'completed'
-        ]);
+        try {
+            $transaction = Transaction::findOrFail($id);
+            
+            // Cast expiry_days ke integer dan update
+            $transaction->update([
+                'drive_link' => $request->drive_link,
+                'expiry_date' => now()->addDays((int)$request->expiry_days),
+                'status' => 'completed'
+            ]);
 
-        return redirect()
-            ->route('admin.transactions.index')
-            ->with('success', 'Link Google Drive berhasil ' . ($transaction->wasChanged('drive_link') ? 'diupdate' : 'ditambahkan') . '!');
+            return redirect()
+                ->route('admin.transactions.index')
+                ->with('success', 'Link Google Drive berhasil ' . ($transaction->wasChanged('drive_link') ? 'diupdate' : 'ditambahkan') . '!');
+                
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.transactions.index')
+                ->with('error', 'Gagal mengupdate link: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified transaction from storage
+     */
+    public function destroy($id)
+    {
+        try {
+            $transaction = Transaction::findOrFail($id);
+            
+            // Store transaction info for success message
+            $transactionNumber = $transaction->transaction_number;
+            $customerName = $transaction->customer_name;
+            
+            // Delete the transaction
+            $transaction->delete();
+            
+            return redirect()
+                ->route('admin.transactions.index')
+                ->with('success', "Transaksi {$transactionNumber} ({$customerName}) berhasil dihapus!");
+                
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()
+                ->route('admin.transactions.index')
+                ->with('error', 'Transaksi tidak ditemukan!');
+                
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.transactions.index')
+                ->with('error', 'Gagal menghapus transaksi: ' . $e->getMessage());
+        }
     }
 }

@@ -99,6 +99,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/{id}/edit', [AdminTransactionController::class, 'edit'])->name('transactions.edit');
     Route::put('/transactions/{id}', [AdminTransactionController::class, 'update'])->name('transactions.update');
+    Route::delete('/transactions/{id}', [AdminTransactionController::class, 'destroy'])->name('transactions.destroy');
 
     // USER
     Route::get('/user', [UserController::class, 'index'])->name('user.index');

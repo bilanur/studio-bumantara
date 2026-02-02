@@ -10,6 +10,14 @@
     </div>
     @endif
 
+    <!-- Alert Error -->
+    @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Gagal!</strong> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
     <!-- Header -->
     <div class="row mb-4">
         <div class="col-md-8">
@@ -38,9 +46,8 @@
                             <th style="width: 150px;">Paket</th>
                             <th style="width: 130px;">Tanggal Booking</th>
                             <th class="text-end" style="width: 120px;">Total</th>
-                            <th class="text-center" style="width: 100px;">Status</th>
                             <th class="text-center" style="width: 120px;">Drive Link</th>
-                            <th class="text-center" style="width: 100px;">Aksi</th>
+                            <th class="text-center" style="width: 180px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,24 +70,11 @@
                             <td>
                                 <div>
                                     {{ $transaction->formatted_booking_date }}<br>
-                                    <small class="text-muted">{{ $transaction->booking_date->diffForHumans() }}</small>
+                                    {{-- <small class="text-muted">{{ $transaction->booking_date->diffForHumans() }}</small> --}}
                                 </div>
                             </td>
                             <td class="text-end">
                                 <strong style="color: #16a34a;">Rp {{ number_format($transaction->total_payment, 0, ',', '.') }}</strong>
-                            </td>
-                            <td class="text-center">
-                                @php
-                                    $statusMap = [
-                                        'completed' => ['bg' => '#10b981', 'text' => 'Selesai'],
-                                        'pending' => ['bg' => '#f59e0b', 'text' => 'Menunggu'],
-                                        'cancelled' => ['bg' => '#ef4444', 'text' => 'Batal'],
-                                    ];
-                                    $status = $statusMap[$transaction->status] ?? ['bg' => '#6b7280', 'text' => $transaction->status];
-                                @endphp
-                                <span class="badge" style="background: {{ $status['bg'] }}; font-size: 0.85rem;">
-                                    {{ $status['text'] }}
-                                </span>
                             </td>
                             <td class="text-center">
                                 @if($transaction->drive_link)
@@ -94,17 +88,38 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.transactions.edit', $transaction->id) }}" 
-                                   class="btn btn-sm"
-                                   style="background: #2B4D62; color: white; padding: 0.25rem 0.75rem;">
-                                    <i class="bi bi-{{ $transaction->drive_link ? 'pencil-square' : 'cloud-upload' }}"></i>
-                                    {{ $transaction->drive_link ? 'Edit' : 'Upload' }}
-                                </a>
+                                <div style="display: inline-flex; gap: 8px; align-items: center;">
+                                    {{-- Tombol Edit/Upload --}}
+                                    <a href="{{ route('admin.transactions.edit', $transaction->id) }}" 
+                                       class="btn btn-sm"
+                                       style="background: #2B4D62; color: white; padding: 0.4rem 0.8rem; border-radius: 4px; white-space: nowrap;"
+                                       title="{{ $transaction->drive_link ? 'Edit Link' : 'Upload Link' }}">
+                                        <i class="bi bi-{{ $transaction->drive_link ? 'pencil-square' : 'cloud-upload' }}"></i>
+                                        {{ $transaction->drive_link ? 'Edit' : 'Upload' }}
+                                    </a>
+                                    
+                                    {{-- Tombol Hapus - Hanya Muncul Jika Sudah Ada Drive Link --}}
+                                    @if($transaction->drive_link)
+                                    <form action="{{ route('admin.transactions.destroy', $transaction->id) }}" 
+                                          method="POST" 
+                                          style="display: inline; margin: 0;"
+                                          onsubmit="return confirm('⚠️ YAKIN INGIN MENGHAPUS?\n\n📋 No Transaksi: {{ $transaction->transaction_number }}\n👤 Customer: {{ $transaction->customer_name }}\n💰 Total: Rp {{ number_format($transaction->total_payment, 0, ',', '.') }}\n\n⚠️ Data yang dihapus tidak dapat dikembalikan!')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                                class="btn btn-sm" 
+                                                style="background: #ef4444; color: white; padding: 0.4rem 0.8rem; border-radius: 4px; border: none; white-space: nowrap;"
+                                                title="Hapus Transaksi">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="9" class="text-center py-5">
+                            <td colspan="8" class="text-center py-5">
                                 <div style="color: #9ca3af;">
                                     <i class="bi bi-inbox" style="font-size: 3rem;"></i>
                                     <p class="mt-2">Belum ada data transaksi</p>
@@ -137,6 +152,15 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Transaction index page loaded');
+    
+    // Auto hide alerts after 5 seconds
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
 });
 </script>
 @endpush

@@ -45,4 +45,5 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         return view('claim2', compact('transaction'));
     }
+    
 }
