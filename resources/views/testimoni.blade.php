@@ -218,6 +218,7 @@
                     <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>
                 </li>
 
+                <li class="sidebar-item">
                     <a href="{{ route('booking.riwayat') }}">🕘 Riwayat Pesanan</a>
                 </li>
 
