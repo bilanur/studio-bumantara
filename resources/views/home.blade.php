@@ -9,6 +9,8 @@
 <script src="{{ asset('assets/js/home.js') }}" defer></script>
 @endpush
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <x-layout>
 
     <div class="hero-carousel">
@@ -29,7 +31,7 @@
                     </p>
                     <div class="hero-buttons">
                         <a href="{{ route('packages') }}" class="hero-btn">Jadwalkan Foto</a>
-        
+
                     </div>
                 </div>
             </div>
