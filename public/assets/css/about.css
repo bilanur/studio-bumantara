@@ -685,3 +685,12 @@
                 height: 250px;
             }
         }
+        
+.contact-card a {
+    text-decoration: none !important;
+    color: #334155;
+}
+
+.contact-card a:hover {
+    color: #1e4d6b;
+}

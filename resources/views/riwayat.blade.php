@@ -13,7 +13,7 @@
 
                 <li class="sidebar-item user-item">
                     <span class="sidebar-icon">👤</span>
-                    <span>Febri Harijadi</span>
+                    <span>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
                 </li>
 
                 <li class="sidebar-item">

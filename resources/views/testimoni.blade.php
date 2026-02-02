@@ -23,10 +23,10 @@
                     <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>
                 </li>
 
-                <li class="sidebar-item active">
+                <li class="sidebar-item">
                     🕘 Riwayat Pesanan
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item active">
                     <a href="{{ route('testimoni') }}">✍️ Tulis Testimoni</a>
                 </li>
 

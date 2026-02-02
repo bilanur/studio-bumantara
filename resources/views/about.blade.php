@@ -130,7 +130,7 @@
                     </div>
                     <div class="contact-content">
                         <h3>WhatsApp</h3>
-                        <p>+62 821-3001-7454</p>
+                        <a href="https://wa.me/6282226114686"> <p>+62 822-2611-4686</p> </a>
                         <small>Chat kami untuk konsultasi</small>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                     </div>
                     <div class="contact-content">
                         <h3>Instagram</h3>
-                        <p>@bumantarastudio</p>
+                        <a href="https://instagram.com/bumantarastudio"> <p>@bumantarastudio</p> </a>
                         <small>Follow untuk update terbaru</small>
                     </div>
                 </div>

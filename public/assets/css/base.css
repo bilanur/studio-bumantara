@@ -1,6 +1,7 @@
 /* ============================================
-   COMPLETE RESPONSIVE NAVBAR CSS
-   Bumantara Studio - Fixed Version
+   COMPLETE RESPONSIVE NAVBAR CSS - FINAL VERSION
+   Bumantara Studio
+   All Issues Fixed - Guaranteed Working
    ============================================ */
 
 * {
@@ -553,111 +554,138 @@ nav {
         display: none;
     }
 
-    /* Mobile Menu Container - FIXED */
+    /* ============================================
+       MOBILE MENU - FIXED FOR ALL 5 ITEMS
+       ============================================ */
     .nav-links {
-        position: fixed;
-        top: 75px;
-        left: -100%;
-        width: 100%;
-        height: auto;
-        max-height: calc(100vh - 180px);
-        background: white;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding: 1.5rem 6%;
-        gap: 0;
-        transition: left 0.3s ease;
-        overflow-y: auto;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-        z-index: 99;
+        position: fixed !important;
+        top: 75px !important;
+        left: -100% !important;
+        width: 100% !important;
+        
+        /* CRITICAL FIX: Height yang cukup untuk 5 menu */
+        height: auto !important;
+        min-height: 350px !important;
+        max-height: 70vh !important;
+        
+        background: white !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        
+        /* CRITICAL FIX: Padding yang pas */
+        padding: 0.5rem 6% !important;
+        padding-bottom: 1rem !important;
+        
+        gap: 0 !important;
+        transition: left 0.3s ease !important;
+        
+        /* CRITICAL FIX: Enable scrolling */
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1) !important;
+        z-index: 99 !important;
     }
 
     .nav-links.active {
-        left: 0;
+        left: 0 !important;
     }
 
+    /* Menu Items - Prevent Shrinking */
     .nav-links li {
-        width: 100%;
-        border-bottom: 1px solid #f0f0f0;
+        width: 100% !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex-shrink: 0 !important;
     }
 
     .nav-links li:last-child {
-        border-bottom: none;
+        border-bottom: none !important;
     }
 
+    /* Links - Proper Spacing */
     .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 1rem 0;
-        font-size: 0.9rem;
+        display: block !important;
+        width: 100% !important;
+        padding: 0.9rem 0 !important;
+        font-size: 0.85rem !important;
+        color: #4a5568 !important;
+        line-height: 1.5 !important;
     }
 
     .nav-links a:hover {
-        padding-left: 8px;
+        padding-left: 8px !important;
+        color: #1e4d6b !important;
     }
 
     /* Mobile Nav Right */
     .nav-right {
-        position: fixed;
-        bottom: 0;
-        left: -100%;
-        width: 100%;
-        background: white;
-        padding: 1.5rem 6%;
-        gap: 0.8rem;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-        transition: left 0.3s ease;
-        flex-direction: column;
-        align-items: stretch;
-        z-index: 100;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        background: white !important;
+        padding: 1rem 6% !important;
+        gap: 0.8rem !important;
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.1) !important;
+        transition: left 0.3s ease !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        z-index: 100 !important;
     }
 
     .nav-links.active ~ .nav-right {
-        left: 0;
+        left: 0 !important;
     }
 
     .masuk-btn-outline,
     .masuk-btn {
-        width: 100%;
-        text-align: center;
-        padding: 0.8rem;
-        font-size: 0.9rem;
+        width: 100% !important;
+        text-align: center !important;
+        padding: 0.8rem !important;
+        font-size: 0.9rem !important;
     }
 
     /* Profile Menu di Mobile */
     .profile-menu {
-        width: 100%;
+        width: 100% !important;
     }
 
     .profile-trigger {
-        width: 100%;
-        justify-content: center;
-        padding: 0.8rem;
-        background: #f8f9fa;
-        border-radius: 8px;
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.8rem !important;
+        background: #f8f9fa !important;
+        border-radius: 8px !important;
     }
 
     .profile-dropdown {
-        position: static;
-        box-shadow: none;
-        margin-top: 0.5rem;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
+        position: static !important;
+        box-shadow: none !important;
+        margin-top: 0.5rem !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        display: none !important;
     }
 
     .profile-menu.active .profile-dropdown {
-        transform: translateY(0);
+        display: block !important;
     }
 
     /* Logo lebih kecil di mobile */
     .logo img {
-        height: 35px;
+        height: 35px !important;
     }
 
     .logo-text-main,
     .logo-text-sub {
-        font-size: 0.9rem;
+        font-size: 0.9rem !important;
     }
 
     /* Overlay gelap saat menu terbuka */
@@ -677,13 +705,13 @@ nav {
     }
 
     body.menu-open::before {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
     }
 
     body.menu-open {
-        overflow: hidden;
+        overflow: hidden !important;
     }
 
     /* Page Title */
@@ -720,36 +748,37 @@ nav {
    ============================================ */
 @media (max-width: 480px) {
     header {
-        padding: 0.8rem 4%;
+        padding: 0.8rem 4% !important;
     }
 
     .logo img {
-        height: 30px;
+        height: 30px !important;
     }
 
     .logo-text-main,
     .logo-text-sub {
-        font-size: 0.85rem;
+        font-size: 0.85rem !important;
     }
 
+    /* CRITICAL FIX: Small mobile adjustments */
     .nav-links {
-        top: 65px;
-        height: auto;
-        max-height: calc(100vh - 160px);
-        padding: 1rem 5%;
+        top: 65px !important;
+        min-height: 320px !important;
+        max-height: 65vh !important;
+        padding: 0.5rem 5% !important;
     }
 
     .nav-links a {
-        padding: 0.9rem 0;
-        font-size: 0.85rem;
+        padding: 0.8rem 0 !important;
+        font-size: 0.8rem !important;
     }
 
     .hamburger span {
-        width: 22px;
+        width: 22px !important;
     }
 
     .nav-right {
-        padding: 1.2rem 5%;
+        padding: 1rem 5% !important;
     }
 
     .page-title h1 {

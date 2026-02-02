@@ -24,12 +24,7 @@ use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminTimeSlotController;
 use App\Http\Controllers\Admin\AdminPromoCodeController;
 
-/*
-|--------------------------------------------------------------------------
-| PUBLIC
-|--------------------------------------------------------------------------
-*/
-
+//publik
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/packages', [PackagePageController::class, 'index'])->name('packages');
@@ -39,16 +34,11 @@ Route::view('/claimphoto', 'claimphoto')->name('claimphoto');
 Route::view('/claim-2', 'claim2')->name('claim2');
 Route::view('/testimoni', 'testimoni')->name('testimoni');
 
-/*
-|--------------------------------------------------------------------------
-| BOOKING FLOW
-|--------------------------------------------------------------------------
-*/
-
+//booking flow
 Route::get('/booking1', [BookingController::class, 'booking1'])->name('booking1');
 Route::get('/booking2', [BookingController::class, 'booking2'])->name('booking2');
 
-// ⬇️ TAMBAHKAN ROUTE API INI ⬇️
+//route api
 Route::get('/api/available-times', [BookingController::class, 'getAvailableTimes']);
 Route::get('/api/booked-slots', [BookingController::class, 'getBookedSlots']);
 Route::get('/api/timeslots', [AdminTimeSlotController::class, 'getActiveSlots']);
@@ -68,12 +58,7 @@ Route::get('/check-promo', [BookingController::class, 'checkPromo']);
 Route::get('/booking-riwayat', [BookingController::class, 'riwayat'])
     ->name('booking.riwayat');
 
-/*
-|--------------------------------------------------------------------------
-| AUTH USER
-|--------------------------------------------------------------------------
-*/
-
+//auth user
 Route::middleware('auth')->group(function () {
 
     Route::view('/dashboard', 'dashboard')->name('dashboard');
@@ -83,23 +68,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-/*
-|--------------------------------------------------------------------------
-| CLAIM PHOTO (TRANSACTIONS)
-|--------------------------------------------------------------------------
-*/
 
-// Route Customer
+// Route Claim photo (Customer)
 Route::get('/claim-photo', [TransactionController::class, 'index'])->name('claim.index');
 Route::post('/claim/search', [TransactionController::class, 'search'])->name('claim.search');
 Route::get('/claim/detail/{id}', [TransactionController::class, 'detail'])->name('claim.detail');
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN
-|--------------------------------------------------------------------------
-*/
-
+//admin
 Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -109,7 +84,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::put('/booking/{id}/update-status', [AdminBookingController::class, 'updateStatus'])->name('booking.update-status');
     Route::put('/booking/{id}/update-payment', [AdminBookingController::class, 'updatePayment'])->name('booking.update-payment');
 
-     // Route baru untuk delete
+     // Route untuk delete
     Route::delete('/booking/{id}', [AdminBookingController::class, 'destroy'])->name('booking.destroy');
 
     // TIME SLOTS
@@ -171,12 +146,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::post('/kodepromo/{id}/toggle', [AdminPromoCodeController::class, 'toggle']);
 });
 
-/*
-|--------------------------------------------------------------------------
-| TESTIMONI PUBLIC POST
-|--------------------------------------------------------------------------
-*/
-
+//testimoni
 Route::post('/testimoni', [TestimoniController::class, 'store'])
     ->middleware('auth')
     ->name('testimoni.store');
