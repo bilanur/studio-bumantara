@@ -11,40 +11,55 @@
     /* SIDEBAR */
 
     .sidebar {
-        width: 240px;
+        width: 260px;
         background: white;
-        border-right: 1px solid #e5e7eb;
-        padding: 20px;
+        padding: 2rem 1.5rem;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        min-height: calc(100vh - 120px);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(42, 73, 98, 0.08);
+        border: 1px solid #e1e8ed;
     }
 
     .sidebar-menu {
         list-style: none;
-        padding: 0;
-        margin: 0;
     }
 
     .sidebar-item {
-        margin-bottom: 12px;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.2s;
+        padding: 0.875rem 1rem;
+        border-radius: 8px;
     }
 
     .sidebar-item a {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        padding: 10px 14px;
-        border-radius: 10px;
         text-decoration: none;
-        color: #374151;
-        transition: .2s;
+        color: inherit;
     }
 
-    .sidebar-item a:hover {
-        background: #f1f5f9;
+    .sidebar-item:hover {
+        background: #f0f4f8;
+        color: #334e68;
     }
 
-    .sidebar-item.active a {
-        background: #2563eb;
-        color: white;
+    .sidebar-item.active {
+        background: #dfe9f3;
+        color: #2a4962;
+        font-weight: 600;
+        border-left: 3px solid #2a4962;
+        padding-left: calc(1rem - 3px);
+    }
+
+    .sidebar-icon {
+        font-size: 1.3rem;
     }
 
     .user-item {
@@ -145,8 +160,9 @@
 
             <ul class="sidebar-menu">
 
-                <li class="user-item">
-                    👤 {{ Auth::user()->name ?? 'Guest' }}
+                <li class="sidebar-item user-item">
+                    <span class="sidebar-icon">👤</span>
+                    <span>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
                 </li>
 
                 <li class="sidebar-item active">
