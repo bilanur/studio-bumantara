@@ -87,6 +87,8 @@ class BookingController extends Controller
      */
 public function booking2(Request $request)
 {
+        session()->forget('voucher');
+
     try {
         if (!$request->has(['package_id', 'tanggal', 'waktu', 'extra_people', 'zona_waktu'])) {
             return redirect()->route('packages')->with('error', 'Data tidak lengkap');
@@ -159,6 +161,7 @@ public function booking2(Request $request)
      */
     public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'package_id' => 'required|exists:packages,id',
             'nama_pelanggan' => 'required|string|max:255',

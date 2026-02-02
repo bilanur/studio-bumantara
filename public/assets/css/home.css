@@ -486,15 +486,34 @@ body {
 }
 
 /* TESTIMONIALS GRID */
-.testimonials-wrapper {
-    overflow: visible;
+/* Horizontal scroll testimonials */
+.testimonials-wrapper{
+    overflow-x:auto;
+    padding-bottom:10px;
+    scroll-behavior:smooth;
 }
 
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+.testimonials-wrapper::-webkit-scrollbar{
+    height:6px;
 }
+
+.testimonials-wrapper::-webkit-scrollbar-thumb{
+    background:#ccc;
+    border-radius:10px;
+}
+
+.testimonials-grid{
+    display:flex;
+    gap:20px;
+    flex-wrap:nowrap;
+}
+
+/* Card width */
+.testimonial-card{
+    min-width:380px;
+    flex-shrink:0;
+}
+
 
 /* CARD */
 .testimonial-card {
@@ -887,7 +906,13 @@ body {
    (max-width: 480px)
 ======================================== */
 @media (max-width: 480px) {
-    /* Hero */
+
+    /* Container */
+    .container {
+        padding: 0 4%;
+    }
+
+    /* ================= HERO ================= */
     .hero-carousel {
         height: 65vh;
         min-height: 450px;
@@ -915,7 +940,7 @@ body {
         right: 10px;
     }
 
-    /* About */
+    /* ================= ABOUT ================= */
     .about {
         padding: 2.5rem 4%;
     }
@@ -928,7 +953,7 @@ body {
         grid-template-rows: repeat(4, 180px);
     }
 
-    /* Services */
+    /* ================= SERVICES ================= */
     .services {
         padding: 2.5rem 4%;
     }
@@ -941,7 +966,7 @@ body {
         height: 220px;
     }
 
-    /* Testimonials */
+    /* ================= TESTIMONIALS ================= */
     .testimonials {
         padding: 2.5rem 4%;
     }
@@ -950,33 +975,39 @@ body {
         font-size: 1.3rem;
     }
 
+    .testimonials-wrapper {
+    overflow-x: auto;
+}
+
+.testimonials-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: nowrap;
+}
+
+.testimonial-card {
+    min-width: 85vw;
+}
+
+
+    .testimonials-grid {
+        display: flex;
+        gap: 16px;
+        flex-wrap: nowrap;
+    }
+
+    .testimonial-card {
+        min-width: 85vw;
+        flex-direction: column;
+        padding: 1.2rem;
+    }
+
     .testimonial-image {
         height: 180px;
         min-height: 180px;
     }
-}
 
-/* ========================================
-   UTILITY CLASSES
-======================================== */
-.text-center {
-    text-align: center;
-}
-
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 6%;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 0 5%;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 0 4%;
+    .testimonial-image img {
+        height: 140px;
     }
 }

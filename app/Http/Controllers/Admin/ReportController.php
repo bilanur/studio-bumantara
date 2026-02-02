@@ -13,8 +13,7 @@ class ReportController extends Controller
         $bulan = $request->bulan ?? now()->format('Y-m');
 
         $reports = Booking::with('package')
-            ->where('status', 'Selesai')
-            ->where('status_pembayaran', 'Lunas')
+            ->where('status', 'Selesai') // cukup ini
             ->whereRaw("DATE_FORMAT(tanggal,'%Y-%m') = ?", [$bulan])
             ->orderBy('tanggal', 'desc')
             ->get();
