@@ -187,9 +187,11 @@
 
             <ul class="sidebar-menu">
 
-                <li class="user-item">
-                    👤 {{ Auth::user()->name ?? 'Guest' }}
+                <li class="sidebar-item user-item">
+                    <span class="sidebar-icon">👤</span>
+                    <span>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
                 </li>
+
 
                 <li class="sidebar-item">
                     <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>

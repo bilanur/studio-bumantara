@@ -1011,3 +1011,46 @@ body {
         height: 140px;
     }
 }
+/* TESTIMONIAL HORIZONTAL */
+
+.testimonials-wrapper{
+    overflow-x:auto;
+    scroll-behavior:smooth;
+}
+
+.testimonials-grid{
+    display:flex;
+    gap:20px;
+    flex-wrap:nowrap;
+}
+
+.testimonial-card{
+    min-width:380px;
+    flex-shrink:0;
+}
+
+/* MOBILE */
+
+@media (max-width:480px){
+
+    .container{
+        padding:0 4%;
+    }
+
+    .testimonial-card{
+        min-width:85vw;
+    }
+
+    .testimonial-image img{
+        height:140px;
+    }
+
+    .testimonial-name{
+        font-size:.95rem;
+    }
+
+    .testimonial-text{
+        font-size:.8rem;
+    }
+
+}
