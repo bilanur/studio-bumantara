@@ -1,176 +1,9 @@
 @php($title = 'Testimoni | Bumantara Studio')
 
 @push('styles')
-<style>
-    .dashboard-layout {
-        display: flex;
-        min-height: 100vh;
-        background: #f6f7fb;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-        width: 260px;
-        background: white;
-        padding: 2rem 1.5rem;
-        position: sticky;
-        top: 100px;
-        height: fit-content;
-        min-height: calc(100vh - 120px);
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(42, 73, 98, 0.08);
-        border: 1px solid #e1e8ed;
-    }
-
-    .sidebar-menu {
-        list-style: none;
-    }
-
-    .sidebar-item {
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 0.9rem;
-        color: #64748b;
-        cursor: pointer;
-        transition: all 0.2s;
-        padding: 0.875rem 1rem;
-        border-radius: 8px;
-    }
-
-    .sidebar-item a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .sidebar-item:hover {
-        background: #f0f4f8;
-        color: #334e68;
-    }
-
-    .sidebar-item.active {
-        background: #dfe9f3;
-        color: #2a4962;
-        font-weight: 600;
-        border-left: 3px solid #2a4962;
-        padding-left: calc(1rem - 3px);
-    }
-
-    .sidebar-icon {
-        font-size: 1.3rem;
-    }
-
-    .user-item {
-        font-weight: 600;
-        margin-bottom: 24px;
-    }
-
-    /* MAIN */
-
-    .main-content {
-        flex: 1;
-        padding: 32px;
-
-        display: flex;
-        justify-content: center;
-    }
-
-    /* CARD FORM */
-
-    .testimoni-card {
-        max-width: 720px;
-        /* dari 520 → 720 */
-        width: 100%;
-        background: white;
-        border-radius: 18px;
-        padding: 24px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
-    }
-
-
-    .page-title {
-        font-size: 22px;
-        font-weight: 600;
-        margin-bottom: 16px;
-    }
-
-    /* FORM */
-
-    .form-group {
-        margin-bottom: 16px;
-    }
-
-    .form-label {
-        display: block;
-        font-weight: 500;
-        margin-bottom: 6px;
-    }
-
-    .form-input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 10px;
-        outline: none;
-    }
-
-    .form-textarea {
-        min-height: 120px;
-    }
-
-    /* STAR */
-
-    .rating-stars {
-        font-size: 26px;
-    }
-
-    .star {
-        cursor: pointer;
-        color: #d1d5db;
-    }
-
-    .star.active {
-        color: #facc15;
-    }
-
-    /* UPLOAD */
-
-    .upload-btn {
-        padding: 8px 14px;
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        background: white;
-        cursor: pointer;
-    }
-
-    /* SUBMIT */
-
-    .submit-btn {
-        width: 100%;
-        background: #2563eb;
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    /* MOBILE */
-
-    @media(max-width:768px) {
-        .sidebar {
-            display: none;
-        }
-
-        .main-content {
-            padding: 16px;
-        }
-    }
-</style>
+<link href="{{ asset('assets/css/testimoni.css') }}" rel="stylesheet">
 @endpush
+
 @push('scripts')
 <script src="{{ asset('assets/js/testimoni.js') }}" defer></script>
 @endpush
@@ -202,28 +35,59 @@
 
 <x-layout>
 
-    <div class="dashboard-layout">
+   <div class="dashboard-layout">
 
         <aside class="sidebar">
 
             <ul class="sidebar-menu">
 
                 <li class="sidebar-item user-item">
-                    <span class="sidebar-icon">👤</span>
+                    <span class="sidebar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
                     <span>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
                 </li>
 
-
                 <li class="sidebar-item">
-                    <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>
+                    <a href="{{ route('booking3') }}">
+                        <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 11H3v2h6v-2zm0-4H3v2h6V7zm0 8H3v2h6v-2zm12-6v-2h-6v2h6zm0 4v-2h-6v2h6zm0 4v-2h-6v2h6zM7 7v10h10V7H7zm2 8V9h6v6H9z"></path>
+                                <rect x="9" y="9" width="6" height="6"></rect>
+                            </svg>
+                        </span>
+                        <span>Pesanan Aktif</span>
+                    </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{ route('booking.riwayat') }}">🕘 Riwayat Pesanan</a>
+                    <a href="{{ route('booking.riwayat') }}">
+                        <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </span>
+                        <span>Riwayat Pesanan</span>
+                    </a>
                 </li>
 
                 <li class="sidebar-item active">
-                    <a href="{{ route('testimoni') }}">✍️ Tulis Testimoni</a>
+                    <a href="{{ route('testimoni') }}">
+                        <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </span>
+                        <span>Tulis Testimoni</span>
+                    </a>
                 </li>
 
             </ul>
@@ -234,7 +98,7 @@
 
             <div class="testimoni-card">
 
-                <div class="page-title">Tulis Testimoni</div>
+                <h2 class="page-title">Tulis Testimoni</h2>
 
                 <form action="{{ route('testimoni.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf

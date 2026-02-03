@@ -1,18 +1,10 @@
-/* ============================================
-   COMPLETE RESPONSIVE NAVBAR CSS - FINAL VERSION
-   Bumantara Studio
-   All Issues Fixed - Guaranteed Working
-   ============================================ */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ============================================
-   HEADER & NAVIGATION
-   ============================================ */
+/* HEADER & NAVIGATION */
 header {
     background: white;
     padding: 1.2rem 6%;
@@ -31,9 +23,7 @@ nav {
     position: relative;
 }
 
-/* ============================================
-   LOGO
-   ============================================ */
+/* logo */
 .logo {
     font-size: 1.4rem;
     font-weight: 700;
@@ -71,9 +61,7 @@ nav {
     letter-spacing: -0.5px;
 }
 
-/* ============================================
-   HAMBURGER MENU BUTTON
-   ============================================ */
+/* HAMBURGER MENU BUTTON */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -105,9 +93,7 @@ nav {
     transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* ============================================
-   NAVIGATION LINKS
-   ============================================ */
+/* NAVIGATION LINKS */
 .nav-links {
     display: flex;
     list-style: none;
@@ -151,9 +137,7 @@ nav {
     width: 100%;
 }
 
-/* ============================================
-   NAV RIGHT (Login/Register/Profile)
-   ============================================ */
+/* NAV RIGHT (Login/Register/Profile) */
 .nav-right {
     display: flex;
     align-items: center;
@@ -195,9 +179,7 @@ nav {
     box-shadow: 0 4px 8px rgba(30, 77, 107, 0.2);
 }
 
-/* ============================================
-   PROFILE MENU
-   ============================================ */
+/* PROFILE MENU */
 .profile-menu {
     position: relative;
     display: inline-block;
@@ -297,9 +279,7 @@ nav {
     margin: 0;
 }
 
-/* ============================================
-   PAGE TITLE
-   ============================================ */
+/* PAGE TITLE */
 .page-title {
     text-align: center;
     padding: 3rem 0 2rem;
@@ -314,9 +294,7 @@ nav {
     letter-spacing: 2px;
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
+/* footer */
 .footer {
     background: linear-gradient(135deg, #1C3A4D 0%, #152e3d 100%);
     color: #E8F1F5;
@@ -481,9 +459,7 @@ nav {
     height: 20px;
 }
 
-/* ============================================
-   RESPONSIVE - TABLET (max-width: 968px)
-   ============================================ */
+/* RESPONSIVE - TABLET */
 @media (max-width: 968px) {
     header {
         padding: 1rem 4%;
@@ -531,9 +507,7 @@ nav {
     }
 }
 
-/* ============================================
-   RESPONSIVE - MOBILE (max-width: 768px)
-   ============================================ */
+/* RESPONSIVE - MOBILE */
 @media (max-width: 768px) {
     header {
         padding: 1rem 4%;
@@ -554,9 +528,7 @@ nav {
         display: none;
     }
 
-    /* ============================================
-       MOBILE MENU - FIXED FOR ALL 5 ITEMS
-       ============================================ */
+    /* MOBILE MENU - FIXED FOR ALL 5 ITEMS */
     .nav-links {
         position: fixed !important;
         top: 75px !important;
@@ -743,9 +715,7 @@ nav {
     }
 }
 
-/* ============================================
-   RESPONSIVE - SMALL MOBILE (max-width: 480px)
-   ============================================ */
+/* RESPONSIVE - SMALL MOBILE */
 @media (max-width: 480px) {
     header {
         padding: 0.8rem 4% !important;
@@ -786,9 +756,7 @@ nav {
     }
 }
 
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
+/*  UTILITY CLASSES */
 .text-center {
     text-align: center;
 }

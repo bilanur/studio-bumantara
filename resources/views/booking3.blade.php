@@ -1,151 +1,7 @@
 @php($title = 'Pesanan Aktif | Bumantara Studio')
 
 @push('styles')
-<style>
-    .dashboard-layout {
-        display: flex;
-        min-height: 100vh;
-        background: #f6f7fb;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-        width: 260px;
-        background: white;
-        padding: 2rem 1.5rem;
-        position: sticky;
-        top: 100px;
-        height: fit-content;
-        min-height: calc(100vh - 120px);
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(42, 73, 98, 0.08);
-        border: 1px solid #e1e8ed;
-    }
-
-    .sidebar-menu {
-        list-style: none;
-    }
-
-    .sidebar-item {
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 0.9rem;
-        color: #64748b;
-        cursor: pointer;
-        transition: all 0.2s;
-        padding: 0.875rem 1rem;
-        border-radius: 8px;
-    }
-
-    .sidebar-item a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .sidebar-item:hover {
-        background: #f0f4f8;
-        color: #334e68;
-    }
-
-    .sidebar-item.active {
-        background: #dfe9f3;
-        color: #2a4962;
-        font-weight: 600;
-        border-left: 3px solid #2a4962;
-        padding-left: calc(1rem - 3px);
-    }
-
-    .sidebar-icon {
-        font-size: 1.3rem;
-    }
-
-    .user-item {
-        font-weight: 600;
-        margin-bottom: 24px;
-    }
-
-    /* MAIN */
-
-    .main-content {
-        flex: 1;
-        padding: 32px;
-    }
-
-    .page-title {
-        font-size: 22px;
-        font-weight: 600;
-    }
-
-    /* GRID */
-
-    .orders-grid {
-        margin-top: 24px;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-    }
-
-    /* CARD */
-
-    .order-card {
-        background: white;
-        border-radius: 16px;
-        padding: 18px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
-    }
-
-    .order-code {
-        font-weight: 600;
-        color: #2563eb;
-    }
-
-    .order-date {
-        font-size: 14px;
-        color: #6b7280;
-    }
-
-    .badge {
-        display: inline-block;
-        margin-top: 6px;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        background: #fff7ed;
-        color: #ea580c;
-    }
-
-    .order-price {
-        margin-top: 12px;
-        font-size: 18px;
-        font-weight: 700;
-    }
-
-    .btn-wa {
-        margin-top: 14px;
-        display: block;
-        text-align: center;
-        padding: 10px;
-        border-radius: 10px;
-        background: #22c55e;
-        color: white;
-        text-decoration: none;
-    }
-
-    /* MOBILE */
-
-    @media(max-width:768px) {
-        .sidebar {
-            display: none;
-        }
-
-        .main-content {
-            padding: 16px;
-        }
-    }
-</style>
+<link href="{{ asset('assets/css/booking3.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
@@ -161,20 +17,52 @@
             <ul class="sidebar-menu">
 
                 <li class="sidebar-item user-item">
-                    <span class="sidebar-icon">👤</span>
+                    <span class="sidebar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
                     <span>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
                 </li>
 
                 <li class="sidebar-item active">
-                    <a href="{{ route('booking3') }}">📋 Pesanan Aktif</a>
+                    <a href="{{ route('booking3') }}">
+                        <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 11H3v2h6v-2zm0-4H3v2h6V7zm0 8H3v2h6v-2zm12-6v-2h-6v2h6zm0 4v-2h-6v2h6zm0 4v-2h-6v2h6zM7 7v10h10V7H7zm2 8V9h6v6H9z"></path>
+                                <rect x="9" y="9" width="6" height="6"></rect>
+                            </svg>
+                        </span>
+                        <span>Pesanan Aktif</span>
+                    </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{ route('booking.riwayat') }}">🕘 Riwayat Pesanan</a>
+                    <a href="{{ route('booking.riwayat') }}">
+                        <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </span>
+                        <span>Riwayat Pesanan</span>
+                    </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="{{ route('testimoni') }}">✍️ Tulis Testimoni</a>
+                    <a href="{{ route('testimoni') }}">
+                        <span class="sidebar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </span>
+                        <span>Tulis Testimoni</span>
+                    </a>
                 </li>
 
             </ul>
@@ -183,50 +71,72 @@
 
         <main class="main-content">
 
-            <div class="page-title">Pesanan Aktif</div>
+            <h2 class="page-title">Tulis Testimoni</h2>
 
             @if($bookings->count())
 
-            <div class="orders-grid">
+                <div class="orders-grid">
 
-                @foreach($bookings as $booking)
+                    @foreach($bookings as $booking)
 
-                @if($booking->status != 'Selesai')
+                        @if($booking->status != 'Selesai')
 
-                <div class="order-card">
+                            <div class="order-card">
 
-                    <div class="order-code">{{ $booking->kode_booking }}</div>
+                                <strong>{{ $booking->package->name }}</strong>
 
-                    <strong>{{ $booking->package->name }}</strong>
+                                <div class="order-date">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span>{{ $booking->tanggal?->format('d M Y') }} • {{ $booking->waktu }}</span>
+                                </div>
 
-                    <div class="order-date">
-                        📅 {{ $booking->tanggal?->format('d M Y') }} • {{ $booking->waktu }}
-                    </div>
+                                <span class="badge {{ strtolower(str_replace(' ', '-', $booking->status)) }}">
+                                    {{ $booking->status }}
+                                </span>
 
-                    <span class="badge">{{ $booking->status }}</span>
+                                <div class="order-price">
+                                    Rp {{ number_format($booking->total_pembayaran, 0, ',', '.') }}
+                                </div>
 
-                    <div class="order-price">
-                        Rp {{ number_format($booking->total_pembayaran,0,',','.') }}
-                    </div>
+                                @if($booking->status == 'Menunggu Pembayaran')
+                                    <a class="btn-wa"
+                                        target="_blank"
+                                        href="https://wa.me/62859109851955?text={{ urlencode('Halo saya ingin konfirmasi pembayaran booking ' . $booking->kode_booking) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                        </svg>
+                                        <span>Konfirmasi WhatsApp</span>
+                                    </a>
+                                @endif
 
-                    @if($booking->status == 'Menunggu Pembayaran')
-                    <a class="btn-wa"
-                        target="_blank"
-                        href="https://wa.me/62859109851955?text={{ urlencode('Halo saya ingin konfirmasi pembayaran booking '.$booking->kode_booking) }}">
-                        💬 Konfirmasi WhatsApp
-                    </a>
-                    @endif
+                            </div>
+
+                        @endif
+
+                    @endforeach
 
                 </div>
 
-                @endif
-
-                @endforeach
-
-            </div>
-
             @else
-            <p>Belum ada pesanan aktif.</p>
+
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 11H3v2h6v-2zm0-4H3v2h6V7zm0 8H3v2h6v-2zm12-6v-2h-6v2h6zm0 4v-2h-6v2h6zm0 4v-2h-6v2h6z"></path>
+                            <line x1="4" y1="6" x2="4" y2="6.01"></line>
+                            <line x1="4" y1="12" x2="4" y2="12.01"></line>
+                            <line x1="4" y1="18" x2="4" y2="18.01"></line>
+                        </svg>
+                    </div>
+                    <p class="empty-state-text">Belum ada pesanan aktif.<br>Mulai booking sekarang untuk melihat pesanan Anda di sini.</p>
+                    <a href="{{ route('home') }}" class="empty-state-button">Lihat Paket Layanan</a>
+                </div>
+
             @endif
 
         </main>

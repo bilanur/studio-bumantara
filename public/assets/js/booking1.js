@@ -1,8 +1,3 @@
-// ============================================
-// BOOKING 1 - PILIH TANGGAL & WAKTU
-// Version: Fixed - No More Date Object Bug
-// ============================================
-
 let currentMonth = 11;
 let currentYear = 2025;
 let selectedDate = null; // ✅ STRING: YYYY-MM-DD (BUKAN Date object!)
@@ -15,9 +10,6 @@ let availableTimeSlots = [];
 const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Booking1 JS loaded (Fixed Version)');
     
@@ -39,9 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadTimeSlots(selectedDate);
 });
 
-// ============================================
-// LOAD TIME SLOTS DARI DATABASE + CEK BOOKING
-// ============================================
 async function loadTimeSlots(dateString = null) {
     const slots = document.getElementById('timeSlots');
     if (!slots) return;
@@ -221,9 +210,6 @@ function generateCalendar(month, year) {
     }
 }
 
-// ============================================
-// EVENT LISTENERS
-// ============================================
 function initEventListeners() {
     // Previous month
     document.getElementById('prevMonth')?.addEventListener('click', function() {
@@ -309,9 +295,6 @@ function initEventListeners() {
     }
 }
 
-// ============================================
-// UPDATE SELECTED DATETIME DISPLAY
-// ============================================
 function updateSelectedDateTime() {
     const display = document.getElementById('selectedDateTime');
     if (!display) return;
@@ -330,9 +313,6 @@ function updateSelectedDateTime() {
     }
 }
 
-// ============================================
-// UPDATE PRICE
-// ============================================
 function updatePrice() {
     const priceElement = document.querySelector('.price-value');
     if (!priceElement) return;
@@ -342,9 +322,6 @@ function updatePrice() {
     priceElement.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
 }
 
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
 function formatDateForAPI(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');

@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    /* ======================
-       SIDEBAR INTERACTION
-    ====================== */
+
     const sidebarItems = document.querySelectorAll(".sidebar-item");
 
     sidebarItems.forEach((item) => {
@@ -67,9 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    /* ======================
-       VALIDASI SUBMIT
-    ====================== */
     form.addEventListener("submit", function (e) {
         if (!ratingInput.value) {
             e.preventDefault();
