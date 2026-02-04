@@ -158,13 +158,19 @@
                         </div>
                        <div class="summary-item">
 
-<div class="summary-item">
+{{-- <div class="summary-item">
     <span class="summary-label">Voucher</span>
     <span class="summary-value text-danger">
         - Rp {{ number_format($voucherDiscount, 0, ',', '.') }}
     </span>
-</div>
+</div> --}}
 
+<div class="summary-item">
+    <span class="summary-label">Voucher</span>
+    <span class="summary-value text-danger" id="voucherAmount">
+        - Rp 0
+    </span>
+</div>
                     </div>
 
                     <!-- Promo -->

@@ -300,6 +300,7 @@ document
     ?.addEventListener("click", async function () {
         const code = document.getElementById("promoCode").value.trim();
         const totalEl = document.getElementById("totalAmount");
+        const voucherDisplayEl = document.querySelector('.summary-item .text-danger'); // Tambahkan ini
 
         if (!code) {
             alert("Masukkan kode promo!");
@@ -315,15 +316,68 @@ document
             const data = await res.json();
 
             if (!data.success) {
-                alert(data.message);
+                showCustomAlert('error', 'Gagal!', data.message);
                 return;
             }
 
+            // Update total pembayaran
             totalEl.innerText = "Rp " + data.new_total.toLocaleString("id-ID");
+            
+            // ✅ UPDATE TAMPILAN VOUCHER (yang warna merah)
+            const discount = originalTotal - data.new_total;
+            if (voucherDisplayEl) {
+                voucherDisplayEl.textContent = '- Rp ' + discount.toLocaleString('id-ID');
+            }
+            
+            // Update hidden value untuk di confirm modal
+            document.getElementById('discountValue').value = discount;
 
-            alert("🎉 Promo berhasil digunakan!");
+            // Show success alert
+            showCustomAlert('success', 'Berhasil!', `Promo berhasil digunakan! Diskon Rp ${discount.toLocaleString('id-ID')}`);
+            
         } catch (e) {
             console.error(e);
-            alert("Server error");
+            showCustomAlert('error', 'Error!', 'Terjadi kesalahan server');
         }
     });
+
+    // ==========================================
+// CUSTOM ALERT MODAL
+// ==========================================
+function showCustomAlert(type, title, message) {
+    // Remove existing alert if any
+    const existingAlert = document.getElementById('customAlert');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+
+    const iconHTML = type === 'success' 
+        ? '<svg class="alert-icon success" viewBox="0 0 52 52"><circle class="alert-icon-circle" cx="26" cy="26" r="25" fill="none"/><path class="alert-icon-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'
+        : '<svg class="alert-icon error" viewBox="0 0 52 52"><circle class="alert-icon-circle" cx="26" cy="26" r="25" fill="none"/><path class="alert-icon-line" fill="none" d="M16 16 36 36 M36 16 16 36"/></svg>';
+
+    const alertHTML = `
+        <div id="customAlert" class="custom-alert-overlay">
+            <div class="custom-alert-modal">
+                ${iconHTML}
+                <h2 class="custom-alert-title">${title}</h2>
+                <p class="custom-alert-message">${message}</p>
+                <button class="custom-alert-btn" onclick="closeCustomAlert()">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', alertHTML);
+    
+    // Show animation
+    setTimeout(() => {
+        document.getElementById('customAlert').classList.add('show');
+    }, 10);
+}
+
+window.closeCustomAlert = function() {
+    const alert = document.getElementById('customAlert');
+    if (alert) {
+        alert.classList.remove('show');
+        setTimeout(() => alert.remove(), 300);
+    }
+}

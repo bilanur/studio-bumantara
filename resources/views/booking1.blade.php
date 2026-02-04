@@ -32,6 +32,14 @@
             </div>
             <h3 class="package-title">{{ $package->name ?? 'Package Name' }}</h3>
             <ul class="package-features">
+
+                @if($package && $package->price)
+                <li>
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Harga: Rp {{ number_format($package->price, 0, ',', '.') }}</span>
+                </li>
+                @endif
+
                 @if($package && $package->max_people)
                 <li>
                     <i class="fas fa-user"></i>
