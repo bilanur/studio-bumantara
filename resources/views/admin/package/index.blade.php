@@ -4,37 +4,37 @@
 <h4>Paket & Harga</h4>
 
 <a href="{{ route('admin.package.create') }}" class="btn btn-primary mb-3">
-    Tambah Paket
+    <i class="bi bi-plus-circle"></i> Tambah Paket
 </a>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Gambar</th>
-            <th>Durasi</th>
-            <th>Harga</th>
-            <th>Maks Orang</th>
-            <th>Fitur Tambahan</th>
-            <th>Aksi</th>
+            <th class="text-center">No</th>
+            <th class="text-center">Nama</th>
+            <th class="text-center">Gambar</th>
+            <th class="text-center">Durasi</th>
+            <th class="text-center">Harga</th>
+            <th class="text-center">Maks Orang</th>
+            <th class="text-center">Fitur Tambahan</th>
+            <th class="text-center" width="180">Aksi</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($packages as $i => $p)
         <tr>
-            <td>{{ $i + 1 }}</td>
+            <td class="text-center">{{ $i + 1 }}</td>
             <td>{{ $p->name ?? '-' }}</td>
-            <td>
+            <td class="text-center">
                 @if($p->image)
-                <img src="{{ asset('storage/'.$p->image) }}" width="80">
+                <img src="{{ asset('storage/'.$p->image) }}" width="80" class="rounded">
                 @else
                 -
                 @endif
             </td>
-            <td>{{ $p->duration ? $p->duration . ' menit' : '-' }}</td>
+            <td class="text-center">{{ $p->duration ? $p->duration . ' menit' : '-' }}</td>
             <td>{{ $p->price ? 'Rp ' . number_format($p->price,0,',','.') : '-' }}</td>
-            <td>{{ $p->max_people ?? '-' }}</td>
+            <td class="text-center">{{ $p->max_people ?? '-' }}</td>
             <td>
                 @if($p->theme_count)
                 <span class="badge bg-info">{{ $p->theme_count }} Tema</span>
@@ -52,13 +52,23 @@
                 <span class="text-muted">-</span>
                 @endif
             </td>
-            <td>
-                <a href="{{ route('admin.package.edit',$p->id) }}" class="btn btn-warning btn-sm">Edit</a>
-
-                <form action="{{ route('admin.package.destroy',$p->id) }}" method="POST" class="d-inline">
+            <td class="text-center">
+                <a href="{{ route('admin.package.edit',$p->id) }}" 
+                   class="btn btn-warning btn-sm me-1" 
+                   title="Edit paket">
+                    <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                
+                <form action="{{ route('admin.package.destroy',$p->id) }}" 
+                      method="POST" 
+                      class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus paket ini?')">Hapus</button>
+                    <button class="btn btn-danger btn-sm" 
+                            onclick="return confirm('Yakin hapus paket ini?')"
+                            title="Hapus paket">
+                        <i class="bi bi-trash"></i> Hapus
+                    </button>
                 </form>
             </td>
         </tr>
