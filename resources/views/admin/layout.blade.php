@@ -244,20 +244,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/booking" class="nav-link d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="bi bi-calendar-check"></i>
-                            <span>Data Booking</span>
-                        </div>
-
-                        @if($newBookingCount > 0)
-                        <span class="badge bg-danger rounded-pill">
-                            {{ $newBookingCount }}
-                        </span>
-                        @endif
-                    </a>
-
-                </li>
+    <a href="/admin/booking" class="nav-link">
+        <i class="bi bi-calendar-check"></i>
+        <span>Data Booking</span>
+        @if($newBookingCount > 0)
+        <span class="badge bg-danger rounded-pill ms-auto">
+            {{ $newBookingCount }}
+        </span>
+        @endif
+    </a>
+</li>
                 <li>
                     <a href="/admin/timeslots" class="nav-link">
                         <i class="bi bi-clock-history"></i>

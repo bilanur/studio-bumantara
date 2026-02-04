@@ -68,7 +68,7 @@
 
         <main class="main-content">
 
-            <h2 class="page-title">Tulis Testimoni</h2>
+            <h2 class="page-title">Riwayat Pesanan</h2>
 
             @if($bookings->count())
 
