@@ -926,3 +926,7 @@ body {
         font-size: 0.75rem;
     }
 }
+
+.calendar-section h3 {
+    text-align: center;
+}

@@ -262,7 +262,7 @@ try {
     DB::commit();
 
             $waMessage = $this->generateWhatsAppMessage($booking);
-            $waNumber = '62859109851955';
+            $waNumber = '6282226114686';
             $waUrl = "https://wa.me/{$waNumber}?text=" . urlencode($waMessage);
 
             return response()->json([
@@ -332,80 +332,47 @@ try {
      * API - Get Available Time Slots dengan Pengecekan Booking
      * ✅ FIX 3: Gunakan whereDate untuk keamanan lebih baik
      */
-    public function getAvailableTimes(Request $request)
-    {
-        try {
-            $date = $request->query('date');
-            $timezone = $request->query('timezone', 'WIB');
-            
-            // Jika tanggal kosong, return semua time slots
-            if (!$date) {
-                $timeSlots = TimeSlot::where('is_active', 1)
-                    ->orderBy('time')
-                    ->get()
-                    ->map(function($slot) {
-                        return [
-                            'time' => date('H:i', strtotime($slot->time)),
-                            'available' => true,
-                            'is_booked' => false
-                        ];
-                    });
-                
-                return response()->json([
-                    'success' => true,
-                    'time_slots' => $timeSlots
-                ]);
-            }
-            
-            // Ambil semua time slots yang aktif dari database
-            $allTimeSlots = TimeSlot::where('is_active', 1)
+public function getAvailableTimes(Request $request)
+{
+    try {
+        $date = $request->query('date');
+        $timezone = $request->query('timezone', 'WIB');
+        
+        // Jika tanggal kosong, return semua time slots
+        if (!$date) {
+            $timeSlots = TimeSlot::where('is_active', 1)
                 ->orderBy('time')
-                ->get();
-            
-            // ✅ FIX 3: Gunakan whereDate untuk keamanan lebih baik
-            $bookedTimes = Booking::whereDate('tanggal', $date)
-                ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
-                ->pluck('waktu')
-                ->map(function($time) {
-                    return date('H:i', strtotime($time));
-                })
-                ->toArray();
-            
-            // Gabungkan data: cek mana yang sudah dibooking
-            $timeSlots = $allTimeSlots->map(function($slot) use ($bookedTimes) {
-                $timeFormatted = date('H:i', strtotime($slot->time));
-                $isBooked = in_array($timeFormatted, $bookedTimes);
-                
-                return [
-                    'time' => $timeFormatted,
-                    'available' => !$isBooked,
-                    'is_booked' => $isBooked
-                ];
-            });
+                ->get()
+                ->map(function($slot) {
+                    return [
+                        'time' => date('H:i', strtotime($slot->time)),
+                        'available' => true,
+                        'is_booked' => false
+                    ];
+                });
             
             return response()->json([
                 'success' => true,
-                'time_slots' => $timeSlots,
-                'booked_count' => count($bookedTimes),
-                'date' => $date
+                'time_slots' => $timeSlots
             ]);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
-            ], 500);
         }
-    }
-
-    /**
-     * API - Get Booked Slots Only
-     * ✅ FIX 3: Gunakan whereDate
-     */
-    public function getBookedSlots(Request $request)
-    {
-        $date = $request->query('date');
         
+        // Ambil semua time slots yang aktif dari database
+        $allTimeSlots = TimeSlot::where('is_active', 1)
+            ->orderBy('time')
+            ->get();
+        
+        // ✅ TAMBAHAN INI SAJA - Filter jam yang sudah lewat jika hari ini
+       $isToday = $date === now('Asia/Jakarta')->format('Y-m-d');
+       $currentTime = now('Asia/Jakarta')->format('H:i');
+        
+       if ($isToday) {
+       $allTimeSlots = $allTimeSlots->filter(function($slot) use ($currentTime) {
+        return date('H:i', strtotime($slot->time)) > $currentTime;
+        })->values(); // ← tambah ini
+        }
+        
+        // Cek booking yang sudah ada
         $bookedTimes = Booking::whereDate('tanggal', $date)
             ->whereIn('status', ['Menunggu Pembayaran', 'Dikonfirmasi'])
             ->pluck('waktu')
@@ -414,12 +381,32 @@ try {
             })
             ->toArray();
         
+        // Gabungkan data
+        $timeSlots = $allTimeSlots->map(function($slot) use ($bookedTimes) {
+            $timeFormatted = date('H:i', strtotime($slot->time));
+            $isBooked = in_array($timeFormatted, $bookedTimes);
+            
+            return [
+                'time' => $timeFormatted,
+                'available' => !$isBooked,
+                'is_booked' => $isBooked
+            ];
+        });
+        
         return response()->json([
             'success' => true,
-            'booked_slots' => $bookedTimes,
-            'count' => count($bookedTimes)
+            'time_slots' => $timeSlots,
+            'booked_count' => count($bookedTimes),
+            'date' => $date
         ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ], 500);
     }
+}
 
     /**
      * API - Get Available Slots (Legacy - untuk backward compatibility)
