@@ -221,7 +221,7 @@
             <div class="sidebar-header">
                 <h5>
                     <i class="bi bi-grid-fill"></i>
-                    Admin Panel
+                    Admin
                 </h5>
             </div>
             <ul class="nav flex-column sidebar-nav">

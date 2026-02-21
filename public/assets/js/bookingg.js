@@ -8,7 +8,87 @@ let selectedMethod = null;
 document.addEventListener('DOMContentLoaded', function() {
     initPaymentOptions();
     initMainButton();
+    initCustomerValidation(); // <-- tambahan validasi real-time
 });
+
+// ==========================================
+// VALIDASI REAL-TIME DETAIL CUSTOMER
+// ==========================================
+function initCustomerValidation() {
+
+    // ── Helper ──────────────────────────────
+    function createHint(afterElement, message) {
+        const hint = document.createElement('span');
+        hint.style.cssText = 'color:red;font-size:12px;display:none;margin-top:4px;';
+        hint.textContent = message;
+        afterElement.insertAdjacentElement('afterend', hint);
+        return hint;
+    }
+
+    function showHint(hint, timer) {
+        hint.style.display = 'block';
+        hint.style.opacity = '1';
+        clearTimeout(timer);
+        return setTimeout(() => {
+            hint.style.transition = 'opacity 0.3s';
+            hint.style.opacity = '0';
+            setTimeout(() => {
+                hint.style.display = 'none';
+                hint.style.opacity = '1';
+            }, 300);
+        }, 3000);
+    }
+
+    function hideHint(hint, timer) {
+        clearTimeout(timer);
+        hint.style.display = 'none';
+        hint.style.opacity = '1';
+    }
+
+    // ── Nama Lengkap ─────────────────────────
+    const namaInput = document.getElementById('namaLengkap');
+    const namaHint  = createHint(namaInput, 'Nama tidak boleh mengandung angka atau simbol.');
+    let namaTimer   = null;
+
+    namaInput.addEventListener('keypress', function (e) {
+        const char = String.fromCharCode(e.charCode);
+        if (/[^a-zA-Z\s]/.test(char)) {
+            e.preventDefault();
+            namaTimer = showHint(namaHint, namaTimer);
+        } else {
+            hideHint(namaHint, namaTimer);
+        }
+    });
+
+    // ── Nomor Telepon ────────────────────────
+    const hpInput    = document.getElementById('nomorTelepon');
+    const hpHintChar = createHint(hpInput, 'Nomor telepon hanya boleh berisi angka.');
+    const hpHintLen  = createHint(hpHintChar, 'Nomor telepon minimal 11 digit.');
+    let hpCharTimer  = null;
+
+    hpInput.addEventListener('keypress', function (e) {
+        const char = String.fromCharCode(e.charCode);
+        if (!/\d/.test(char)) {
+            e.preventDefault();
+            hpCharTimer = showHint(hpHintChar, hpCharTimer);
+        } else {
+            hideHint(hpHintChar, hpCharTimer);
+        }
+    });
+
+    hpInput.addEventListener('input', function () {
+        const val = hpInput.value.trim();
+        if (val.length > 13) hpInput.value = val.slice(0, 13);
+        hpHintLen.style.display = (val.length >= 4 && val.length < 11) ? 'block' : 'none';
+        hpHintLen.style.opacity = '1';
+    });
+
+    hpInput.addEventListener('blur', function () {
+        const val = hpInput.value.trim();
+        hpHintLen.style.display = (val.length >= 4 && val.length < 11) ? 'block' : 'none';
+        hpHintLen.style.opacity = '1';
+    });
+}
 
 // ==========================================
 // PAYMENT METHOD SELECTION & MODAL
@@ -134,43 +214,55 @@ function initMainButton() {
 // CONFIRMATION MODAL
 // ==========================================
 window.openConfirmModal = function() {
-    const namaLengkap = document.getElementById('namaLengkap').value.trim();
+    const namaLengkap  = document.getElementById('namaLengkap').value.trim();
     const nomorTelepon = document.getElementById('nomorTelepon').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const sosialMedia = document.getElementById('sosialMedia').value;
+    const email        = document.getElementById('email').value.trim();
+    const sosialMedia  = document.getElementById('sosialMedia').value;
     
     if (!namaLengkap) {
-        alert('Mohon isi Nama Lengkap!');
+        showCustomAlert('error', 'Perhatian!', 'Mohon isi Nama Lengkap!');
+        document.getElementById('namaLengkap').focus();
+        return;
+    }
+
+    if (/[^a-zA-Z\s]/.test(namaLengkap)) {
+        showCustomAlert('error', 'Perhatian!', 'Nama tidak boleh mengandung angka atau simbol!');
         document.getElementById('namaLengkap').focus();
         return;
     }
     
     if (!nomorTelepon) {
-        alert('Mohon isi Nomor Telepon!');
+        showCustomAlert('error', 'Perhatian!', 'Mohon isi Nomor Telepon!');
+        document.getElementById('nomorTelepon').focus();
+        return;
+    }
+
+    if (nomorTelepon.length < 11) {
+        showCustomAlert('error', 'Perhatian!', 'Nomor telepon minimal 11 digit!');
         document.getElementById('nomorTelepon').focus();
         return;
     }
     
     if (!email) {
-        alert('Mohon isi Email!');
+        showCustomAlert('error', 'Perhatian!', 'Mohon isi Email!');
         document.getElementById('email').focus();
         return;
     }
     
     if (!email.includes('@')) {
-        alert('Format email tidak valid!');
+        showCustomAlert('error', 'Perhatian!', 'Format email tidak valid!');
         document.getElementById('email').focus();
         return;
     }
     
     if (sosialMedia === 'Pilih opsi') {
-        alert('Mohon pilih opsi upload sosial media!');
+        showCustomAlert('error', 'Perhatian!', 'Mohon pilih opsi upload sosial media!');
         document.getElementById('sosialMedia').focus();
         return;
     }
     
     if (!selectedMethod) {
-        alert('Mohon pilih metode pembayaran terlebih dahulu!');
+        showCustomAlert('error', 'Perhatian!', 'Mohon pilih metode pembayaran terlebih dahulu!');
         return;
     }
     
@@ -263,18 +355,12 @@ async function processBooking() {
 
         if (result.success) {
             console.log('Booking saved:', result.data);
-            
-            // Close modal
             closeConfirmModal();
-            
-            // SHOW SUCCESS ALERT
             alert(`✅ Pesanan berhasil dibuat!\n\nKode Booking: ${result.data.kode_booking}\n\nAnda akan diarahkan ke WhatsApp untuk konfirmasi pembayaran.`);
-            
-            // REDIRECT KE WHATSAPP
             window.location.href = result.data.whatsapp_url;
             
         } else {
-            alert('❌ ' + (result.message || 'Terjadi kesalahan. Silakan coba lagi.'));
+            showCustomAlert('error', 'Gagal!', result.message || 'Terjadi kesalahan. Silakan coba lagi.');
             console.error('Booking error:', result);
             
             btnText.style.display = 'inline';
@@ -284,7 +370,7 @@ async function processBooking() {
 
     } catch (error) {
         console.error('Booking error:', error);
-        alert('❌ Terjadi kesalahan koneksi. Silakan coba lagi.');
+        showCustomAlert('error', 'Error!', 'Terjadi kesalahan koneksi. Silakan coba lagi.');
         
         btnText.style.display = 'inline';
         btnLoading.style.display = 'none';
@@ -300,10 +386,10 @@ document
     ?.addEventListener("click", async function () {
         const code = document.getElementById("promoCode").value.trim();
         const totalEl = document.getElementById("totalAmount");
-        const voucherDisplayEl = document.querySelector('.summary-item .text-danger'); // Tambahkan ini
+        const voucherDisplayEl = document.querySelector('.summary-item .text-danger');
 
         if (!code) {
-            alert("Masukkan kode promo!");
+            showCustomAlert('error', 'Perhatian!', 'Masukkan kode promo!');
             return;
         }
 
@@ -320,19 +406,14 @@ document
                 return;
             }
 
-            // Update total pembayaran
             totalEl.innerText = "Rp " + data.new_total.toLocaleString("id-ID");
             
-            // ✅ UPDATE TAMPILAN VOUCHER (yang warna merah)
             const discount = originalTotal - data.new_total;
             if (voucherDisplayEl) {
                 voucherDisplayEl.textContent = '- Rp ' + discount.toLocaleString('id-ID');
             }
             
-            // Update hidden value untuk di confirm modal
             document.getElementById('discountValue').value = discount;
-
-            // Show success alert
             showCustomAlert('success', 'Berhasil!', `Promo berhasil digunakan! Diskon Rp ${discount.toLocaleString('id-ID')}`);
             
         } catch (e) {
@@ -341,15 +422,12 @@ document
         }
     });
 
-    // ==========================================
+// ==========================================
 // CUSTOM ALERT MODAL
 // ==========================================
 function showCustomAlert(type, title, message) {
-    // Remove existing alert if any
     const existingAlert = document.getElementById('customAlert');
-    if (existingAlert) {
-        existingAlert.remove();
-    }
+    if (existingAlert) existingAlert.remove();
 
     const iconHTML = type === 'success' 
         ? '<svg class="alert-icon success" viewBox="0 0 52 52"><circle class="alert-icon-circle" cx="26" cy="26" r="25" fill="none"/><path class="alert-icon-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>'
@@ -368,7 +446,6 @@ function showCustomAlert(type, title, message) {
 
     document.body.insertAdjacentHTML('beforeend', alertHTML);
     
-    // Show animation
     setTimeout(() => {
         document.getElementById('customAlert').classList.add('show');
     }, 10);
