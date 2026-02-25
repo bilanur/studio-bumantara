@@ -235,7 +235,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="qr-code-container">
-                        <img src="https://via.placeholder.com/250x250/e8f0f7/2a4962?text=QR+CODE" alt="QRIS" class="qr-code">
+                        <img src="{{ asset('assets/images/qris.jpeg') }}" alt="QRIS" class="qr-code">
                     </div>
                     <div class="payment-instructions">
                         <h3>Cara Pembayaran:</h3>
