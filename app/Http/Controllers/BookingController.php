@@ -464,14 +464,12 @@ public function getAvailableTimes(Request $request)
         $email = $user->email;
         $phone = $user->no_hp ?? null;
         
-        $bookings = Booking::query()
-            ->where('email', $email)
-            ->when($phone, function($q) use ($phone) {
-                $q->orWhere('nomor_telepon', $phone);
-            })
-            ->with('package')
-            ->latest()
-            ->get();
+        // ✅ SESUDAH
+$bookings = Booking::with('package')
+    ->where('email', $email)
+    ->where('status', '!=', 'Selesai')
+    ->latest()
+    ->get();
         
         return view('booking3', compact('bookings'));
     }

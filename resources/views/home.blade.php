@@ -57,7 +57,7 @@
         <div class="about-content">
             <div class="about-badge">✨ Tentang Kami</div>
             <h2>Bumantara Studio itu apa sih?</h2>
-            <p>Bumantara Studio adalah studio foto profesional yang menyediakan layanan foto keluarga, wisuda, bestie, grup, couple, prawedding, maternity, dan pas foto dengan konsep modern dan nyaman.</p>
+            <p>Bumantara Studio adalah studio foto profesional yang menyediakan layanan foto keluarga, wisuda, bestie, grup, couple, prawedding, maternity, dan pass foto dengan konsep modern dan nyaman.</p>
 
             <a href="#service" class="about-btn">Lihat Layanan</a>
         </div>

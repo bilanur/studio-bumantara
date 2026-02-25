@@ -129,6 +129,8 @@ nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+    /* Biar semua card dalam satu row sama tingginya */
+    align-items: stretch;
 }
 
 .package-card {
@@ -138,6 +140,10 @@ nav {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     border: 2px solid #ddd;
+
+    /* FIX: card jadi flex column biar content bisa stretch */
+    display: flex;
+    flex-direction: column;
 }
 
 .package-card:hover {
@@ -167,12 +173,19 @@ nav {
 
 .package-content {
     padding: 1.5rem;
+
+    /* FIX: flex column + flex:1 biar content memenuhi sisa ruang card */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .package-features {
     list-style: none;
+    /* FIX: flex:1 biar list mengisi ruang kosong, dorong button ke bawah */
+    flex: 1;
     margin-bottom: 1.5rem;
-    padding-left: 3rem; /* Tambah padding kiri agar lebih ke tengah */
+    padding-left: 3rem;
 }
 
 .package-features li {
@@ -184,17 +197,16 @@ nav {
     text-align: left;
 }
 
-/* HAPUS CENTANG HIJAU - Ganti dengan icon tidak berwarna */
 .package-features li i {
     position: absolute;
     left: 0;
     top: 0.6rem;
-    color: #6c757d; /* Warna abu-abu tidak berwarna */
+    color: #6c757d;
     font-size: 16px;
     width: 20px;
 }
 
-/* ================= BOOKING BUTTON (FIXED) ================= */
+/* ================= BOOKING BUTTON ================= */
 .booking-btn {
     width: 60%;
     background: #1e4d6b;
@@ -204,15 +216,16 @@ nav {
     font-size: 0.9rem;
     font-weight: 500;
     margin: 0 auto 0.8rem;
-
-    /* FIX UTAMA */
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     cursor: pointer;
-
+    border: none;
     transition: background 0.3s;
+
+    /* FIX: jangan shrink, tetap di posisinya */
+    flex-shrink: 0;
 }
 
 .booking-btn:hover {
@@ -239,6 +252,9 @@ nav {
     cursor: pointer;
     transition: background 0.3s;
     border: none;
+
+    /* FIX: jangan shrink */
+    flex-shrink: 0;
 }
 
 .price-btn:hover {
